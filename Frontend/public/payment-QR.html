@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment - FitJAD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/payment-QR.css" />
+</head>
+
+<body>
+    <!-- navbar page -->
+    <nav class="navbar">
+        <div class="logo">FitJAD</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Member</a></li>
+            <li><a href="#">Classes</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <a href="#">
+            <img src="images/user-icon.png" alt="User Icon" class="user-icon" />
+        </a>
+    </nav>
+
+    <section class="payment">
+        <h2><span>Payment</span></h2>
+        <p class="subtitle">Choose the perfect plan that fits your fitness journey</p>
+
+        <div class="payment-container">
+            <!-- Payment Details -->
+            <div class="payment-details">
+
+                <h3>Payment Details</h3>
+                <p>Select the payment method that suits you best.</p>
+
+                <div class="method-buttons">
+                    <h4>Payment Methods</h4>
+                    <div class="method-btn">
+                        <div class="PromptPay-method">
+                            <img src="images/Thai-QR-Payment.png" alt="" class="Thai-QR-Payment">
+                            <button class="active">Promptpay</button>
+                        </div>
+                        <div class="CreditCard-method">
+                            <img src="images/credit-card.png" alt="">
+                            <button>Credit Card</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="promptpay-box">
+                    <img src="images/QR-code.png" alt="QR Code" class="qr" />
+                    <div class="info">
+                        <p><strong>PromptPay Number:</strong> 0XX-XXX-XXXX</p>
+                        <p><strong>Account Name:</strong> XXXXXXXXXX</p>
+                        <p><strong>Amount:</strong> ฿XXX.00</p>
+                        <p><strong>Reference Code:</strong> XXXXXXXX</p>
+                    </div>
+                    <div class="warning">
+                        ⚠️ Payment must be completed within 15 minutes. <br>
+                        Please retain a photo of the transaction receipt for verification purposes.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <p>Details of your selected package.</p>
+                <div class="summary-box">
+                    <h4>Gold</h4>
+                    <p class="price">฿XX<span>/mo.</span></p>
+                    <ul>
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                    </ul>
+                </div>
+                <div class="totals">
+                    <p>Subtotal: <span>฿70</span></p>
+                    <p>Discount: <span>฿0</span></p>
+                    <hr>
+                    <p><strong>Total:</strong> <span>฿70</span></p>
+                </div>
+                <button class="confirm-btn">Confirm Payment</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
