@@ -55,7 +55,7 @@ body {
 
 /* intro black black page */
 .hero {
-    background: url('../images/img-intro-blackblack.png') center center / cover no-repeat;
+    background: url('../image/img-intro-blackblack.png') center center / cover no-repeat;
     height: 640px;
     position: relative;
     color: white;
