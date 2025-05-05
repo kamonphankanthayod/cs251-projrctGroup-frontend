@@ -13,7 +13,7 @@
         <nav>
             <a href="#">Home</a>
             <a href="#plans">Member</a>
-            <a href="#">Classes</a>
+            <a href="#classes">Classes</a>
             <a href="#footer">Contact</a>
         </nav>
         <a href="login.html" class="join-now">Join Now</a>
@@ -88,7 +88,27 @@
                 <a href="login.html" class="btn">Get premium</a>
             </div>
         </div>
-    </section>  
+    </section> 
+    
+    <!-- Classes Section (Filter + Search + Class List รวมอยู่ด้วยกัน) -->
+    <section class="classes-section" id="classes">
+        <h2><span>Our </span>Classes</h2>
+        <p id="perfectclass">Choose the perfect class that fits your fitness journey</p>
+        <div class="class-controls">
+            <div class="filters">
+                <button data-filter="All">All Classes</button>
+                <button data-filter="Strength">Strength</button>
+                <button data-filter="Cardio">Cardio</button>
+                <button data-filter="Yoga">Yoga</button>
+                <button data-filter="HIIT">HIIT</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search">
+            </div>
+        </div>
+
+    <div class="class-list" id="classList"></div>
+    </section>
 
      <!-- Trainers Section -->
     <section class="trainers" id="trainers">
@@ -150,5 +170,6 @@
             &copy; 2025 FitJud. All rights reserved.
         </div>
     </footer>
+    <script src="/js/class.js"></script>
 </body>
 </html>
