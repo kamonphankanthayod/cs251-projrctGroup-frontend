@@ -1,0 +1,261 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Navbar - Start */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #111;
+}
+
+.logo a {
+    color: #111;
+    text-decoration: none;
+}
+
+.navbar nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+}
+
+.my-member {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* Navbar Hover */
+.navbar nav a:hover {
+    color: #FFD700;
+    text-decoration: underline;
+}
+
+/* My Member Button Hover (user icon button)*/
+.my-member:hover {
+    background: #e6c200;
+}
+
+/* Navbar - End */
+
+
+.payment {
+    border: #333 0.5px solid;
+    text-align: center;
+    padding: 3rem 2rem;
+}
+
+.payment h2 span {
+    color: #FFD700;
+    font-size: 2.5rem;
+}
+
+.subtitle {
+    color: #666;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.payment-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.payment-details,
+.order-summary {
+    flex: 1;
+    min-width: 300px;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 2rem;
+    background: #fafafa;
+}
+
+.payment-details h3,
+.order-summary h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.payment-details p,
+.order-summary p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.method-buttons {
+    display:block;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+.method-buttons h4 {
+    width: 35%;
+    margin-bottom: 10px;
+    /* border: #b91c1c solid 1px; */
+}
+.method-btn {
+    /* border: #b91c1c solid 1px; */
+    height: 100px;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+.PromptPay-method {
+    display: block;
+    width: 50%;
+    border: #FFD700 solid 2px;
+    border-radius: 5px;
+}
+.Thai-QR-Payment {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 35%;
+}
+.CreditCard-method {
+    margin-left: 20px;
+    width: 50%;
+    border: #00000061 solid 1px;
+    border-radius: 5px;
+}
+.method-btn button {
+    flex: 1;
+    padding: 0.6rem;
+    border-radius: 6px;
+    border: 0px solid #FFD700;
+    background: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.method-btn .active {
+    /* background: #FFD700; */
+    color: black;
+}
+
+.promptpay-box {
+    background: white;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.qr {
+    width: 100px;
+    margin: 0 auto 1rem;
+    display: block;
+}
+
+.info p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.warning {
+    background-color: #b91c1c;
+    color: white;
+    padding: 0.75rem;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+.order-summary .summary-box {
+    background: #fff8dc;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.summary-box h4 {
+    font-size: 1.2rem;
+    /* color: #FFD700; */
+}
+.summary-box ul li span {
+    color: #FFD700;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: red;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.price span {
+    font-size: 1rem;
+    color: black;
+}
+
+.summary-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.summary-box li {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.totals p {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    font-weight: bold;
+}
+
+.totals hr {
+    margin: 1rem 0;
+    border: none;
+    border-top: 1px solid #ccc;
+}
+
+.confirm-btn {
+    background-color: #b91c1c;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+html {
+    scroll-behavior: smooth;
+}

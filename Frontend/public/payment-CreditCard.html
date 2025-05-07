@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment - FitJAD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/payment-CreditCard.css" />
+</head>
+
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo"><a href="#">FitJAD</a></div>
+        <!-- edit href='#' : Replace # with the file path of the Home page. -->
+        <nav>
+            <a href="#">Home</a> <!-- edit href='#' : Replace # with the file path of the Home page. -->
+            <a href="./membership.html">Member</a> <!-- edit href='#' : Replace # with the file path of the Member page. -->
+            <a href="#">Classes</a> <!-- edit href='#' : Replace # with the file path of the Classes page. -->
+            <a href="#footer">Contact</a> <!-- edit href='#' : Replace # with the file path of the Contact page. -->
+        </nav>
+        <a href="#" class="my-member"> <!-- edit href='#' : Replace # with the file path of the Profile page. -->
+            <img src="image/user-icon.png" alt="User Icon" class="user-icon" />
+        </a>
+    </header>
+
+    <section class="payment">
+        <h2><span>Payment</span></h2>
+        <p class="subtitle">Choose the perfect plan that fits your fitness journey</p>
+
+        <div class="payment-container">
+            <!-- Payment Details -->
+            <div class="payment-details">
+
+                <h3>Payment Details</h3>
+                <p>Select the payment method that suits you best.</p>
+
+                <div class="method-buttons">
+                    <h4>Payment Methods</h4>
+                    <div class="method-btn">
+                        <div class="PromptPay-method">
+                            <img src="image/Thai-QR-Payment.png" alt="" class="Thai-QR-Payment">
+                            <button class="active">Promptpay</button>
+                        </div>
+                        <div class="CreditCard-method">
+                            <img src="image/credit-card.png" alt="">
+                            <button>Credit Card</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-box">
+                    <p class="section-label">Select a saved card</p>
+                    <div class="card-option">
+                        <input type="radio" name="card" checked />
+                        <label><img src="image/credit-card.png" alt="" class="credit-card-small"> Mastercard •••• 5555 <small>expired 12/26</small></label>
+                    </div>
+                    <div class="card-option">
+                        <input type="radio" name="card" />
+                        <label><img src="image/credit-card.png" alt="" class="credit-card-small"> Mastercard •••• 5555 <small>expired 12/26</small></label>
+                    </div>
+                    <div class="card-option">
+                        <input type="radio" name="card" />
+                        <label><img src="image/credit-card.png" alt="" class="credit-card-small"> Add new card</label>
+                    </div>
+
+                    <div class="new-card-form">
+                        <p class="card-header"><img src="image/credit-card.png" alt="" class="credit-card-small"> Card Details</p>
+                        <input type="text" placeholder="First Name Last Name" />
+                        <input type="text" placeholder="0000 0000 0000 0000" />
+                        <div class="row">
+                            <input type="text" placeholder="MM" />
+                            <input type="text" placeholder="YYYY" />
+                            <input type="text" placeholder="123" />
+                        </div>
+                        <button class="save-btn">Save Card</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <p>Details of your selected package.</p>
+                <div class="summary-box">
+                    <h4 id="plan-name">Gold</h4>
+                    <p class="price" id="plan-price">฿XX<span>/mo.</span></p>
+                    <ul id="plan-features">
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                        <li><span>✔</span> xxxxxxxxxxxxx</li>
+                    </ul>
+                </div>
+                <div class="totals">
+                    <p>Subtotal: <span id="subtotal">฿70</span></p>
+                    <p>Discount: <span id="discount">฿0</span></p>
+                    <hr>
+                    <p><strong>Total:</strong> <span id="total">฿70</span></p>
+                </div>
+                <button class="confirm-btn" id="confirm-payment-btn">Confirm Payment</button>
+            </div>
+        </div>
+    </section>
+
+    <script src="./js/payment.js"></script>
+</body>
+
+</html>
