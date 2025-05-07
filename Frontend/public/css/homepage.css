@@ -40,6 +40,11 @@
     color: #111;
     font-weight: 500;
   }
+
+  .my-member {
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
   
   .join-now {
     background: #FFD700;
@@ -144,7 +149,7 @@
     color: #fff;
     padding: 80px 20px;
     text-align: center;
-    scroll-margin-top: 200px;
+    scroll-margin-top: 50px;
   }
   
   /* Section heading */

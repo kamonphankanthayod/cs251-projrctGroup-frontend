@@ -34,19 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${cls.description}</p>
                 <p><strong>Instructor:</strong> ${cls.instructor}</p>
                 <p><strong>Duration:</strong> ${cls.duration} min</p>
-                <button class="book-btn" data-id="${cls.id}" data-name="${cls.title}">Book Now</button>
             `;
             classList.appendChild(card);
-        });
-
-        // หลัง render เสร็จต้องผูก event ให้ปุ่ม Book ใหม่ด้วย
-        const bookButtons = document.querySelectorAll('.book-btn');
-        bookButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const classId = button.getAttribute('data-id');
-                localStorage.setItem('selectedClassId', classId);
-                window.location.href = "payment.html";
-            });
         });
     }
 
