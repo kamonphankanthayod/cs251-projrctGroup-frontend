@@ -4,41 +4,37 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FitJAD</title>
-    <link rel="stylesheet" href="css/member.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>FitJAD - Member</title>
+    <link rel="stylesheet" href="./css/membership.css" />
 </head>
 
 <body>
-    <!-- navbar page -->
-    <nav class="navbar">
-        <div class="logo">FitJAD</div>
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Member</a></li>
-            <li><a href="#">Classes</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <a href="#">
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo"><a href="./homepage.html">FitJAD</a></div>
+        <!-- edit href='#' : Replace # with the file path of the Home page. -->
+        <nav>
+            <a href="./homepage.html">Home</a> <!-- edit href='#' : Replace # with the file path of the Home page. -->
+            <a href="#member-paln">Member</a> <!-- edit href='#' : Replace # with the file path of the Member page. -->
+            <a href="#">Classes</a> <!-- edit href='#' : Replace # with the file path of the Classes page. -->
+            <a href="#footer">Contact</a> <!-- edit href='#' : Replace # with the file path of the Contact page. -->
+        </nav>
+        <a href="#" class="my-member"> <!-- edit href='#' : Replace # with the file path of the Profile page. -->
             <img src="image/user-icon.png" alt="User Icon" class="user-icon" />
         </a>
-    </nav>
+    </header>
 
-    <!-- intro black black page-->
+    <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-overlay">
-            <div class="hero-text">
-                <h1>WHY ???<br><span class="highlight">FitJAD Member?</span></h1>
-                <p>
-                    Join our premium fitness center and experience world-class <br> equipment, expert trainers, and a
-                    supportive community dedicated to <br> your success.
-                </p>
-            </div>
+        <div class="hero-content">
+            <h1>WHY ???<br><span>FitJAD Member?</span></h1>
+            <p>Join our premium fitness center and experience world-class equipment, expert trainers, and a supportive
+                community dedicated to your success.</p>
         </div>
     </section>
 
-    <!-- membership -->
-    <section class="membership">
+    <!-- Membership Plans -->
+    <section class="membership" id="member-paln">
         <div class="title-member">
             <h2>Membership <span>Plans</span></h2>
             <p>Choose the perfect plaan that fits your fitness journey</p>
@@ -65,7 +61,7 @@
                             <li>Access to all locations</li>
                         </ul>
                     </div>
-                    <button class="detail-btn-gold">Detail</button>
+                    <a href="#" class="btn">Detail</a>
                 </div>
                 <div class="plan-cta-dark">
                     <h3 class="highlight">Gold</h3>
@@ -84,7 +80,10 @@
                             <p>฿70<span>/month</span></p>
                         </div>
                     </div>
-                    <button class="register-btn">Register Now</button>
+                    <form action="./payment-QR.html" method="get">
+                        <input type="hidden" name="PlanName" value="Gold" />
+                        <button type="submit" class="register-btn">Register Now</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -101,7 +100,7 @@
                         <li>Locker room access</li>
                         <li>Free water station</li>
                     </ul>
-                    <button class="detail-btn">Detail</button>
+                    <a href="#" class="btn">Detail</a>
                 </div>
                 <div class="plan-cta-dark">
                     <h3 class="highlight">Basic</h3>
@@ -120,7 +119,10 @@
                             <p>฿50<span>/month</span></p>
                         </div>
                     </div>
-                    <button class="register-btn">Register Now</button>
+                    <form action="./payment-QR.html" method="get">
+                        <input type="hidden" name="PlanName" value="Basic" />
+                        <button type="submit" class="register-btn">Register Now</button>
+                    </form>
                 </div>
             </div>
 
@@ -135,7 +137,7 @@
                         <li>Spa & recovery services</li>
                         <li>Priority class booking</li>
                     </ul>
-                    <button class="detail-btn">Detail</button>
+                    <a href="#" class="btn">Detail</a>
                 </div>
                 <div class="plan-cta-dark">
                     <h3 class="highlight">Platinum</h3>
@@ -154,7 +156,10 @@
                             <p>฿100<span>/month</span></p>
                         </div>
                     </div>
-                    <button class="register-btn">Register Now</button>
+                    <form action="./payment-QR.html" method="get">
+                        <input type="hidden" name="PlanName" value="Platinum" />
+                        <button type="submit" class="register-btn">Register Now</button>
+                    </form>
                 </div>
             </div>
 
@@ -164,88 +169,37 @@
     <!-- promotion -->
     <section class="promotion">
         <div class="title-promotion">
-            <h2>New <span>Promotion</span></h2>
+            <h2>New <span>Promotion FOR GOLD</span></h2>
             <p>Choose the perfect plan that fits your fitness journey</p>
         </div>
-
-        <!-- Free Plan -->
-        <div class="promo-plan highlight">
-            <div class="tag">MOST POPULAR</div>
-            <h3><span class="emphasis">Free!!!!, <strong>Register now</strong> </span>for Basic member</h3>
-            <p class="price">฿0<span>/month</span></p>
-            <ul>
-                <li>Everything in Basic</li>
-                <li>Group fitness classes</li>
-                <li>Nutrition consultation</li>
-                <li>Access to all locations</li>
-            </ul>
-            <button class="button button-yellow">Join now</button>
-        </div>
-
-        <!-- Cheaper / Permanent -->
-        <div class="promo-flex">
-            <div class="promo-plan light">
-                <h3>Cheaper, <span class="highlight-text">long term</span></h3>
-                <p class="price">฿500<span>/year</span></p>
-                <ul>
-                    <li>Access to gym floor</li>
-                    <li>Basic equipment usage</li>
-                    <li>Locker room access</li>
-                    <li>Free water station</li>
-                </ul>
-                <button class="button button-outline">Get started</button>
-            </div>
-
-            <div class="promo-plan light">
-                <h3>Permanent</h3>
-                <p class="price">฿2500<span>/life</span></p>
-                <ul>
-                    <li>Everything in Gold</li>
-                    <li>Premium locker with amenities</li>
-                    <li>Spa & recovery services</li>
-                    <li>Priority class booking</li>
-                </ul>
-                <button class="button button-outline">Get started</button>
-            </div>
-        </div>
+        <div id="promo-container" class="promo-flex"></div>
     </section>
+    <script src="./js/promotions.js"></script>
 
-
-    <!-- footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-col">
-                <h3>FitJAD</h3>
-                <p>Transforming lives through fitness excellence since 2010.</p>
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-cols">
+            <div>
+                <h4>FitJAD</h4>
+                <p>Transforming lives through fitness <br>excellence since 2010.</p>
             </div>
-            <div class="footer-col">
+            <div>
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Membership</a></li>
-                    <li><a href="#">Trainers</a></li>
+                    <li><a href="./homepage.html">Home</a></li>                    <!-- edit href='#' : Replace # with the file path of the Home page. --> 
+                    <li><a href="#footer">About us</a></li>
+                    <li><a href="./member.html">Membership</a></li>
+                    <li><a href="#trainers">Trainers</a></li>        <!-- edit href='#' : Replace # with the file path of the Trainers page. --> 
                 </ul>
             </div>
-            <div class="footer-col">
-                <h4>Membership</h4>
-                <ul>
-                    <li><a href="#">Pricing</a></li>
-                    <li><a href="#">Benefits</a></li>
-                    <li><a href="#">Membership</a></li>
-                    <li><a href="#">Trainers</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
+            <div>
                 <h4>Contact Us</h4>
-                <p>123 FitJud Street<br>
-                    Pathum, TH 10290<br>
-                    info@fitJud.com<br>
-                    012-3456-789</p>
+                <p>123 FitJud Street Pathum, TH 10290<br>info@fitJud.com<br>012-3456-789</p>
             </div>
         </div>
-        <hr>
-        <p class="copyright">© 2025 FitJud . All rights reserved.</p>
+        <div class="copyright">
+            &copy; 2025 FitJud. All rights reserved.
+        </div>
     </footer>
 
 </body>

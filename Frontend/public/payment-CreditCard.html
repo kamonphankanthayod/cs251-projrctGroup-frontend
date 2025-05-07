@@ -10,19 +10,20 @@
 </head>
 
 <body>
-    <!-- navbar page -->
-    <nav class="navbar">
-        <div class="logo">FitJAD</div>
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Member</a></li>
-            <li><a href="#">Classes</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-        <a href="#">
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo"><a href="#">FitJAD</a></div>
+        <!-- edit href='#' : Replace # with the file path of the Home page. -->
+        <nav>
+            <a href="#">Home</a> <!-- edit href='#' : Replace # with the file path of the Home page. -->
+            <a href="./membership.html">Member</a> <!-- edit href='#' : Replace # with the file path of the Member page. -->
+            <a href="#">Classes</a> <!-- edit href='#' : Replace # with the file path of the Classes page. -->
+            <a href="#footer">Contact</a> <!-- edit href='#' : Replace # with the file path of the Contact page. -->
+        </nav>
+        <a href="#" class="my-member"> <!-- edit href='#' : Replace # with the file path of the Profile page. -->
             <img src="image/user-icon.png" alt="User Icon" class="user-icon" />
         </a>
-    </nav>
+    </header>
 
     <section class="payment">
         <h2><span>Payment</span></h2>
@@ -83,9 +84,9 @@
                 <h3>Order Summary</h3>
                 <p>Details of your selected package.</p>
                 <div class="summary-box">
-                    <h4>Gold</h4>
-                    <p class="price">฿XX<span>/mo.</span></p>
-                    <ul>
+                    <h4 id="plan-name">Gold</h4>
+                    <p class="price" id="plan-price">฿XX<span>/mo.</span></p>
+                    <ul id="plan-features">
                         <li><span>✔</span> xxxxxxxxxxxxx</li>
                         <li><span>✔</span> xxxxxxxxxxxxx</li>
                         <li><span>✔</span> xxxxxxxxxxxxx</li>
@@ -93,15 +94,17 @@
                     </ul>
                 </div>
                 <div class="totals">
-                    <p>Subtotal: <span>฿70</span></p>
-                    <p>Discount: <span>฿0</span></p>
+                    <p>Subtotal: <span id="subtotal">฿70</span></p>
+                    <p>Discount: <span id="discount">฿0</span></p>
                     <hr>
-                    <p><strong>Total:</strong> <span>฿70</span></p>
+                    <p><strong>Total:</strong> <span id="total">฿70</span></p>
                 </div>
-                <button class="confirm-btn">Confirm Payment</button>
+                <button class="confirm-btn" id="confirm-payment-btn">Confirm Payment</button>
             </div>
         </div>
     </section>
+
+    <script src="./js/payment.js"></script>
 </body>
 
 </html>
