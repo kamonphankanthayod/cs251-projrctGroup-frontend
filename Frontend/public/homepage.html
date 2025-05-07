@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitJAD - Home</title>
+  <link rel="stylesheet" href="/css/homepage.css" />
+</head>
+<body>
+  <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo"><a href="#">FitJAD</a></div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#plans">Member</a>
+            <a href="#classes">Classes</a>
+            <a href="#footer">Contact</a>
+        </nav>
+        <a href="login.html" class="join-now">Join Now</a>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>TRANSFORM<br>YOUR BODY,<br><span>ELEVATE YOUR LIFE</span></h1>
+            <p>Join our premium fitness center and experience world-class equipment, expert trainers, and a supportive community dedicated to your success.</p>
+            <a href="login.html" class="primary-btn-start">Start Your Journey</a>
+        </div>
+    </section>
+
+    <!-- Why Choose Section -->
+    <section class="why">
+        <h2>Why should <span>FitJAD</span></h2>
+        <p>Experience the difference with our state-of-the-art facilities and expert guidance</p>
+        <div class="features">
+            <div class="card">
+                <h3>Premium Equipment</h3>
+                <p>Access to the latest fitness technology and top-quality equipment for effective workouts.</p>
+            </div>
+            <div class="card">
+                <h3>24/7 Access</h3>
+                <p>Train on your schedule with round-the-clock access to our facilities.</p>
+            </div>
+            <div class="card">
+                <h3>Expert Trainers</h3>
+                <p>Work with certified professionals who are dedicated to helping you achieve your goals.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Plans -->
+    <section class="plans" id="plans">
+        <h2>Membership <span>Plans</span></h2>
+        <p>Choose the perfect plan that fits your fitness journey</p>
+        <div class="plan-cards">
+            <div class="card">
+                <h3 id="Mem-type">Standard</h3>
+                <h4>฿70<span>/month</span></h4>
+                <ul>
+                    <li>Access to gym floor</li>
+                    <li>Basic equipment usage</li>
+                    <li>Locker room access</li>
+                    <li>Free water station</li>
+                </ul>
+                <a href="login.html" class="btn">Get start</a>
+            </div>
+            <div class="card popular">
+                <div class="badge">MOST POPULAR</div>
+                <h3 id="Mem-type">Gold</h3>
+                <h4>฿70<span>/month</span></h4>
+                <ul>
+                    <li>Everything in Basic</li>
+                    <li>Group fitness classes</li>
+                    <li>Nutrition consultation</li>
+                    <li>Access to all locations</li>
+                </ul>
+                <a href="login.html" class="btn">Join now</a>
+            </div>
+            <div class="card">
+                <h3 id="Mem-type">Platinum</h3>
+                <h4>฿70<span>/month</span></h4>
+                <ul>
+                    <li>Everything in Gold</li>
+                    <li>Premium locker with amenities</li>
+                    <li>Spa & recovery services</li>
+                    <li>Priority class booking</li>
+                </ul>
+                <a href="login.html" class="btn">Get premium</a>
+            </div>
+        </div>
+    </section> 
+    
+    <!-- Classes Section (Filter + Search + Class List รวมอยู่ด้วยกัน) -->
+    <section class="classes-section" id="classes">
+        <h2><span>Our </span>Classes</h2>
+        <p id="perfectclass">Choose the perfect class that fits your fitness journey</p>
+        <div class="class-controls">
+            <div class="filters">
+                <button data-filter="All">All Classes</button>
+                <button data-filter="Strength">Strength</button>
+                <button data-filter="Cardio">Cardio</button>
+                <button data-filter="Yoga">Yoga</button>
+                <button data-filter="HIIT">HIIT</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search">
+            </div>
+        </div>
+
+    <div class="class-list" id="classList"></div>
+    </section>
+
+     <!-- Trainers Section -->
+    <section class="trainers" id="trainers">
+        <h2>Our Expert <span>Trainers</span></h2>
+        <p>Meet our team of certified professionals dedicated to your fitness success</p>
+        <div class="trainer-cards">
+            <div class="trainer-card">
+                <img src="/image/trainer.jpeg" alt="Trainer 1">
+                <h4>Isagi</h4>
+                <p>Certified Personal Trainer</p>
+            </div>
+            <div class="trainer-card">
+                <img src="/image/trainer.jpeg" alt="Trainer 2">
+                <h4>Nagi</h4>
+                <p>Strength Coach</p>
+            </div>
+            <div class="trainer-card">
+                <img src="/image/trainer.jpeg" alt="Trainer 3">
+                <h4>Shido</h4>
+                <p>Nutrition Specialist</p>
+            </div>
+            <div class="trainer-card">
+                <img src="/image/trainer.jpeg" alt="Trainer 4">
+                <h4>Kunigami</h4>
+                <p>Yoga Instructor</p>
+            </div>
+        </div>
+    </section>      
+
+    <!-- Promotion Section -->
+    <section class="cta">
+        <h2>Ready to Start Your Fitness Journey?</h2>
+        <p>Join today and get your first month at 50% off. No contracts, cancel anytime.</p>
+        <a href="login.html" class="primary-btn">Become a member today</a>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-cols">
+            <div>
+                <h4>FitJAD</h4>
+                <p>Transforming lives through fitness <br>excellence since 2010.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#footer">About us</a></li>
+                    <li><a href="#plans">Membership</a></li>
+                    <li><a href="#trainers">Trainers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <p>123 FitJud Street Pathum, TH 10290<br>info@fitJud.com<br>012-3456-789</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 FitJud. All rights reserved.
+        </div>
+    </footer>
+    <script src="./js/homepage.js"></script>
+</body>
+</html>

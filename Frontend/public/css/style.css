@@ -1,0 +1,117 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .left-panel {
+    width: 50%;
+    background-color: #1f1f1f;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .right-panel {
+    width: 50%;
+    background: url('/image/Fitness.png') center/cover no-repeat;
+    position: relative;
+  }
+   
+  .right-panel::after {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* ดำโปร่งใส 40% */
+  }
+  
+  .form-box {
+    width: 80%;
+    max-width: 400px;
+  }
+  
+  .logo {
+    font-size: 2.5rem;
+    color: #FFD700;
+    margin-bottom: 30px;
+  }
+  
+  h2 {
+    font-size: 1.8rem; /* หัวข้อใหญ่ */
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1.1rem; /* ข้อความอธิบาย */
+    color: #ccc;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 1rem; /* ชื่อฟิลด์ */
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ccc;
+  }
+  
+  input {
+    font-size: 1rem; /* ช่องใส่ข้อมูล */
+    background: #3b3b3b;
+    color: white;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 15px;
+  }
+  
+  .primary-btn {
+    font-size: 1.1rem; /* ปุ่ม */
+    background-color: #FFD700;
+    padding: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .primary-btn:hover {
+    background-color: #e6c200;
+  }
+  
+  .forgot-link {
+    font-size: 0.95rem; /* ลิงก์เล็ก */
+    color: #FFD700;
+    text-decoration: none;
+    margin-top: -12px;
+    margin-bottom: 15px;
+  }
+  
+  .switch-link {
+    font-size: 1rem; /* ลิงก์ล่างสุด */
+    text-align: center;
+    color: #aaa;
+    margin-top: 20px;
+  }
+  
+  .switch-link a {
+    color: #FFD700;
+    text-decoration: none;
+  }
+  

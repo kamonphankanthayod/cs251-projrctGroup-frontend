@@ -1,0 +1,645 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .navbar .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #111;
+  }
+
+  .logo a {
+    color: #111;
+    text-decoration: none;
+  }
+  
+  .navbar nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+  }
+
+  .my-member {
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+  
+  .join-now {
+    background: #FFD700;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+  }
+  
+  /* Hero Section */
+  .hero {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0.1) 70%), 
+                url('/image/Homepage.jpg') center/cover no-repeat;
+    height: 100vh;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #fff;
+    padding-left: 150px;
+  }  
+  
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+  }
+  
+  .hero h1 {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  
+  .hero h1 span {
+    color: #FFD700;
+  }
+  
+  .hero p {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+  }
+  
+  .primary-btn {
+    background: #000;
+    color: #FFD700;
+    padding: 14px 28px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+
+  .primary-btn-start {
+    background: #FFD700;
+    color: #000;
+    padding: 14px 28px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  /* Why Section */
+  .why {
+    text-align: center;
+    padding: 80px 20px;
+  }
+  
+  .why h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .why h2 span {
+    color: #FFD700;
+  }
+  
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .features .card {
+    background: #fff;
+    border: 2px solid #FFD700;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 300px;
+  }
+  
+/* Section background */
+.plans {
+    background-color: #111;
+    color: #fff;
+    padding: 80px 20px;
+    text-align: center;
+    scroll-margin-top: 50px;
+  }
+  
+  /* Section heading */
+  .plans h2 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .plans h2 span {
+    color: #FFD700;
+  }
+  
+  .plans p {
+    font-size: 1rem;
+    color: #ccc;
+  }
+  
+  /* Cards */
+  .plan-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .plan-cards .card {
+    background: #fff;
+    color: #000;
+    padding: 30px;
+    border-radius: 10px;
+    border: 2px solid #FFD700;
+    width: 300px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .plan-cards .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+  }
+  
+  #Mem-type {
+    text-align: left;
+  }
+  /* Price */
+  .plan-cards .card h4 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    text-align: left;
+  }
+  
+  /* Features */
+  .plan-cards .card ul {
+    text-align: left;
+    margin: 20px 0;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .plan-cards .card ul li::before {
+    content: \"▶\";
+    font-size: 0.8rem;
+    color: #FFD700;
+    margin-right: 8px;
+  }
+  
+  /* Buttons */
+  .plan-cards .btn {
+    padding: 10px 0;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    display: block;
+    margin-top: auto;
+    transition: all 0.3s ease;
+  }
+  
+  /* Default buttons (Standard & Platinum) */
+  .plan-cards .card:not(.popular) .btn {
+    border: 1px solid #FFD700;
+    background: transparent;
+    color: #000;
+  }
+  
+  .plan-cards .card:not(.popular) .btn:hover {
+    background: #FFD700;
+    color: #000;
+  }
+  
+  /* Gold plan */
+  .plan-cards .popular .btn {
+    background: #FFD700;
+    border: none;
+    color: #000;
+  }
+  
+  .plan-cards .popular .btn:hover {
+    background: #e6c200;
+  }
+  
+  /* Badge */
+  .plan-cards .popular .badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #FFD700;
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-bottom-left-radius: 8px;
+  }
+  
+  /* Trainers Section */
+  .trainers {
+    text-align: center;
+    padding: 80px 20px;
+  }
+  
+  .trainers h2 span {
+    color: #FFD700;
+  }
+
+  #trainers {
+    scroll-margin-top: 200px;
+  }
+  
+  .trainer-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .trainer-cards .card {
+    background: #f5f5f5;
+    padding: 60px 20px;
+    border-radius: 8px;
+    width: 200px;
+  }
+
+  .trainer-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 40px;
+  }
+  
+  .trainer-card {
+    background-color: #f5f5f5;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .trainer-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .trainer-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .trainer-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+  
+  .trainer-card p {
+    font-size: 0.9rem;
+    color: #555;
+  }  
+  
+  /* CTA Section */
+  .cta {
+    background: #FFD700;
+    text-align: center;
+    padding: 60px 20px;
+    color: #000;
+  }
+  
+  .cta h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .cta p {
+    margin-bottom: 20px;
+  }
+  
+  /* Footer */
+  footer {
+    background: #111;
+    color: #fff;
+    padding: 60px 20px;
+  }
+  
+  .footer-cols {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .footer-cols > div {
+    flex: 1;
+    min-width: 200px;
+  }  
+
+  .footer-cols a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .footer-cols a:hover {
+    color: #FFD700;
+    text-decoration: underline;
+  }
+  
+  
+  .footer-cols div {
+    margin-bottom: 20px;
+  }
+  
+  .footer-cols h4 {
+    margin-bottom: 10px;
+  }
+  
+  .footer-cols ul {
+    list-style: none;
+  }
+  
+  .footer-cols ul li {
+    margin-bottom: 8px;
+  }
+  
+  footer .copyright {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+
+  /* Navbar Hover */
+.navbar nav a:hover {
+    color: #FFD700;
+    text-decoration: underline;
+  }
+  
+  /* Join Now Button Hover */
+  .join-now:hover {
+    background: #e6c200;
+  }
+  
+  /* Hero Primary Button Hover */
+  .primary-btn:hover {
+    background: #333230;
+    transform: translateY(-3px);
+    transition: all 0.3s ease;
+  }
+  
+  /* Feature Card Hover */
+  .features .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  /* Plan Card Hover */
+  .plan-cards .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  /* Trainer Card Hover */
+  .trainer-cards .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  /* Footer Link Hover */
+  .footer-cols ul li:hover {
+    color: #FFD700;
+    cursor: pointer;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Class Filter Section */
+.class-filter {
+  background-color: #525252;
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.class-filter h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.class-filter .filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.class-filter .filters button {
+  background-color: #222;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.class-filter .filters button:hover {
+  background-color: #FFD700;
+  color: #000;
+}
+
+.class-filter .search-box input {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1rem;
+  width: 300px;
+  max-width: 90%;
+}
+
+.classes-section {
+  background-color: #1f1f1f;
+  padding: 80px 20px;
+  color: #fff;
+  text-align: center;
+}
+
+.classes-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.classes-section span {
+  color: #FFD700;
+}
+
+#perfectclass {
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.class-controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+}
+
+.filters button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.filters button:hover,
+.filters button.active {
+  background-color: #FFD700;
+  color: #000;
+}
+
+.search-box input {
+  padding: 10px 20px;
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+}
+
+.class-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.class-card {
+  background-color: #fff;
+  color: #000;
+  padding: 30px;
+  border-radius: 10px;
+  border: 2px solid #FFD700;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  text-align: left;
+  min-height: 350px;
+}
+
+.class-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+}
+
+.class-card .badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #FFD700;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-bottom-left-radius: 8px;
+}
+
+.class-card h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+.class-card p {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.class-card .book-btn {
+  padding: 10px 0;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  background: #FFD700;
+  color: #000;
+  text-align: center;
+  margin-top: auto;
+}
+
+.class-card .book-btn:hover {
+  background: #e6c200;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .features, .plan-cards, .trainer-cards, .footer-cols {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero {
+  padding-left: 20px;
+  }
+}
+  
