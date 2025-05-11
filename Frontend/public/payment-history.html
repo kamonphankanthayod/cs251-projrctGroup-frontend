@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ประวัติการชำระเงิน - FitJAD</title>
+    <link rel="stylesheet" href="./css/ProfileSetting.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ส่วนหัว -->
+        <header class="main-header">
+            <div class="logo">FitJAD</div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link active">Member</a></li>
+                    <li><a href="#" class="nav-link">Classes</a></li>
+                    <li><a href="#" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="sign-out">
+                <a href="#" class="sign-out-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sign out
+                </a>
+            </div>
+        </header>
+
+        <!-- ส่วนเนื้อหาหลัก -->
+        <div class="content-container">
+            <!-- เมนูด้านข้าง -->
+            <aside class="sidebar">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="/placeholder.svg?height=50&width=50" alt="User Avatar">
+                    </div>
+                    <div class="user-info">
+                        <h3 class="user-name">John Cena</h3>
+                        <p class="user-membership">Premium Member</p>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="profile">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="my-classes">
+                                <i class="fas fa-calendar"></i> My Class
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="trainer">
+                                <i class="fas fa-dumbbell"></i> Trainer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="history">
+                                <i class="fas fa-history"></i> History
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- เนื้อหาหลัก -->
+            <main class="main-content">
+                <div class="dashboard-header">
+                    <h1>Member Dashboard</h1>
+                    <p>Manage your profile, classes, trainer ratings, and view your history</p>
+                </div>
+                
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2>Activity & Payment History</h2>
+                        <p>View your gym visit history and payment records</p>
+                    </div>
+                    <div class="tab-container" id="history-tabs">
+                        <div class="tabs">
+                            <button class="tab-btn" data-tab="gym-visit">Gym visit</button>
+                            <button class="tab-btn active" data-tab="payment">Payment</button>
+                        </div>
+                        <div class="tab-content" id="gym-visit-content">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Duration</th>
+                                        <th>Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gym-visit-table">
+                                    <!-- ข้อมูลการเข้าใช้บริการจะถูกเพิ่มที่นี่ด้วย JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-content active" id="payment-content">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Amount</th>
+                                        <th>Method</th>
+                                        <th>Invoice</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payment-table">
+                                    <!-- ข้อมูลการชำระเงินจะถูกเพิ่มที่นี่ด้วย JavaScript -->
+                                    <tr>
+                                        <td>12-01-2025</td>
+                                        <td>Monthly Membership - October 2023</td>
+                                        <td>฿1,500</td>
+                                        <td>Credit Card</td>
+                                        <td><a href="#" class="view-btn">View</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>12-01-2025</td>
+                                        <td>Monthly Membership - October 2023</td>
+                                        <td>฿1,500</td>
+                                        <td>Credit Card</td>
+                                        <td><a href="#" class="view-btn">View</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>12-01-2025</td>
+                                        <td>Monthly Membership - October 2023</td>
+                                        <td>฿1,500</td>
+                                        <td>Credit Card</td>
+                                        <td><a href="#" class="view-btn">View</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>12-01-2025</td>
+                                        <td>Monthly Membership - October 2023</td>
+                                        <td>฿1,500</td>
+                                        <td>Credit Card</td>
+                                        <td><a href="#" class="view-btn">View</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>12-01-2025</td>
+                                        <td>Monthly Membership - October 2023</td>
+                                        <td>฿1,500</td>
+                                        <td>Credit Card</td>
+                                        <td><a href="#" class="view-btn">View</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-secondary" id="load-more-history">Load More</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal ดูใบเสร็จ -->
+    <div id="invoice-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Invoice Details</h2>
+            <div class="invoice-content">
+                <div class="invoice-header">
+                    <div class="invoice-logo">LOGO</div>
+                    <div class="invoice-info">
+                        <div class="invoice-number">Invoice #INV-2023-001</div>
+                        <div class="invoice-date">Date: 12-01-2025</div>
+                    </div>
+                </div>
+                <div class="invoice-customer">
+                    <div class="invoice-section-title">Bill To:</div>
+                    <div class="customer-name">John Cena</div>
+                    <div class="customer-email">john.cena@mailbox.com</div>
+                    <div class="customer-address">99/9 Moo ping</div>
+                </div>
+                <div class="invoice-details">
+                    <table class="invoice-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Monthly Membership - Gold Plan (October 2023)</td>
+                                <td>1</td>
+                                <td>฿1,500.00</td>
+                                <td>฿1,500.00</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" class="text-right">Subtotal</td>
+                                <td>฿1,500.00</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-right">Tax (7%)</td>
+                                <td>฿105.00</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="text-right">Total</td>
+                                <td>฿1,605.00</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="invoice-footer">
+                    <div class="payment-info">
+                        <div class="invoice-section-title">Payment Information:</div>
+                        <div>Payment Method: Credit Card</div>
+                        <div>Payment Date: 12-01-2025</div>
+                        <div>Payment Status: Paid</div>
+                    </div>
+                    <div class="invoice-notes">
+                        <div class="invoice-section-title">Notes:</div>
+                        <div>Thank you for your business!</div>
+                    </div>
+                </div>
+                <div class="invoice-actions">
+                    <button class="btn btn-primary" id="download-invoice">Download PDF</button>
+                    <button class="btn btn-outline" id="print-invoice">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="./js/api.js"></script>
+    <script src="./js/ProfileSetting.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ตั้งค่าแท็บประวัติ
+            setupHistoryTabs();
+            
+            // ตั้งค่าปุ่มโหลดเพิ่มเติม
+            setupLoadMoreButton();
+            
+            // ตั้งค่าปุ่มดูใบเสร็จ
+            setupViewInvoiceButtons();
+            
+            // โหลดข้อมูลประวัติการชำระเงิน
+            // loadPaymentHistory();
+        });
+
+        // ฟังก์ชันตั้งค่าแท็บประวัติ
+        function setupHistoryTabs() {
+            const tabContainer = document.getElementById('history-tabs');
+            const tabButtons = tabContainer.querySelectorAll('.tab-btn');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // เปลี่ยนแท็บ
+                    switchTab(tabContainer, tabId);
+                    
+                    // โหลดข
