@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรไฟล์ - FitJAD</title>
+    <link rel="stylesheet" href="./css/ProfileSetting.css">
+    <link rel="stylesheet" href="./css/modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ส่วนหัว -->
+        <header class="main-header">
+            <div class="logo">FitJAD</div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link active">Member</a></li>
+                    <li><a href="#" class="nav-link">Classes</a></li>
+                    <li><a href="#" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="sign-out">
+                <a href="#" class="sign-out-btn">
+                    <i class="fas fa-sign-out-alt"></i> Sign out
+                </a>
+            </div>
+        </header>
+
+        <!-- ส่วนเนื้อหาหลัก -->
+        <div class="content-container">
+            <!-- เมนูด้านข้าง -->
+            <aside class="sidebar">
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <img src="/placeholder.svg?height=50&width=50" alt="User Avatar">
+                    </div>
+                    <div class="user-info">
+                        <h3 class="user-name">John Cena</h3>
+                        <p class="user-membership">Premium Member</p>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="profile">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="my-classes">
+                                <i class="fas fa-calendar"></i> My Class
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="trainer">
+                                <i class="fas fa-dumbbell"></i> Trainer
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="sidebar-link" data-page="history">
+                                <i class="fas fa-history"></i> History
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+            <!-- เนื้อหาหลัก -->
+            <main class="main-content">
+                <div class="dashboard-header">
+                    <h1>Member Dashboard</h1>
+                    <p>Manage your profile, classes, trainer ratings, and view your history</p>
+                </div>
+                
+                <div class="profile-container">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>Personal Information</h2>
+                            <p>View and update your personal details</p>
+                        </div>
+                        <div class="profile-content">
+                            <div class="profile-avatar">
+                                <img src="/placeholder.svg?height=120&width=120" alt="Profile Picture" id="profile-image">
+                            </div>
+                            <div class="profile-edit-btn">
+                                <button class="btn btn-outline" id="edit-profile-btn">Edit Profile</button>
+                            </div>
+                            <div class="profile-details">
+                                <!-- ข้อมูลส่วนตัวจะถูกเพิ่มที่นี่ด้วย JavaScript -->
+                                <div class="profile-item">
+                                    <div class="profile-item-icon"><i class="fas fa-user"></i></div>
+                                    <div class="profile-item-label">Name</div>
+                                    <div class="profile-item-value" id="profile-name-value">John Cena</div>
+                                </div>
+                                <div class="profile-item">
+                                    <div class="profile-item-icon"><i class="fas fa-envelope"></i></div>
+                                    <div class="profile-item-label">Email</div>
+                                    <div class="profile-item-value" id="profile-email-value">john.cena@mailbox.com</div>
+                                </div>
+                                <div class="profile-item">
+                                    <div class="profile-item-icon"><i class="fas fa-phone"></i></div>
+                                    <div class="profile-item-label">Phone</div>
+                                    <div class="profile-item-value" id="profile-phone-value">0686644959</div>
+                                </div>
+                                <div class="profile-item">
+                                    <div class="profile-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                    <div class="profile-item-label">Address</div>
+                                    <div class="profile-item-value" id="profile-address-value">99/9 Moo ping</div>
+                                </div>
+                                <div class="profile-item">
+                                    <div class="profile-item-icon"><i class="fas fa-birthday-cake"></i></div>
+                                    <div class="profile-item-label">Birth Date</div>
+                                    <div class="profile-item-value" id="profile-birthdate-value">18 Feb 1990</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>Membership Details</h2>
+                            <p>Information about your current membership</p>
+                        </div>
+                        <div class="membership-tabs">
+                            <div class="tabs">
+                                <button class="tab-btn active" data-tab="overview">Overview</button>
+                                <button class="tab-btn" data-tab="benefits">Benefits</button>
+                                <button class="tab-btn" data-tab="history">History</button>
+                            </div>
+                            <div class="tab-content active" id="membership-overview">
+                                <!-- ข้อมูลสมาชิกจะถูกเพิ่มที่นี่ด้วย JavaScript -->
+                                <div class="membership-badge">
+                                    <div class="membership-type">FitJAD <span id="membership-type-value">Gold</span></div>
+                                    <div class="membership-info">Member since: <span id="membership-since-value">January 2025</span></div>
+                                    <div class="membership-info">Expires on: <span id="membership-expires-value">December 31, 2025</span></div>
+                                    <div class="membership-info">Membership ID: <span id="membership-id-value">FIT-8482</span></div>
+                                </div>
+                                <div class="billing-info">
+                                    <div class="billing-title">Billing Cycle</div>
+                                    <div class="billing-detail" id="billing-cycle-value">Monthly automatic renewal</div>
+                                    <div class="billing-detail">Next billing: <span id="next-billing-value">December 31, 2023</span></div>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="membership-benefits">
+                                <ul class="benefits-list" id="benefits-list">
+                                    <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
+                                    <li>คลาสกลุ่มฟรี</li>
+                                    <li>ปรึกษาเทรนเนอร์ส่วนตัว (2 ครั้ง/เดือน)</li>
+                                    <li>เข้าถึงอุปกรณ์พรีเมียม</li>
+                                    <li>บริการผ้าเช็ดตัว</li>
+                                    <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                                </ul>
+                            </div>
+                            <div class="tab-content" id="membership-history">
+                                <div class="membership-history-list">
+                                    <!-- ประวัติการเปลี่ยนแปลงสมาชิกจะถูกเพิ่มที่นี่ด้วย JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="membership-actions">
+                            <button class="btn btn-primary" id="change-plan-btn">Change Membership Plan</button>
+                            <button class="btn btn-danger" id="cancel-membership-btn">Cancel Membership</button>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2>Payment Method</h2>
+                            <p>Manage your payment method</p>
+                        </div>
+                        <div class="payment-methods" id="payment-methods-list">
+                            <!-- วิธีการชำระเงินจะถูกเพิ่มที่นี่ด้วย JavaScript -->
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" id="add-payment-btn">Add Payment Method</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+        <!-- Modal แก้ไขโปรไฟล์ -->
+    <div id="edit-profile-modal" class="modal">
+        <div class="modal-content modal-scrollable">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="profile-form" class="profile-form">
+                <div class="form-group profile-image-upload">
+                    <label for="profile-image-upload">Profile Picture</label>
+                    <div class="image-upload-container">
+                        <img id="profile-image-preview" src="/placeholder.svg?height=100&width=100" alt="Profile Picture Preview">
+                        <div class="upload-controls">
+                            <input type="file" id="profile-image-upload" name="profileImage" accept="image/*" style="display: none;">
+                            <button type="button" id="upload-image-btn" class="btn btn-outline">Choose Image</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="profile-name">Name</label>
+                    <input type="text" id="profile-name" name="name" value="John Cena">
+                </div>
+                <div class="form-group">
+                    <label for="profile-email">Email</label>
+                    <input type="email" id="profile-email" name="email" value="john.cena@mailbox.com">
+                </div>
+                <div class="form-group">
+                    <label for="profile-phone">Phone</label>
+                    <input type="tel" id="profile-phone" name="phone" value="0686644959">
+                </div>
+                <div class="form-group">
+                    <label for="profile-address">Address</label>
+                    <textarea id="profile-address" name="address" rows="3">99/9 Moo ping</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="profile-birthdate">Birth Date</label>
+                    <input type="date" id="profile-birthdate" name="birthDate" value="1990-02-18">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal เปลี่ยนแผนสมาชิก -->
+    <div id="change-plan-modal" class="modal">
+        <div class="modal-content modal-scrollable">
+            <span class="close-modal">&times;</span>
+            <h2>Change Membership Plan</h2>
+            <div class="plan-options">
+                <div class="plan-option" id="standard-plan">
+                    <div class="plan-header">
+                        <h3>Standard</h3>
+                        <div class="plan-price">฿590/month</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
+                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                    </ul>
+                    <button class="btn btn-outline select-plan-btn" data-plan="standard">Select Plan</button>
+                </div>
+                <div class="plan-option" id="silver-plan">
+                    <div class="plan-header">
+                        <h3>Silver</h3>
+                        <div class="plan-price">฿990/month</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
+                        <li>คลาสกลุ่มพื้นฐาน</li>
+                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                    </ul>
+                    <button class="btn btn-outline select-plan-btn" data-plan="silver">Select Plan</button>
+                </div>
+                <div class="plan-option active" id="gold-plan">
+                    <div class="plan-header">
+                        <h3>Gold</h3>
+                        <div class="plan-price">฿1,500/month</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
+                        <li>คลาสกลุ่มฟรี</li>
+                        <li>ปรึกษาเทรนเนอร์ส่วนตัว (2 ครั้ง/เดือน)</li>
+                        <li>เข้าถึงอุปกรณ์พรีเมียม</li>
+                        <li>บริการผ้าเช็ดตัว</li>
+                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                    </ul>
+                    <div class="current-plan-badge">Current Plan</div>
+                </div>
+                <div class="plan-option" id="platinum-plan">
+                    <div class="plan-header">
+                        <h3>Platinum</h3>
+                        <div class="plan-price">฿2,500/month</div>
+                    </div>
+                    <ul class="plan-features">
+                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
+                        <li>คลาสกลุ่มฟรีไม่จำกัด</li>
+                        <li>ปรึกษาเทรนเนอร์ส่วนตัว (4 ครั้ง/เดือน)</li>
+                        <li>เข้าถึงอุปกรณ์พรีเมียม</li>
+                        <li>บริการผ้าเช็ดตัว</li>
+                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                        <li>สิทธิ์เข้าใช้สปาและซาวน่า</li>
+                        <li>ที่จอดรถฟรี</li>
+                    </ul>
+                    <button class="btn btn-primary select-plan-btn" data-plan="platinum">Select Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal เพิ่มวิธีการชำระเงิน -->
+    <div id="add-payment-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Add Payment Method</h2>
+            <form id="payment-form" class="payment-form">
+                <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" id="card-number" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
+                </div>
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="card-expiry">Expiry Date</label>
+                        <input type="text" id="card-expiry" name="cardExpiry" placeholder="MM/YY" maxlength="5">
+                    </div>
+                    <div class="form-group half">
+                        <label for="card-cvv">CVV</label>
+                        <input type="text" id="card-cvv" name="cardCvv" placeholder="XXX" maxlength="3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="card-name">Name on Card</label>
+                    <input type="text" id="card-name" name="cardName" placeholder="John Cena">
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="set-default" name="setDefault">
+                        Set as default payment method
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Payment Method</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="./js/api.js"></script>
+    <script src="/js/ProfileSetting.js"></script>
+    <script src="/js/profile.js"></script>
+    
+    <style>
+        /* เพิ่ม CSS สำหรับ Modal ที่มี scroll */
+        .modal-scrollable {
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        /* เพิ่ม CSS สำหรับฟอร์มเพิ่มวิธีการชำระเงิน */
+        .payment-form {
+            margin-top: 1.5rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-group.half {
+            flex: 1;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        /* เพิ่ม CSS สำหรับประวัติสมาชิก */
+        .membership-history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-date {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .history-action {
+            font-weight: 600;
+        }
+        
+        .history-details {
+            font-size: 0.9rem;
+            color: #333;
+            margin-top: 0.5rem;
+        }
+        
+        /* เพิ่ม CSS สำหรับการแจ้งเตือน */
+        .notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 4px;
+            background-color: #4caf50;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background-color: #f44336;
+        }
+    </style>
+</body>
+</html>
