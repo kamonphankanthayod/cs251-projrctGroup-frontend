@@ -58,7 +58,7 @@
   /* Hero Section */
   .hero {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0.1) 70%), 
-                url('/image/Homepage.jpg') center/cover no-repeat;
+                url('../image/Homepage.jpg') center/cover no-repeat;
     height: 100vh;
     align-content: center;
     align-items: center;
