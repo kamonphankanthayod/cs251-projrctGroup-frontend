@@ -1,76 +1,109 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const classList = document.getElementById("classList");
-    const searchInput = document.getElementById("searchInput");
-    const filterButtons = document.querySelectorAll(".filters button");
+  const classList = document.getElementById("classList");
+  const searchInput = document.getElementById("searchInput");
+  const filterButtons = document.querySelectorAll(".filters button");
 
-    let allClasses = [];
+  let allClasses = [];
 
-    // ดึงข้อมูลจาก Backend จริง
-    fetch("https://your-backend.com/api/classes")
-        .then(response => response.json())
-        .then(data => {
-            allClasses = data;
-            renderClasses(allClasses);
-        })
-        .catch((error) => {
-            console.error("Error fetching class data", error);
-            classList.innerHTML = "<p>Failed to load classes. Please try again later.</p>";
-        });
+  // ดึงข้อมูลคลาสจาก API จริง
+  fetch("http://localhost:8080/class")
+    .then((response) => response.json())
+    .then((data) => {
+      allClasses = data;
+      renderClasses(allClasses);
+    })
+    .catch((error) => {
+      console.error("Error fetching class data", error);
+      classList.innerHTML =
+        "<p>Failed to load classes. Please try again later.</p>";
+    });
 
-    // ฟังก์ชันแสดงผล
-    function renderClasses(classes) {
-        classList.innerHTML = "";
-        if (classes.length === 0) {
-            classList.innerHTML = "<p>No classes found.</p>";
-            return;
-        }
-
-        classes.forEach(cls => {
-            const card = document.createElement("div");
-            card.className = "class-card";
-            card.innerHTML = `
-                <div class="badge">${cls.category}</div>
-                <h3>${cls.title}</h3>
-                <p>${cls.description}</p>
-                <p><strong>Instructor:</strong> ${cls.instructor}</p>
-                <p><strong>Duration:</strong> ${cls.duration} min</p>
-                <button class="book-btn" data-id="${cls.id}" data-name="${cls.title}">Book Now</button>
-            `;
-            classList.appendChild(card);
-        });
-
-        // หลัง render เสร็จต้องผูก event ให้ปุ่ม Book ใหม่ด้วย
-        const bookButtons = document.querySelectorAll('.book-btn');
-        bookButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const classId = button.getAttribute('data-id');
-                localStorage.setItem('selectedClassId', classId);
-                window.location.href = "payment.html";
-            });
-        });
+  // ฟังก์ชันแสดงข้อมูลคลาส
+  function renderClasses(classes) {
+    classList.innerHTML = "";
+    if (classes.length === 0) {
+      classList.innerHTML = "<p>No classes found.</p>";
+      return;
     }
 
-    // Search
-    searchInput.addEventListener("input", () => {
-        const keyword = searchInput.value.toLowerCase();
-        const filtered = allClasses.filter(cls =>
-            cls.title.toLowerCase().includes(keyword) ||
-            cls.description.toLowerCase().includes(keyword) ||
-            cls.instructor.toLowerCase().includes(keyword)
-        );
-        renderClasses(filtered);
+    classes.forEach((cls) => {
+      const card = document.createElement("div");
+      card.className = "class-card";
+      card.innerHTML = `
+                <h3>${cls.className}</h3>
+                <p><strong>Schedule:</strong> ${cls.schedule}</p>
+                <p><strong>Capacity:</strong> ${cls.capacity} คน</p>
+                <p><strong>Rating:</strong> ⭐ ${cls.rating}</p>
+                <button class="book-btn" data-id="${cls.classId}" data-name="${cls.className}">Join Class</button>
+            `;
+      classList.appendChild(card);
     });
 
-    // Filter by category
-    filterButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const category = button.getAttribute("data-filter");
-            if (category === "All") {
-                renderClasses(allClasses);
-            } else {
-                const filtered = allClasses.filter(cls => cls.category === category);
-                renderClasses(filtered);
-            }
-        });
+    // ตั้งค่าให้ปุ่ม Join Class เชื่อม API ลงทะเบียน
+    const bookButtons = document.querySelectorAll(".book-btn");
+    bookButtons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const memberId = localStorage.getItem("memberId");
+        if (!memberId) {
+          alert("กรุณาเข้าสู่ระบบก่อนจองคลาส!");
+          return;
+        }
+
+        const classId = button.getAttribute("data-id");
+        try {
+          const response = await fetch("http://localhost:8080/booking", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ memberId, classId }),
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            alert("ลงทะเบียนเข้าคลาสเรียบร้อย!");
+          } else {
+            alert("ไม่สามารถลงทะเบียนคลาสได้ กรุณาลองใหม่");
+          }
+        } catch (error) {
+          console.error("Error booking class:", error);
+        }
+      });
     });
+  }
+
+  // ฟังก์ชันค้นหาคลาส
+  async function searchClasses(query) {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/class/search?query=${query}`
+      );
+      const classes = await response.json();
+      renderClasses(classes);
+    } catch (error) {
+      console.error("Error searching class", error);
+    }
+  }
+
+  searchInput.addEventListener("input", () => {
+    const keyword = searchInput.value.trim();
+    if (!keyword) {
+      renderClasses(allClasses);
+      return;
+    }
+    searchClasses(keyword);
+  });
+
+  // ฟังก์ชันกรองคลาสตามประเภท (ใช้ `schedule` แทน `category`)
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const schedule = button.getAttribute("data-filter");
+      if (schedule === "All") {
+        renderClasses(allClasses);
+      } else {
+        const filtered = allClasses.filter((cls) =>
+          cls.schedule.includes(schedule)
+        );
+        renderClasses(filtered);
+      }
+    });
+  });
 });

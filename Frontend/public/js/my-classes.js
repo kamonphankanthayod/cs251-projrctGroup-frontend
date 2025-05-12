@@ -1,108 +1,116 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // ตั้งค่าปุ่มยกเลิกคลาส
-    setupCancelButtons();
-    
-    // โหลดข้อมูลคลาสที่ลงทะเบียน
-    loadUpcomingClasses();
+document.addEventListener("DOMContentLoaded", () => {
+  setupCancelButtons();
+  loadUpcomingClasses();
 });
 
-// ฟังก์ชันโหลดข้อมูลคลาสที่ลงทะเบียน
+// โหลดข้อมูลคลาสที่ลงทะเบียน
 async function loadUpcomingClasses() {
-    const classesContainer = document.getElementById('upcoming-classes-list');
-    
-    try {
-        // ในระบบจริงจะใช้ API.getUpcomingClasses() เพื่อดึงข้อมูล
-        const classes = await API.getUpcomingClasses();
-        
-        if (classes && classes.length > 0) {
-            classesContainer.innerHTML = '';
-            
-            classes.forEach(classItem => {
-                const classElement = createClassElement(classItem);
-                classesContainer.appendChild(classElement);
-            });
-            
-            // ตั้งค่าปุ่มยกเลิกคลาสหลังจากโหลดข้อมูล
-            setupCancelButtons();
-        } else {
-            classesContainer.innerHTML = '<div class="no-data">คุณยังไม่มีคลาสที่ลงทะเบียน</div>';
-        }
-    } catch (error) {
-        console.error('เกิดข้อผิดพลาดในการโหลดคลาส:', error);
-        showNotification('ไม่สามารถโหลดข้อมูลคลาสได้ กรุณาลองใหม่อีกครั้ง', 'error');
+  const classesContainer = document.getElementById("upcoming-classes-list");
+
+  const memberId = localStorage.getItem("memberId");
+  if (!memberId) {
+    console.error("Member not logged in. Redirecting to login page...");
+    window.location.href = "login.html";
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      `http://localhost:8080/booking/memberId/${memberId}`
+    );
+    const classes = await response.json();
+
+    if (classes && classes.length > 0) {
+      classesContainer.innerHTML = "";
+
+      classes.forEach((classItem) => {
+        const classElement = createClassElement(classItem);
+        classesContainer.appendChild(classElement);
+      });
+
+      setupCancelButtons();
+    } else {
+      classesContainer.innerHTML =
+        "<div class='no-data'>คุณยังไม่มีคลาสที่ลงทะเบียน</div>";
     }
+  } catch (error) {
+    console.error("เกิดข้อผิดพลาดในการโหลดคลาส:", error);
+    showNotification(
+      "ไม่สามารถโหลดข้อมูลคลาสได้ กรุณาลองใหม่อีกครั้ง",
+      "error"
+    );
+  }
 }
 
-// ฟังก์ชันสร้าง element สำหรับคลาส
+// สร้าง UI สำหรับคลาส
 function createClassElement(classData) {
-    const classItem = document.createElement('div');
-    classItem.className = 'class-item';
-    classItem.dataset.id = classData.id;
-    
-    classItem.innerHTML = `
+  const classItem = document.createElement("div");
+  classItem.className = "class-item";
+  classItem.dataset.id = classData.bookingId;
+
+  const isCancelled = classData.status === "Cancelled";
+
+  classItem.innerHTML = `
         <div class="class-header">
-            <div class="class-title">${classData.title}</div>
-            <div class="class-studio">${classData.studio}</div>
+            <div class="class-title">${classData.className}</div>
+            <div class="class-trainer">Trainer: ${classData.trainerName}</div>
+            <div class="class-schedule">${classData.schedule}</div>
         </div>
-        <div class="class-instructor">Instructor: ${classData.instructor}</div>
-        <div class="class-details">
-            <div class="class-detail">
-                <i class="fas fa-calendar"></i> ${classData.date}
-            </div>
-            <div class="class-detail">
-                <i class="fas fa-clock"></i> ${classData.time}
-            </div>
-            <button class="cancel-btn" data-id="${classData.id}">✕ Cancel</button>
-        </div>
+        <button class="cancel-btn ${isCancelled ? "disabled" : ""}" data-id="${
+    classData.bookingId
+  }" ${isCancelled ? "disabled" : ""}>
+            ${isCancelled ? "Cancelled" : "✕ Cancel"}
+        </button>
     `;
-    
-    return classItem;
+
+  return classItem;
 }
 
-// ฟังก์ชันตั้งค่าปุ่มยกเลิกคลาส
+// ตั้งค่าปุ่มยกเลิกคลาส (ใช้ `PUT`)
 function setupCancelButtons() {
-    const cancelButtons = document.querySelectorAll('.cancel-btn');
-    
-    cancelButtons.forEach(button => {
-        button.addEventListener('click', async function() {
-            const classId = this.getAttribute('data-id');
-            
-            if (confirm('คุณต้องการยกเลิกการลงทะเบียนคลาสนี้หรือไม่?')) {
-                try {
-                    // ในระบบจริงจะเรียกใช้ API
-                    await API.cancelClassRegistration(classId);
-                    
-                    // ลบคลาสออกจาก UI
-                    const classItem = this.closest('.class-item');
-                    classItem.remove();
-                    
-                    // แสดงการแจ้งเตือน
-                    showNotification('ยกเลิกการลงทะเบียนคลาสเรียบร้อยแล้ว');
-                } catch (error) {
-                    console.error('เกิดข้อผิดพลาดในการยกเลิกคลาส:', error);
-                    showNotification('ไม่สามารถยกเลิกการลงทะเบียนได้ กรุณาลองใหม่อีกครั้ง', 'error');
-                }
-            }
-        });
+  const cancelButtons = document.querySelectorAll(".cancel-btn");
+
+  cancelButtons.forEach((button) => {
+    button.addEventListener("click", async function () {
+      const bookingId = this.getAttribute("data-id");
+
+      if (confirm("คุณต้องการยกเลิกการลงทะเบียนคลาสนี้หรือไม่?")) {
+        try {
+          await fetch(`http://localhost:8080/booking/${bookingId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: "Cancelled" }),
+          });
+
+          this.textContent = "Cancelled";
+          this.disabled = true;
+          this.classList.add("disabled");
+          showNotification("ยกเลิกการลงทะเบียนคลาสเรียบร้อยแล้ว");
+        } catch (error) {
+          console.error("เกิดข้อผิดพลาดในการยกเลิกคลาส:", error);
+          showNotification(
+            "ไม่สามารถยกเลิกการลงทะเบียนได้ กรุณาลองใหม่อีกครั้ง",
+            "error"
+          );
+        }
+      }
     });
+  });
 }
 
-// ฟังก์ชันแสดงการแจ้งเตือน
-function showNotification(message, type = 'success') {
-    const notification = document.getElementById('notification');
-    const notificationMessage = document.getElementById('notification-message');
-    
-    // ตั้งค่าข้อความและประเภท
-    notificationMessage.textContent = message;
-    notification.className = `notification ${type}`;
-    
-    // แสดงการแจ้งเตือน
-    setTimeout(() => {
-        notification.classList.add('show');
-    }, 10);
-    
-    // ซ่อนการแจ้งเตือนหลังจาก 3 วินาที
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
+// แสดงการแจ้งเตือน
+function showNotification(message, type = "success") {
+  const notification = document.getElementById("notification");
+  const notificationMessage = document.getElementById("notification-message");
+
+  notificationMessage.textContent = message;
+  notification.className = `notification ${type}`;
+
+  setTimeout(() => {
+    notification.classList.add("show");
+  }, 10);
+
+  setTimeout(() => {
+    notification.classList.remove("show");
+  }, 3000);
 }
