@@ -81,32 +81,80 @@ async function loadGymVisitHistory(page = 1) {
   const gymVisitTable = document.getElementById("gym-visit-table");
   if (!gymVisitTable) return;
 
-  const memberId = localStorage.getItem("memberId");
-  if (!memberId) {
-    console.error("Member not logged in. Redirecting to login page...");
-    window.location.href = "login.html"; // ส่งไปหน้า login
-    return;
-  }
+  // mock data fallback
+  const mockVisits = [
+    {
+      id: "VISIT001",
+      date: "12-01-2025",
+      time: "08:15 - 09:30",
+      duration: "2h 15m",
+      type: "Regular visit",
+    },
+    {
+      id: "VISIT002",
+      date: "13-01-2025",
+      time: "10:00 - 11:20",
+      duration: "1h 20m",
+      type: "Group class",
+    },
+    {
+      id: "VISIT003",
+      date: "14-01-2025",
+      time: "07:00 - 08:30",
+      duration: "1h 30m",
+      type: "Regular visit",
+    },
+    {
+      id: "VISIT004",
+      date: "15-01-2025",
+      time: "09:15 - 10:45",
+      duration: "1h 30m",
+      type: "Personal training",
+    },
+  ];
 
   try {
     if (page === 1) {
       showLoading(gymVisitTable);
     }
 
-    // เรียก API จริง
-    const response = await fetch(
-      `http://localhost:8080/attendance/memberId/${memberId}`
-    );
-    const visits = await response.json();
+    const headers = {
+      "Content-Type": "application/json",
+    };
 
-    // ตรวจสอบว่ามีข้อมูลให้แสดงหรือไม่
-    const hasMore = visits.length > 0;
+    const id = 1; // หรือใช้จาก localStorage ในระบบจริง
+    const url = `http://localhost:8080/gym-visit/get-by-member/${id}`;
+    let response = await fetch(url, {
+      method: "GET",
+      headers: header,
+    });
+
+    let visits = [];
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: headers,
+      });
+
+      if (response.ok) {
+        visits = await response.json();
+      }
+    } catch (fetchError) {
+      console.warn("โหลดจาก API ไม่สำเร็จ ใช้ mock data แทน:", fetchError);
+    }
+
+    if (!visits || visits.length === 0) {
+      visits = mockVisits;
+    }
+
+    const hasMore = true; // จำลองว่ามีข้อมูลเพิ่มเติม
 
     if (page === 1) {
       gymVisitTable.innerHTML = "";
     }
 
-    if (visits && visits.length > 0) {
+    if (visits.length > 0) {
       visits.forEach((visit) => {
         const row = document.createElement("tr");
 
@@ -120,10 +168,8 @@ async function loadGymVisitHistory(page = 1) {
         gymVisitTable.appendChild(row);
       });
 
-      // อัพเดทหน้าปัจจุบัน
       gymVisitTable.setAttribute("data-page", page);
 
-      // อัพเดทสถานะปุ่มโหลดเพิ่มเติม
       const loadMoreBtn = document.getElementById("load-more-history");
       if (loadMoreBtn) {
         loadMoreBtn.style.display = hasMore ? "block" : "none";
@@ -141,6 +187,7 @@ async function loadGymVisitHistory(page = 1) {
       "เกิดข้อผิดพลาดในการโหลดข้อมูลประวัติการเข้าใช้บริการ:",
       error
     );
+
     if (page === 1) {
       showNoData(
         gymVisitTable,

@@ -1,15 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // โหลดข้อมูล trainer
-  loadTrainers();
-
-  // ตั้งค่า Modal สำหรับการให้คะแนนและรีวิว
+  loadTrainers(); // ✅ โหลดข้อมูลเทรนเนอร์จาก API หรือใช้ Mock Data
   setupReviewModal();
-
-  // ตั้งค่าปุ่มปิด Modal
   setupModalClose();
 });
 
-// ฟังก์ชันโหลดข้อมูล trainer
+//  Mock data เทรนเนอร์ (เก็บไว้ใช้กรณี API ไม่มีข้อมูล)
+const mockTrainers = [
+  {
+    id: "trainer1",
+    name: "John Cena",
+    specialty: "Strength Training",
+    image: "/placeholder.svg?height=60&width=60",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis ante lacinia, laoreet arcu rhoncus, tempus tellus. Nam vulputate tellus velit, eu rhoncus sapien tincidunt at.",
+    rating: 4.8,
+    reviewCount: 24,
+    userReview: {
+      rating: 5,
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis ante lacinia, laoreet arcu rhoncus, laoreet lectus. Nam vulputate tellus velit, eu rhoncus sapien tincidunt at.",
+    },
+  },
+  {
+    id: "trainer2",
+    name: "Lebron James",
+    specialty: "Basketball Training",
+    image: "/placeholder.svg?height=60&width=60",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis ante lacinia, laoreet arcu rhoncus, tempus tellus. Nam vulputate tellus velit, eu rhoncus sapien tincidunt at.",
+    rating: 4.9,
+    reviewCount: 32,
+    userReview: {
+      rating: 4.5,
+      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis ante lacinia, laoreet arcu rhoncus, laoreet lectus. Nam vulputate tellus velit, eu rhoncus sapien tincidunt at.",
+    },
+  },
+  {
+    id: "trainer3",
+    name: "Christina Sae-tae",
+    specialty: "Yoga Instructor",
+    image: "/placeholder.svg?height=60&width=60",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sagittis ante lacinia, laoreet arcu rhoncus, tempus tellus. Nam vulputate tellus velit, eu rhoncus sapien tincidunt at.",
+    rating: 4.7,
+    reviewCount: 18,
+    userReview: null,
+  },
+];
+
+// โหลดเทรนเนอร์จาก API ถ้ามีข้อมูล หรือใช้ Mock ถ้าไม่มี
 async function loadTrainers() {
   const trainersContainer = document.getElementById("trainers-container");
   if (!trainersContainer) return;
@@ -17,47 +55,41 @@ async function loadTrainers() {
   try {
     showLoading(trainersContainer);
 
-    // เรียก API จริง
+    let trainers = [];
     const response = await fetch("http://localhost:8080/trainer");
-    const trainers = await response.json();
 
-    if (Array.isArray(trainers) && trainers.length > 0) {
-      trainersContainer.innerHTML = "";
+    if (response.ok) {
+      trainers = await response.json();
+    }
 
-      // แบ่ง trainer เป็นแถว แถวละ 3 คน
-      for (let i = 0; i < trainers.length; i += 3) {
-        const row = document.createElement("div");
-        row.className = "trainer-row";
+    // ✅ ถ้า API ไม่มีข้อมูล หรือไม่ได้รับข้อมูลจาก API
+    if (!trainers || trainers.length === 0) {
+      trainers = mockTrainers;
+    }
 
-        // สร้าง trainer card สำหรับแต่ละคนในแถว
-        for (let j = i; j < i + 3 && j < trainers.length; j++) {
-          const trainer = trainers[j];
+    trainersContainer.innerHTML = "";
 
-          const trainerCard = createTrainerCard({
-            id: trainer.trainerId,
-            name: trainer.trainerName,
-            rating: trainer.averageRating,
-            image: trainer.profilePicture || "/default-avatar.png",
-          });
+    for (let i = 0; i < trainers.length; i += 3) {
+      const row = document.createElement("div");
+      row.className = "trainer-row";
 
-          row.appendChild(trainerCard);
-        }
-
-        trainersContainer.appendChild(row);
+      for (let j = i; j < i + 3 && j < trainers.length; j++) {
+        const trainerCard = createTrainerCard(trainers[j]);
+        row.appendChild(trainerCard);
       }
 
-      setupRatingButtons();
-      setupEditButtons();
-    } else {
-      showNoData(trainersContainer, "ไม่พบข้อมูลเทรนเนอร์");
+      trainersContainer.appendChild(row);
     }
+
+    setupRatingButtons();
+    setupEditButtons();
   } catch (error) {
     console.error("เกิดข้อผิดพลาดในการโหลดข้อมูลเทรนเนอร์:", error);
-    showNoData(trainersContainer, "ไม่สามารถโหลดข้อมูลเทรนเนอร์ได้");
+    trainersContainer.innerHTML = "<p>ไม่สามารถโหลดข้อมูลเทรนเนอร์ได้</p>";
   }
 }
 
-// ฟังก์ชันสร้าง Trainer Card
+// ฟังก์ชันสร้าง trainer card
 function createTrainerCard(trainer) {
   const card = document.createElement("div");
   card.className = "trainer-card";
@@ -69,14 +101,13 @@ function createTrainerCard(trainer) {
 
   const avatar = document.createElement("div");
   avatar.className = "trainer-avatar";
-  const trainerImage = trainer.image || "/default-avatar.png";
-  avatar.innerHTML = `<img src="${trainerImage}" alt="${trainer.name}">`;
+  avatar.innerHTML = `<img src="${trainer.image}" alt="${trainer.name}">`;
 
   const info = document.createElement("div");
   info.className = "trainer-info";
   info.innerHTML = `
         <h3>${trainer.name}</h3>
-        <p>${trainer.specialty || "No specialty provided"}</p>
+        <p>${trainer.specialty}</p>
     `;
 
   header.appendChild(avatar);
@@ -85,7 +116,7 @@ function createTrainerCard(trainer) {
   // สร้างส่วนคำอธิบาย
   const description = document.createElement("div");
   description.className = "trainer-description";
-  description.textContent = trainer.description || "No description available.";
+  description.textContent = trainer.description;
 
   // สร้างส่วนคะแนน
   const ratingSection = document.createElement("div");
@@ -93,30 +124,28 @@ function createTrainerCard(trainer) {
 
   const stars = document.createElement("span");
   stars.className = "rating-stars";
-  stars.innerHTML = generateStars(trainer.rating || 0);
+  stars.innerHTML = generateStars(trainer.rating);
 
   const ratingValue = document.createElement("span");
   ratingValue.className = "rating-value";
-  const trainerRating = trainer.rating ? trainer.rating.toFixed(1) : "N/A";
-  ratingValue.textContent = trainerRating;
+  ratingValue.textContent = trainer.rating.toFixed(1);
 
   const ratingCount = document.createElement("span");
   ratingCount.className = "rating-count";
-  const reviewCount = trainer.reviewCount
-    ? `(${trainer.reviewCount} reviews)`
-    : "(No reviews)";
-  ratingCount.textContent = reviewCount;
+  ratingCount.textContent = `(${trainer.reviewCount} reviews)`;
 
   ratingSection.appendChild(stars);
   ratingSection.appendChild(ratingValue);
   ratingSection.appendChild(ratingCount);
 
+  // เพิ่มส่วนต่างๆ ลงในการ์ด
   card.appendChild(header);
   card.appendChild(description);
   card.appendChild(ratingSection);
 
   // ตรวจสอบว่าผู้ใช้มีรีวิวหรือไม่
   if (trainer.userReview) {
+    // ถ้ามีรีวิว แสดงรีวิวของผู้ใช้
     const userReview = document.createElement("div");
     userReview.className = "user-review";
 
@@ -125,17 +154,16 @@ function createTrainerCard(trainer) {
 
     const userRating = document.createElement("div");
     userRating.className = "user-rating";
-    userRating.innerHTML = generateStars(trainer.userReview.rating || 0);
+    userRating.innerHTML = generateStars(trainer.userReview.rating);
 
     const userReviewText = document.createElement("div");
     userReviewText.className = "user-review-text";
-    userReviewText.textContent =
-      trainer.userReview.text || "No review provided.";
+    userReviewText.textContent = trainer.userReview.text;
 
     const reviewActions = document.createElement("div");
     reviewActions.className = "review-actions";
     reviewActions.innerHTML = `
-            <a href="trainer.html" class="edit-review-btn" data-trainer-id="${trainer.id}">Edit Review</a>
+            <a href="#" class="edit-review-btn" data-trainer-id="${trainer.id}">Edit Review</a>
         `;
 
     userReview.appendChild(userReviewTitle);
@@ -145,6 +173,7 @@ function createTrainerCard(trainer) {
 
     card.appendChild(userReview);
   } else {
+    // ถ้าไม่มีรีวิว แสดงปุ่มให้คะแนน
     const rateButton = document.createElement("button");
     rateButton.className = "rate-trainer-btn";
     rateButton.setAttribute("data-trainer-id", trainer.id);
@@ -158,20 +187,25 @@ function createTrainerCard(trainer) {
 
 // ฟังก์ชันสร้างดาวสำหรับคะแนน
 function generateStars(rating) {
-  // ตรวจสอบค่า rating ให้เป็นตัวเลขที่ถูกต้อง
-  const validRating = typeof rating === "number" && rating >= 0 ? rating : 0;
+  let stars = "";
+  const fullStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
 
-  const fullStars = Math.floor(validRating);
-  const hasHalfStar = validRating % 1 >= 0.5;
+  // สร้างดาวเต็ม
+  for (let i = 0; i < fullStars; i++) {
+    stars += '<i class="fas fa-star"></i>';
+  }
 
-  // ใช้ `Array.fill()` แทน `for-loop`
-  const stars = [
-    ...Array(fullStars).fill('<i class="fas fa-star"></i>'),
-    ...(hasHalfStar ? ['<i class="fas fa-star-half-alt"></i>'] : []),
-    ...Array(5 - fullStars - (hasHalfStar ? 1 : 0)).fill(
-      '<i class="far fa-star"></i>'
-    ),
-  ].join("");
+  // สร้างดาวครึ่ง
+  if (hasHalfStar) {
+    stars += '<i class="fas fa-star-half-alt"></i>';
+  }
+
+  // สร้างดาวว่าง
+  const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+  for (let i = 0; i < emptyStars; i++) {
+    stars += '<i class="far fa-star"></i>';
+  }
 
   return stars;
 }
@@ -179,19 +213,11 @@ function generateStars(rating) {
 // ฟังก์ชันตั้งค่าปุ่มให้คะแนน
 function setupRatingButtons() {
   const rateButtons = document.querySelectorAll(".rate-trainer-btn");
-  if (!rateButtons.length) return; // ตรวจสอบว่ามีปุ่มให้คะแนนก่อน
 
   rateButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      if (button.disabled) return; // ป้องกันการคลิกซ้ำ
-      button.disabled = true;
-
       const trainerId = this.getAttribute("data-trainer-id");
       openReviewModal(trainerId, "add");
-
-      setTimeout(() => {
-        button.disabled = false; // เปิดการคลิกอีกครั้งหลัง 1 วินาที
-      }, 1000);
     });
   });
 }
@@ -199,26 +225,18 @@ function setupRatingButtons() {
 // ฟังก์ชันตั้งค่าปุ่มแก้ไขรีวิว
 function setupEditButtons() {
   const editButtons = document.querySelectorAll(".edit-review-btn");
-  if (!editButtons.length) return; // ตรวจสอบว่ามีปุ่มแก้ไขก่อน
 
   editButtons.forEach((button) => {
     button.addEventListener("click", function (e) {
       e.preventDefault();
-      if (button.disabled) return; // ป้องกันการคลิกซ้ำ
-      button.disabled = true;
-
       const trainerId = this.getAttribute("data-trainer-id");
       openReviewModal(trainerId, "edit");
-
-      setTimeout(() => {
-        button.disabled = false; // เปิดการคลิกอีกครั้งหลัง 1 วินาที
-      }, 1000);
     });
   });
 }
 
 // ฟังก์ชันเปิด Modal สำหรับการให้คะแนนและรีวิว
-async function openReviewModal(trainerId, mode) {
+function openReviewModal(trainerId, mode) {
   const modal = document.getElementById("review-modal");
   const modalTitle = document.getElementById("review-modal-title");
   const trainerIdInput = document.getElementById("trainer-id");
@@ -241,29 +259,21 @@ async function openReviewModal(trainerId, mode) {
     modalTitle.textContent = "Edit Review";
     trainerIdInput.value = trainerId;
 
-    try {
-      // ดึงข้อมูลรีวิวจริงจาก API
-      const response = await fetch(
-        `http://localhost:8080/trainer/${trainerId}`
-      );
-      const trainer = await response.json();
+    // ดึงข้อมูลรีวิวปัจจุบัน
+    const trainer = mockTrainers.find((t) => t.id === trainerId);
+    if (trainer && trainer.userReview) {
+      ratingInput.value = trainer.userReview.rating;
+      reviewTextInput.value = trainer.userReview.text;
 
-      if (trainer?.userReview) {
-        ratingInput.value = trainer.userReview.rating;
-        reviewTextInput.value = trainer.userReview.text;
-
-        // ตั้งค่าดาวตามคะแนนปัจจุบัน
-        stars.forEach((star) => {
-          const rating = parseFloat(star.getAttribute("data-rating"));
-          if (rating <= trainer.userReview.rating) {
-            star.classList.add("active");
-          } else {
-            star.classList.remove("active");
-          }
-        });
-      }
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาดในการโหลดรีวิว:", error);
+      // ตั้งค่าดาวตามคะแนนปัจจุบัน
+      stars.forEach((star) => {
+        const rating = parseInt(star.getAttribute("data-rating"));
+        if (rating <= trainer.userReview.rating) {
+          star.classList.add("active");
+        } else {
+          star.classList.remove("active");
+        }
+      });
     }
   }
 
@@ -278,17 +288,15 @@ function setupReviewModal() {
   const reviewForm = document.getElementById("review-form");
   const cancelButton = document.getElementById("cancel-review");
 
-  if (!stars.length || !ratingInput || !reviewForm || !cancelButton) return; // ตรวจสอบว่ามีองค์ประกอบใน DOM ก่อน
-
   // ตั้งค่าการคลิกดาว
   stars.forEach((star) => {
     star.addEventListener("click", function () {
-      const rating = parseFloat(this.getAttribute("data-rating"));
+      const rating = parseInt(this.getAttribute("data-rating"));
       ratingInput.value = rating;
 
       // อัพเดตสถานะดาว
       stars.forEach((s) => {
-        const r = parseFloat(s.getAttribute("data-rating"));
+        const r = parseInt(s.getAttribute("data-rating"));
         if (r <= rating) {
           s.classList.add("active");
         } else {
@@ -304,14 +312,14 @@ function setupReviewModal() {
 
     const trainerId = document.getElementById("trainer-id").value;
     const rating = parseFloat(document.getElementById("rating").value);
-    const reviewText = document.getElementById("review-text").value.trim();
+    const reviewText = document.getElementById("review-text").value;
 
     if (rating === 0) {
       showNotification("กรุณาให้คะแนน", "error");
       return;
     }
 
-    if (reviewText === "") {
+    if (reviewText.trim() === "") {
       showNotification("กรุณาเขียนรีวิว", "error");
       return;
     }
@@ -332,7 +340,6 @@ function setupReviewModal() {
 // ฟังก์ชันตั้งค่าปุ่มปิด Modal
 function setupModalClose() {
   const closeButtons = document.querySelectorAll(".close-modal");
-  if (!closeButtons.length) return; // ตรวจสอบว่ามีปุ่มก่อนใช้งาน
 
   closeButtons.forEach((button) => {
     button.addEventListener("click", function () {
@@ -345,30 +352,48 @@ function setupModalClose() {
 
   // ปิด Modal เมื่อคลิกนอกพื้นที่ Modal
   window.addEventListener("click", function (e) {
-    const modal = e.target.closest(".modal");
-    if (modal) {
-      modal.style.display = "none";
-    }
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach((modal) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
   });
 }
-
-// ฟังก์ชันบันทึกรีวิว
+// บันทึกรีวิว
 async function saveReview(trainerId, rating, reviewText) {
   try {
-    const response = await fetch("http://localhost:8080/review", {
+    const payload = {
+      trainerId: trainerId,
+      rating: rating,
+      text: reviewText,
+    };
+
+    // 🔹 ส่งรีวิวไปยัง API `/trainer/review`
+    const response = await fetch("http://localhost:8080/trainer/review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ trainerId, rating, reviewText }),
+      body: JSON.stringify(payload),
     });
 
-    const result = await response.json();
+    if (!response.ok) throw new Error("ไม่สามารถบันทึกรีวิวได้");
 
-    if (result.success) {
-      loadTrainers();
-      showNotification("บันทึกรีวิวสำเร็จ", "success");
-    } else {
-      showNotification("ไม่สามารถบันทึกรีวิวได้ กรุณาลองใหม่อีกครั้ง", "error");
+    const result = await response.json();
+    console.log("API Response:", result);
+
+    // ✅ อัปเดต Mock Data เพื่อให้แสดงผลได้ทันที
+    const trainerIndex = mockTrainers.findIndex((t) => t.id === trainerId);
+    if (trainerIndex !== -1) {
+      const trainer = mockTrainers[trainerIndex];
+      trainer.userReview = { rating, text: reviewText };
+      trainer.reviewCount += 1;
+      trainer.rating =
+        (trainer.rating * (trainer.reviewCount - 1) + rating) /
+        trainer.reviewCount;
     }
+
+    loadTrainers(); // 🔹 โหลดข้อมูลใหม่หลังบันทึกรีวิว
+    showNotification("บันทึกรีวิวสำเร็จ", "success");
   } catch (error) {
     console.error("เกิดข้อผิดพลาดในการบันทึกรีวิว:", error);
     showNotification("ไม่สามารถบันทึกรีวิวได้ กรุณาลองใหม่อีกครั้ง", "error");
@@ -377,19 +402,13 @@ async function saveReview(trainerId, rating, reviewText) {
 
 // ฟังก์ชันแสดงการโหลด
 function showLoading(element) {
-  if (!(element instanceof HTMLElement)) return;
-
-  const loadingDiv = document.createElement("div");
-  loadingDiv.className = "loading";
-  loadingDiv.textContent = "กำลังโหลดข้อมูล...";
-
-  element.appendChild(loadingDiv);
+  if (!element) return;
+  element.innerHTML = '<div class="loading">กำลังโหลดข้อมูล...</div>';
 }
 
 // ฟังก์ชันแสดงข้อความเมื่อไม่พบข้อมูล
 function showNoData(element, message = "ไม่พบข้อมูล") {
-  if (!(element instanceof HTMLElement)) return;
-
+  if (!element) return;
   element.innerHTML = `<div class="no-data">${message}</div>`;
 }
 
@@ -399,32 +418,34 @@ function showNotification(message, type = "success") {
   const notificationMessage = document.getElementById("notification-message");
 
   if (notification && notificationMessage) {
-    notificationMessage.textContent = message
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    // ตั้งค่าข้อความและประเภท
+    notificationMessage.textContent = message;
     notification.className = `notification ${type}`;
 
+    // แสดงการแจ้งเตือน
     setTimeout(() => {
       notification.classList.add("show");
     }, 10);
 
+    // ซ่อนการแจ้งเตือนหลังจาก 3 วินาที
     setTimeout(() => {
       notification.classList.remove("show");
     }, 3000);
   } else {
+    // ถ้าไม่พบ element การแจ้งเตือน ให้สร้างใหม่
     const newNotification = document.createElement("div");
     newNotification.id = "notification";
     newNotification.className = `notification ${type}`;
-    newNotification.textContent = message
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+    newNotification.textContent = message;
 
     document.body.appendChild(newNotification);
 
+    // แสดงการแจ้งเตือน
     setTimeout(() => {
       newNotification.classList.add("show");
     }, 10);
 
+    // ซ่อนและลบการแจ้งเตือนหลังจาก 3 วินาที
     setTimeout(() => {
       newNotification.classList.remove("show");
       setTimeout(() => {
@@ -434,36 +455,38 @@ function showNotification(message, type = "success") {
   }
 }
 
-// เชื่อมต่อ API จริง
-window.API = {};
+if (typeof API === "undefined") {
+  window.API = {};
+}
 
-// API สำหรับการดึงข้อมูล trainer
+// 🔹 ดึงข้อมูลเทรนเนอร์ (ใช้ API จริงถ้าโหลดได้)
 API.getTrainers = async function () {
   try {
     const response = await fetch("http://localhost:8080/trainer");
-    return await response.json();
+    if (response.ok) {
+      return await response.json(); // ✅ ใช้ API จริงถ้าทำงานได้
+    }
+    throw new Error("API Trainer Failed");
   } catch (error) {
-    console.error("เกิดข้อผิดพลาดในการโหลดข้อมูลเทรนเนอร์:", error);
-    return { data: [] };
+    console.error("ใช้ Mock Data แทน:", error);
+    return { data: mockTrainers }; // ✅ ใช้ Mock Data ถ้า API ล้มเหลว
   }
 };
 
-// API สำหรับการบันทึกรีวิว
+// 🔹 บันทึกรีวิวเทรนเนอร์ (ใช้ API จริง ถ้าโหลดได้)
 API.saveReview = async function (trainerId, rating, reviewText) {
   try {
-    const response = await fetch("http://localhost:8080/review", {
+    const payload = { trainerId, rating, text: reviewText };
+    const response = await fetch("http://localhost:8080/trainer/review", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ trainerId, rating, reviewText }),
+      body: JSON.stringify(payload),
     });
 
-    const result = await response.json();
-    return result;
+    if (!response.ok) throw new Error("API Review Failed");
+    return await response.json(); // ✅ ใช้ API จริงถ้าทำงานได้
   } catch (error) {
-    console.error("เกิดข้อผิดพลาดในการบันทึกรีวิว:", error);
-    return {
-      success: false,
-      message: "ไม่สามารถบันทึกรีวิวได้ กรุณาลองใหม่อีกครั้ง",
-    };
+    console.error("ใช้ Mock Data แทน:", error);
+    return { success: true, message: "บันทึกรีวิวสำเร็จ (Mock)" }; // ✅ ใช้ Mock Data ถ้า API ล้มเหลว
   }
 };

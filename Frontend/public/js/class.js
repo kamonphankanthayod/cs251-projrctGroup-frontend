@@ -5,17 +5,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let allClasses = [];
 
-  // ดึงข้อมูลคลาสจาก API จริง
+  const mockClasses = [
+    {
+      classId: 1,
+      className: "Yoga for Beginners",
+      schedule: "Monday 08:00 - 09:00",
+      capacity: 20,
+      rating: 4.5,
+    },
+    {
+      classId: 2,
+      className: "HIIT Cardio",
+      schedule: "Wednesday 18:00 - 19:00",
+      capacity: 15,
+      rating: 4.8,
+    },
+    {
+      classId: 3,
+      className: "Zumba Dance",
+      schedule: "Friday 17:00 - 18:00",
+      capacity: 25,
+      rating: 4.6,
+    },
+  ];
+
+  // ดึงข้อมูลคลาสจาก API จริง ถ้าไม่สำเร็จให้ใช้ mock
   fetch("http://localhost:8080/class")
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) throw new Error("API failed");
+      return response.json();
+    })
     .then((data) => {
       allClasses = data;
       renderClasses(allClasses);
     })
     .catch((error) => {
-      console.error("Error fetching class data", error);
-      classList.innerHTML =
-        "<p>Failed to load classes. Please try again later.</p>";
+      console.warn("Error fetching class data, fallback to mock:", error);
+      allClasses = mockClasses;
+      renderClasses(allClasses);
     });
 
   // ฟังก์ชันแสดงข้อมูลคลาส
@@ -30,16 +57,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const card = document.createElement("div");
       card.className = "class-card";
       card.innerHTML = `
-                <h3>${cls.className}</h3>
-                <p><strong>Schedule:</strong> ${cls.schedule}</p>
-                <p><strong>Capacity:</strong> ${cls.capacity} คน</p>
-                <p><strong>Rating:</strong> ⭐ ${cls.rating}</p>
-                <button class="book-btn" data-id="${cls.classId}" data-name="${cls.className}">Join Class</button>
-            `;
+        <h3>${cls.className}</h3>
+        <p><strong>Schedule:</strong> ${cls.schedule}</p>
+        <p><strong>Capacity:</strong> ${cls.capacity} คน</p>
+        <p><strong>Rating:</strong> ⭐ ${cls.rating}</p>
+        <button class="book-btn" data-id="${cls.classId}" data-name="${cls.className}">Join Class</button>
+      `;
       classList.appendChild(card);
     });
 
-    // ตั้งค่าให้ปุ่ม Join Class เชื่อม API ลงทะเบียน
+    // ตั้งค่าปุ่ม Join Class
     const bookButtons = document.querySelectorAll(".book-btn");
     bookButtons.forEach((button) => {
       button.addEventListener("click", async () => {
@@ -50,12 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const classId = button.getAttribute("data-id");
+
         try {
           const response = await fetch("http://localhost:8080/booking", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ memberId, classId }),
           });
+
           const result = await response.json();
 
           if (result.success) {
@@ -79,7 +108,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const classes = await response.json();
       renderClasses(classes);
     } catch (error) {
-      console.error("Error searching class", error);
+      console.warn("Search API failed, fallback to local filter");
+      const filtered = allClasses.filter((cls) =>
+        cls.className.toLowerCase().includes(query.toLowerCase())
+      );
+      renderClasses(filtered);
     }
   }
 
@@ -92,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
     searchClasses(keyword);
   });
 
-  // ฟังก์ชันกรองคลาสตามประเภท (ใช้ `schedule` แทน `category`)
+  // ฟังก์ชันกรองคลาสตาม schedule
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const schedule = button.getAttribute("data-filter");

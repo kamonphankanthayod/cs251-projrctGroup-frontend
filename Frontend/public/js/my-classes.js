@@ -3,7 +3,24 @@ document.addEventListener("DOMContentLoaded", () => {
   loadUpcomingClasses();
 });
 
-// โหลดข้อมูลคลาสที่ลงทะเบียน
+// mock data fallback
+const mockBookings = [
+  {
+    bookingId: 101,
+    className: "Yoga for Beginners",
+    trainerName: "Trainer A",
+    schedule: "Monday 08:00 - 09:00",
+    status: "Confirmed",
+  },
+  {
+    bookingId: 102,
+    className: "HIIT Cardio",
+    trainerName: "Trainer B",
+    schedule: "Wednesday 18:00 - 19:00",
+    status: "Cancelled",
+  },
+];
+
 async function loadUpcomingClasses() {
   const classesContainer = document.getElementById("upcoming-classes-list");
 
@@ -18,31 +35,30 @@ async function loadUpcomingClasses() {
     const response = await fetch(
       `http://localhost:8080/booking/memberId/${memberId}`
     );
+    if (!response.ok) throw new Error("API failed");
+
     const classes = await response.json();
-
-    if (classes && classes.length > 0) {
-      classesContainer.innerHTML = "";
-
-      classes.forEach((classItem) => {
-        const classElement = createClassElement(classItem);
-        classesContainer.appendChild(classElement);
-      });
-
-      setupCancelButtons();
-    } else {
-      classesContainer.innerHTML =
-        "<div class='no-data'>คุณยังไม่มีคลาสที่ลงทะเบียน</div>";
-    }
+    renderClassList(classes, classesContainer);
   } catch (error) {
-    console.error("เกิดข้อผิดพลาดในการโหลดคลาส:", error);
-    showNotification(
-      "ไม่สามารถโหลดข้อมูลคลาสได้ กรุณาลองใหม่อีกครั้ง",
-      "error"
-    );
+    console.warn("โหลดข้อมูลล้มเหลว ใช้ mock bookings แทน:", error);
+    renderClassList(mockBookings, classesContainer);
   }
 }
 
-// สร้าง UI สำหรับคลาส
+function renderClassList(classes, container) {
+  if (classes && classes.length > 0) {
+    container.innerHTML = "";
+    classes.forEach((classItem) => {
+      const classElement = createClassElement(classItem);
+      container.appendChild(classElement);
+    });
+    setupCancelButtons();
+  } else {
+    container.innerHTML =
+      "<div class='no-data'>คุณยังไม่มีคลาสที่ลงทะเบียน</div>";
+  }
+}
+
 function createClassElement(classData) {
   const classItem = document.createElement("div");
   classItem.className = "class-item";
@@ -66,13 +82,14 @@ function createClassElement(classData) {
   return classItem;
 }
 
-// ตั้งค่าปุ่มยกเลิกคลาส (ใช้ `PUT`)
 function setupCancelButtons() {
   const cancelButtons = document.querySelectorAll(".cancel-btn");
 
   cancelButtons.forEach((button) => {
     button.addEventListener("click", async function () {
       const bookingId = this.getAttribute("data-id");
+
+      if (this.classList.contains("disabled")) return;
 
       if (confirm("คุณต้องการยกเลิกการลงทะเบียนคลาสนี้หรือไม่?")) {
         try {
@@ -98,7 +115,6 @@ function setupCancelButtons() {
   });
 }
 
-// แสดงการแจ้งเตือน
 function showNotification(message, type = "success") {
   const notification = document.getElementById("notification");
   const notificationMessage = document.getElementById("notification-message");

@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login - FitJAD</title>
-  <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login - FitJAD</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="left-panel">
+      <div class="form-box">
+        <h1 class="logo">FitJAD</h1>
+        <h2>Welcome back</h2>
+        <p>Please enter your details to sign in to your account</p>
 
-  <div class="left-panel">
-    <div class="form-box">
-      <h1 class="logo">FitJAD</h1>
-      <h2>Welcome back</h2>
-      <p>Please enter your details to sign in to your account</p>
+        <form id="loginForm">
+          <label>Username</label>
+          <input type="text" placeholder="Enter your username" required />
 
-      <form id="loginForm">
-        <label>Username</label>
-        <input type="text" placeholder="Enter your username" required>
+          <label>Password </label>
+          <input type="password" placeholder="XXXXXXXX" required />
 
-        <label>Password </label>
-        <input type="password" placeholder="XXXXXXXX" required>
-
-        <button type="submit" class="primary-btn">Sign in</button>
-        <p class="switch-link">Don't have an account? <a href="register.html">Sign up</a></p>
-      </form>
+          <button type="submit" class="primary-btn">Sign in</button>
+          <p class="switch-link">
+            Don't have an account? <a href="register.html">Sign up</a>
+          </p>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <div class="right-panel"></div>
+    <div class="right-panel"></div>
 
-  <script src="./js/login.js"></script>
-</body>
+    <script src="./js/login.js"></script>
+  </body>
 </html>
