@@ -1,3 +1,41 @@
+/*const promotionstest = [
+    {
+        promotionId: 20001,
+        code: "DISCOUNT10",
+        discountType: "Percentage",
+        discountValue: 10.0,
+        startDate: "2025-01-01",
+        endDate: "2026-01-31",
+        status: "Active"
+    },
+    {
+        promotionId: 20002,
+        code: "SAVE25",
+        discountType: "Fixed Amount",
+        discountValue: 25.0,
+        startDate: "2025-02-01",
+        endDate: "2026-02-29",
+        status: "Active"
+    },
+    {
+        promotionId: 20003,
+        code: "NEWYEAR50",
+        discountType: "Percentage",
+        discountValue: 50.0,
+        startDate: "2024-12-25",
+        endDate: "2026-01-05",
+        status: "Active"
+    },
+    {
+        promotionId: 20004,
+        code: "DISCOUNT20",
+        discountType: "Percentage",
+        discountValue: 20.0,
+        startDate: "2025-01-25",
+        endDate: "2026-01-31",
+        status: "Active"
+    }
+  ];*/
 
 let promotions = [];
 window.onload = async function () {
@@ -11,7 +49,6 @@ window.onload = async function () {
     });
     console.log(response);
     data = await response.json();
-    console.log(promotions);
     a=1;
     for(const i of data){
         if(a){
@@ -54,3 +91,4 @@ window.onload = async function () {
         container.appendChild(div);
     });
 }
+
