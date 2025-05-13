@@ -135,7 +135,7 @@ function createTrainerCard(trainer) {
     const reviewActions = document.createElement("div");
     reviewActions.className = "review-actions";
     reviewActions.innerHTML = `
-            <a href="#" class="edit-review-btn" data-trainer-id="${trainer.id}">Edit Review</a>
+            <a href="trainer.html" class="edit-review-btn" data-trainer-id="${trainer.id}">Edit Review</a>
         `;
 
     userReview.appendChild(userReviewTitle);
