@@ -27,6 +27,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
   })
   .then(data => {
     alert("Account created successfully!");
+    localStorage.setItem("memberId", data.id);
     window.location.href = "login.html";
   })
   .catch(error => {
@@ -64,7 +65,8 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
   })
   .then(data => {
     alert("Login successful!");
-    window.location.href = "home.html";
+    localStorage.setItem("memberId", data.id);
+    window.location.href = "alreadyLoginHome.html";
   })
   .catch(error => {
     alert(error.message);

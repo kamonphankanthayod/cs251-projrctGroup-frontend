@@ -35,6 +35,14 @@ async function loadUserProfile() {
     try {
         // ในระบบจริงจะใช้ API.getUserProfile() เพื่อดึงข้อมูล
         const profile = await API.getUserProfile();
+        const header = {
+            "Content-Type": "application/json"
+        };
+        let url = "http://localhost:8080/member/{memberId}";
+        let response = await fetch(url, {
+            method: "GET",
+            headers: header,
+        });
         
         if (profile) {
             // อัพเดทข้อมูลในหน้า
