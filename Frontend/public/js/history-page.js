@@ -174,6 +174,7 @@ async function loadGymVisitHistory(page = 1) {
 
 // ฟังก์ชันโหลดข้อมูลประวัติการชำระเงิน
 async function loadPaymentHistory(page = 1) {
+    id = 1 //const id = localStorage.getItem("id");
     const paymentTable = document.getElementById('payment-table');
     if (!paymentTable) return;
     
@@ -182,50 +183,23 @@ async function loadPaymentHistory(page = 1) {
             showLoading(paymentTable);
         }
         
-        // ใช้ข้อมูล mock สำหรับการพัฒนา
-        const mockPayments = [
-            {
-                id: "PAY001",
-                date: "12-01-2025",
-                description: "Monthly Membership - October 2023",
-                amount: "฿1,500",
-                method: "Credit Card"
-            },
-            {
-                id: "PAY002",
-                date: "12-01-2025",
-                description: "Monthly Membership - October 2023",
-                amount: "฿1,500",
-                method: "Credit Card"
-            },
-            {
-                id: "PAY003",
-                date: "12-01-2025",
-                description: "Monthly Membership - October 2023",
-                amount: "฿1,500",
-                method: "Credit Card"
-            },
-            {
-                id: "PAY004",
-                date: "12-01-2025",
-                description: "Monthly Membership - October 2023",
-                amount: "฿1,500",
-                method: "Credit Card"
-            },
-            {
-                id: "PAY005",
-                date: "12-01-2025",
-                description: "Monthly Membership - October 2023",
-                amount: "฿1,500",
-                method: "Credit Card"
+        const header = {
+            "Content-Type": "application/json"
+        };
+        url = "http://localhost:8080/payment/get-by-member/"+id; 
+        response = await fetch(url, {
+            method: "GET",
+            headers: header
+        });
+        console.log(response);
+        data = await response.json();
+        payments = []
+        for(const i of data){
+            if(i.paymentStatus == "Success"){
+             payments.push(i);
             }
-        ];
+        }
         
-        // จำลองการเรียก API
-        // const response = await API.getPaymentHistory(page);
-        // const payments = response.data;
-        
-        const payments = mockPayments;
         const hasMore = true; // จำลองว่ามีข้อมูลเพิ่มเติม
         
         if (page === 1) {
@@ -237,10 +211,10 @@ async function loadPaymentHistory(page = 1) {
                 const row = document.createElement('tr');
                 
                 row.innerHTML = `
-                    <td>${payment.date}</td>
-                    <td>${payment.description}</td>
+                    <td>${payment.paymentDate}</td>
+                    <td>${payment.planName}</td>
                     <td>${payment.amount}</td>
-                    <td>${payment.method}</td>
+                    <td>${payment.paymentMethod}</td>
                     <td><a href="#" class="view-btn" data-id="${payment.id}">View</a></td>
                 `;
                 
