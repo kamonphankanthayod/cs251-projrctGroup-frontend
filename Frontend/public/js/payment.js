@@ -1,7 +1,17 @@
 // ดึงค่าจาก query string
 const params = new URLSearchParams(window.location.search);
 const planName = params.get('PlanName') || 'Unknown';
-const promoCode = params.get('PromotionCode') || null;
+const promoCode = params.get('PromotionCode') || '0';
+let id = params.get('id') || 1;
+console.log(planName,promoCode,id);
+
+window.onload = function () {
+  
+}
+
+
+
+
 
 // Mock plans
 const plans = {
@@ -146,12 +156,50 @@ const confirmBtn = document.getElementById("confirm-payment-btn");
 
 if (confirmBtn) {
   confirmBtn.addEventListener("click", () => {
+    savepayment();
     // โหลดข้อมูลที่เราสร้างไว้ก่อนหน้า
     const payment = JSON.parse(localStorage.getItem("lastPayment"));
-
     if (payment) {
       // ส่งผู้ใช้ไปหน้า success
       window.location.href = "payment-success-QR.html";
     }
   });
+}
+
+
+async function savepayment() {
+  const header = {
+    "Content-Type": "application/json"
+  };
+  let url = "http://localhost:8080/membership";
+  let response = await fetch(url, {
+    method: "GET",
+    headers: header,
+  });
+  let data = await response.json();
+  let amount = '';
+  let planId = '';
+  console.log(data);
+  for(const i of data){
+    if (i.planName == planName){
+       amount = i.price
+       planId = i.id
+    }
+  }
+  console.log(amount,planName,planId,id,planId,promoCode);
+  const body = JSON.stringify({
+    "amount": amount,
+    "paymentMethod": planName,
+    "memberId": id,
+    "planId": planId,
+    "promotionCode": promoCode
+  });
+  url = "http://localhost:8080/payment"; 
+  response = await fetch(url, {
+    method: "POST",
+    headers: header,
+    body: body,
+  });
+  data = await response.json();
+  console.log(data);
 }

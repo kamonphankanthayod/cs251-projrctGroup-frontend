@@ -1,5 +1,6 @@
 // ดึงข้อมูล payment ล่าสุดจาก localStorage
 const payment = JSON.parse(localStorage.getItem("lastPayment"));
+console.log("ข้อมูลจากหน้าเดิม:", payment);
 
 if (payment) {
   // ใส่ข้อมูลในช่องต่างๆ
