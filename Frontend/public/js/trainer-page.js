@@ -42,7 +42,7 @@ function createTrainerCard(trainerReview) {
   card.className = "trainer-card";
   card.setAttribute("data-trainer-id", trainerReview.trainerId);
 
-  const trainerName = trainerReview.trainerName?.trim() || `Trainer ${trainerCounter++}`; // ✅ Ensures trainer name is valid
+  const trainerName = trainerReview.trainerName?.trim() || `Review ${trainerCounter++}`; // ✅ Ensures trainer name is valid
   const imageSrc =
     trainerReview.image && trainerReview.image.trim() !== ""
       ? trainerReview.image
@@ -57,7 +57,6 @@ function createTrainerCard(trainerReview) {
       </div>
       <div class="trainer-info">
         <h3>${trainerName}</h3>
-        <p>⭐ ${rating}</p>
       </div>
     </div>
     <button class="rate-trainer-btn" data-trainer-id="${trainerReview.trainerId}">Rate Trainer</button>
