@@ -276,7 +276,7 @@ function setupEditProfileButton() {
                 
                 // อัพเดทรูปโปรไฟล์ทุกที่ในเว็บไซต์
                 if (response.profileImage) {
-                    updateProfileImages(response.profileImage);
+                    //updateProfileImages(response.profileImage);
                 }
                 
                 // อัพเดทชื่อผู้ใช้ในเมนูด้านข้าง
@@ -808,7 +808,7 @@ async function loadUserProfile() {
             
             // อัพเดทรูปโปรไฟล์ทุกที่ในเว็บไซต์
             if (profile.profileImage) {
-                updateProfileImages(profile.profileImage);
+                //updateProfileImages(profile.profileImage);
             }
         }
     } catch (error) {
@@ -816,7 +816,7 @@ async function loadUserProfile() {
         showNotification('ไม่สามารถโหลดข้อมูลโปรไฟล์ได้ กรุณาลองใหม่อีกครั้ง', 'error');
     }
 }
-
+/*
 // ฟังก์ชันอัพเดทรูปโปรไฟล์ทุกที่ในเว็บไซต์
 function updateProfileImages(imageUrl) {
     // อัพเดทรูปในหน้าโปรไฟล์
@@ -836,7 +836,7 @@ function updateProfileImages(imageUrl) {
     if (profileImagePreview) {
         profileImagePreview.src = imageUrl;
     }
-}
+}*/
 
 // ฟังก์ชันตั้งค่าการอัพโหลดรูปโปรไฟล์
 function setupProfileImageUpload() {
