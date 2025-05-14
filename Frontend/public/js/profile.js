@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const id = 1 //JSON.parse(localStorage.getItem("id"));
     // โหลดข้อมูลผู้ใช้
     loadUserProfile();
     
@@ -40,21 +39,16 @@ async function loadUserProfile() {
         const header = {
             "Content-Type": "application/json"
         };
-        let url = "http://localhost:8080/member/{memberId}";
-        let response = await fetch(url, {
-            method: "GET",
-            headers: header,
-        });
-        
+        console.log(profile)
         if (profile) {
             let memberIdElem = document.getElementById("nameP");
             if (memberIdElem) memberIdElem.textContent = profile.name;
             memberIdElem = document.getElementById("planP");
             if (memberIdElem) memberIdElem.textContent = profile.membershipType;
             // อัพเดทข้อมูลในหน้า
-            document.getElementById('profile-name-value').textContent = `${profile.fname} ${profile.lname}`;
+            document.getElementById('profile-name-value').textContent = profile.name;
             document.getElementById('profile-email-value').textContent = profile.email;
-            document.getElementById('profile-phone-value').textContent = profile.phoneNumber;
+            document.getElementById('profile-phone-value').textContent = profile.phone;
             document.getElementById('profile-address-value').textContent = profile.address;
             
             // อัพเดทฟอร์มแก้ไขโปรไฟล์
@@ -86,15 +80,6 @@ async function loadMembershipDetails() {
     try {
         // ในระบบจริงจะใช้ API.getMembershipDetails() เพื่อดึงข้อมูล
         const membership = await API.getMembershipDetails();
-        const header = {
-            "Content-Type": "application/json"
-        };
-        let url = "http://localhost:8080/membership/{id}";
-        let response = await fetch(url, {
-            method: "GET",
-            headers: header,
-        });
-        
         if (membership) {
             // อัพเดทข้อมูลในหน้า
             document.getElementById('membership-type-value').textContent = membership.type;
@@ -295,113 +280,51 @@ function setupEditProfileButton() {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    // รวบรวมข้อมูลจากฟอร์ม
     const formData = new FormData(form);
+    const data = {};
+    for (const [key, value] of formData.entries()) {
+      data[key] = value;
+    }
 
     try {
-      // ในระบบจริงจะเรียกใช้ API
-      const response = await API.updateUserProfile(formData);
+      const response = await API.updateUserProfile(data);
 
       if (response.success) {
         // อัพเดทข้อมูลในหน้า
-        document.getElementById("profile-name-value").textContent =
-          formData.get("name");
-        document.getElementById("profile-email-value").textContent =
-          formData.get("email");
-        document.getElementById("profile-phone-value").textContent =
-          formData.get("phone");
-        document.getElementById("profile-address-value").textContent =
-          formData.get("address");
+        document.getElementById("profile-name-value").textContent = data.name;
+        document.getElementById("profile-email-value").textContent = data.email;
+        document.getElementById("profile-phone-value").textContent = data.phone;
+        document.getElementById("profile-address-value").textContent = data.address;
 
-        // แปลงวันที่เป็นรูปแบบที่ต้องการ
-        const birthDate = new Date(formData.get("birthDate"));
+        const birthDate = new Date(data.birthDate);
         const formattedDate = birthDate.toLocaleDateString("th-TH", {
           day: "numeric",
           month: "short",
           year: "numeric",
         });
-        document.getElementById("profile-birthdate-value").textContent =
-          formattedDate;
+        document.getElementById("profile-birthdate-value").textContent = formattedDate;
 
-        // อัพเดทรูปโปรไฟล์ทุกที่ในเว็บไซต์
         if (response.profileImage) {
           updateProfileImages(response.profileImage);
         }
 
-    });
-    
-    // ส่งฟอร์มแก้ไขโปรไฟล์
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        // รวบรวมข้อมูลจากฟอร์ม
-        const formData = new FormData(form);
-        let data ={}
-        for (const [key, value] of formData.entries()) {
-            data[key] =  value
-        }
-        
-        try {
-            // ในระบบจริงจะเรียกใช้ API
-            const response = await API.updateUserProfile(data);
-            
-            if (response.success) {
-                // อัพเดทข้อมูลในหน้า
-                document.getElementById('profile-name-value').textContent = formData.get('name');
-                document.getElementById('profile-email-value').textContent = formData.get('email');
-                document.getElementById('profile-phone-value').textContent = formData.get('phone');
-                document.getElementById('profile-address-value').textContent = formData.get('address');
-                
-                // แปลงวันที่เป็นรูปแบบที่ต้องการ
-                const birthDate = new Date(formData.get('birthDate'));
-                const formattedDate = birthDate.toLocaleDateString('th-TH', { 
-                    day: 'numeric', 
-                    month: 'short', 
-                    year: 'numeric' 
-                });
-                document.getElementById('profile-birthdate-value').textContent = formattedDate;
-                
-                // อัพเดทรูปโปรไฟล์ทุกที่ในเว็บไซต์
-                if (response.profileImage) {
-                    //updateProfileImages(response.profileImage);
-                }
-                
-                // อัพเดทชื่อผู้ใช้ในเมนูด้านข้าง
-                const sidebarUsername = document.querySelector('.sidebar .user-name');
-                if (sidebarUsername) {
-                    sidebarUsername.textContent = formData.get('name');
-                }
-                
-                // ปิด Modal
-                modal.style.display = 'none';
-                
-                // แสดงข้อความสำเร็จ
-                showNotification('อัพเดทโปรไฟล์เรียบร้อยแล้ว');
-            } else {
-                throw new Error(response.message || 'ไม่สามารถอัพเดทโปรไฟล์ได้');
-            }
-        } catch (error) {
-            console.error('เกิดข้อผิดพลาดในการอัพเดทโปรไฟล์:', error);
-            showNotification('ไม่สามารถอัพเดทโปรไฟล์ได้ กรุณาลองใหม่อีกครั้ง', 'error');
+        const sidebarUsername = document.querySelector(".sidebar .user-name");
+        if (sidebarUsername) {
+          sidebarUsername.textContent = data.name;
         }
 
-        // ปิด Modal
         modal.style.display = "none";
-
-        // แสดงข้อความสำเร็จ
         showNotification("อัพเดทโปรไฟล์เรียบร้อยแล้ว");
       } else {
         throw new Error(response.message || "ไม่สามารถอัพเดทโปรไฟล์ได้");
       }
     } catch (error) {
       console.error("เกิดข้อผิดพลาดในการอัพเดทโปรไฟล์:", error);
-      showNotification(
-        "ไม่สามารถอัพเดทโปรไฟล์ได้ กรุณาลองใหม่อีกครั้ง",
-        "error"
-      );
+      showNotification("ไม่สามารถอัพเดทโปรไฟล์ได้ กรุณาลองใหม่อีกครั้ง", "error");
     }
   });
 }
+
 
 // ฟังก์ชันตั้งค่าปุ่มเปลี่ยนแผนสมาชิก
 function setupChangePlanButton() {

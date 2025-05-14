@@ -2,7 +2,7 @@
 const params = new URLSearchParams(window.location.search);
 const planName = params.get('PlanName') || 'Unknown';
 const promoCode = params.get('PromotionCode') || '0';
-let id = params.get('id') || 1;
+const id = localStorage.getItem("memberId");
 console.log(planName,promoCode,id);
 
 let promotions = [];
