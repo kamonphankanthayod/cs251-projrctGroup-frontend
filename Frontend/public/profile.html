@@ -15,14 +15,14 @@
             <div class="logo">FitJAD</div>
             <nav class="main-nav">
                 <ul>
-                    <li><a href="#" class="nav-link">Home</a></li>
-                    <li><a href="#" class="nav-link active">Member</a></li>
-                    <li><a href="#" class="nav-link">Classes</a></li>
-                    <li><a href="#" class="nav-link">Contact</a></li>
+                    <li><a href="alreadyLoginHome.html" class="nav-link">Home</a></li>
+                    <li><a href="membership.html" class="nav-link active">Member</a></li>
+                    <li><a href="my-classes(Profile).html" class="nav-link">Classes</a></li>
+                    <li><a href="alreadyLoginHome.html" class="nav-link">Contact</a></li>
                 </ul>
             </nav>
             <div class="sign-out">
-                <a href="#" class="sign-out-btn">
+                <a href="homepage.html" class="sign-out-btn">
                     <i class="fas fa-sign-out-alt"></i> Sign out
                 </a>
             </div>
@@ -34,32 +34,32 @@
             <aside class="sidebar">
                 <div class="user-profile">
                     <div class="user-avatar">
-                        <img src="/placeholder.svg?height=50&width=50" alt="User Avatar">
+                        <img src="./image/user-icon.png" alt="User Avatar"> <!--<img src="/placeholder.svg?height=50&width=50" alt="User Avatar">-->
                     </div>
                     <div class="user-info">
-                        <h3 class="user-name">John Cena</h3>
-                        <p class="user-membership">Premium Member</p>
+                        <h3 class="user-name" id ='nameP'>John Cena</h3>
+                        <p class="user-membership" id ='planP'>Premium Member</p>
                     </div>
                 </div>
                 <nav class="sidebar-nav">
                     <ul>
                         <li>
-                            <a href="#" class="sidebar-link" data-page="profile">
+                            <a href="profile.html" class="sidebar-link" data-page="profile">
                                 <i class="fas fa-user"></i> Profile
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="sidebar-link" data-page="my-classes">
+                            <a href="my-classes(Profile).html" class="sidebar-link" data-page="my-classes(Profile)">
                                 <i class="fas fa-calendar"></i> My Class
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="sidebar-link" data-page="trainer">
+                            <a href="trainer.html" class="sidebar-link" data-page="trainer">
                                 <i class="fas fa-dumbbell"></i> Trainer
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="sidebar-link" data-page="history">
+                            <a href="history.html" class="sidebar-link" data-page="history">
                                 <i class="fas fa-history"></i> History
                             </a>
                         </li>
@@ -82,7 +82,7 @@
                         </div>
                         <div class="profile-content">
                             <div class="profile-avatar">
-                                <img src="/placeholder.svg?height=120&width=120" alt="Profile Picture" id="profile-image">
+                                <img src="./image/user-icon.png" alt="User Avatar"> <!--<img src="/placeholder.svg?height=120&width=120" alt="Profile Picture" id="profile-image">-->
                             </div>
                             <div class="profile-edit-btn">
                                 <button class="btn btn-outline" id="edit-profile-btn">Edit Profile</button>
@@ -108,11 +108,6 @@
                                     <div class="profile-item-icon"><i class="fas fa-map-marker-alt"></i></div>
                                     <div class="profile-item-label">Address</div>
                                     <div class="profile-item-value" id="profile-address-value">99/9 Moo ping</div>
-                                </div>
-                                <div class="profile-item">
-                                    <div class="profile-item-icon"><i class="fas fa-birthday-cake"></i></div>
-                                    <div class="profile-item-label">Birth Date</div>
-                                    <div class="profile-item-value" id="profile-birthdate-value">18 Feb 1990</div>
                                 </div>
                             </div>
                         </div>
@@ -191,7 +186,7 @@
                 <div class="form-group profile-image-upload">
                     <label for="profile-image-upload">Profile Picture</label>
                     <div class="image-upload-container">
-                        <img id="profile-image-preview" src="/placeholder.svg?height=100&width=100" alt="Profile Picture Preview">
+                        <img src="./image/user-icon.png" alt="User Avatar"> <!--<img id="profile-image-preview" src="/placeholder.svg?height=100&width=100" alt="Profile Picture Preview">-->
                         <div class="upload-controls">
                             <input type="file" id="profile-image-upload" name="profileImage" accept="image/*" style="display: none;">
                             <button type="button" id="upload-image-btn" class="btn btn-outline">Choose Image</button>
@@ -215,8 +210,8 @@
                     <textarea id="profile-address" name="address" rows="3">99/9 Moo ping</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="profile-birthdate">Birth Date</label>
-                    <input type="date" id="profile-birthdate" name="birthDate" value="1990-02-18">
+                    <label for="profile-pass">Confirm password</label>
+                    <input type="tel" id="profile-pass" name="pass" value="">
                 </div>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
@@ -228,21 +223,10 @@
         <div class="modal-content modal-scrollable">
             <span class="close-modal">&times;</span>
             <h2>Change Membership Plan</h2>
-            <div class="plan-options">
-                <div class="plan-option" id="standard-plan">
-                    <div class="plan-header">
-                        <h3>Standard</h3>
-                        <div class="plan-price">฿590/month</div>
-                    </div>
-                    <ul class="plan-features">
-                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
-                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
-                    </ul>
-                    <button class="btn btn-outline select-plan-btn" data-plan="standard">Select Plan</button>
-                </div>
+            <div class="plan-options">  
                 <div class="plan-option" id="silver-plan">
                     <div class="plan-header">
-                        <h3>Silver</h3>
+                        <h3>Basic</h3>
                         <div class="plan-price">฿990/month</div>
                     </div>
                     <ul class="plan-features">
@@ -325,8 +309,8 @@
 
     <!-- JavaScript -->
     <script src="./js/api.js"></script>
-    <script src="/js/ProfileSetting.js"></script>
-    <script src="/js/profile.js"></script>
+    <script src="./js/ProfileSetting.js"></script>
+    <script src="./js/profile.js"></script>
     
     <style>
         /* เพิ่ม CSS สำหรับ Modal ที่มี scroll */
