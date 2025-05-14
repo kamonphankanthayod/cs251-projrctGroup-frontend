@@ -7,25 +7,62 @@
 const API = {
   // API ข้อมูลผู้ใช้
   getUserProfile: async () => {
+    const id = 1 //JSON.parse(localStorage.getItem("id"));
     // จำลองการหน่วงเวลาเรียก API
-    await new Promise((resolve) => setTimeout(resolve, 500))
-
-    // ส่งข้อมูลจำลอง
+    const header = {
+      "Content-Type": "application/json"
+    };
+    url = "http://localhost:8080/member/"+id; 
+    response = await fetch(url, {
+        method: "GET",
+        headers: header
+    });
+    data = await response.json();
+    // ส่งข้อมูล
     return {
-      id: "USR12345",
-      name: "John Cena",
-      email: "john.cena@mailbox.com",
-      phone: "0686644959",
-      address: "99/9 Moo ping",
+      id: data.id,
+      name: data.fname+' '+data.lname,
+      email: data.email,
+      phone: data.phoneNumber,
+      address: data.address,
       birthDate: "18 Feb 1990",
       profileImage: "/placeholder.svg?height=120&width=120",
-      membershipType: "Premium Member",
+      membershipType: data.planName+" Member",
     }
   },
 
   updateUserProfile: async (userData) => {
-    // จำลองการหน่วงเวลาเรียก API
-    await new Promise((resolve) => setTimeout(resolve, 800))
+    console.log(userData);
+    const id = 1 //JSON.parse(localStorage.getItem("id"));
+    const header = {
+      "Content-Type": "application/json"
+    };
+    url = "http://localhost:8080/member/"+id; 
+    response = await fetch(url, {
+        method: "GET",
+        headers: header,
+    });
+    data = await response.json();
+    rname = userData.name.split(' ');
+    
+    const body = JSON.stringify({
+      "userName": data.userName,
+      "fname": rname[0],
+      "lname": rname[1],
+      "email": userData.email,
+      "password": userData.pass,
+      "phoneNumber": userData.phone,
+      "address": userData.address
+    });
+    console.log(body);
+    url = "http://localhost:8080/member/"+id; 
+    response = await fetch(url, {
+        method: "PUT",
+        headers: header,
+        body: body,
+    });
+    data = await response.json();
+    console.log(data);
 
     // จำลองการอัพเดทสำเร็จ
     return {
@@ -37,25 +74,74 @@ const API = {
 
   // API ข้อมูลสมาชิก
   getMembershipDetails: async () => {
-    // จำลองการหน่วงเวลาเรียก API
-    await new Promise((resolve) => setTimeout(resolve, 600))
+    const id = 1 //JSON.parse(localStorage.getItem("id"));
+    const header = {
+      "Content-Type": "application/json"
+    };
+    url = "http://localhost:8080/member/"+id; 
+    response = await fetch(url, {
+        method: "GET",
+        headers: header
+    });
+    datamem = await response.json();
+    //console.log(datamem);
+    url = "http://localhost:8080/membership"; 
+    response = await fetch(url, {
+        method: "GET",
+        headers: header
+    });
+    dataplan = await response.json();
+    //console.log(dataplan);
+    let plan = '';
+    for(const i of dataplan){
+      if(i.planName == datamem.planName){
+        plan = i
+      } 
+    }
+    console.log(plan);
+    enddate = datamem.expireDate.split('-');
+    enddate[1] = parseInt(enddate[1])+1;
+    enddate[2] = parseInt(enddate[2])-1
+    if(enddate[2]==0){
+      enddate[1]-=1;
+      if(enddate[1]%2==1){
+        enddate[2] = 31;
+      }
+      else if(enddate[1]==2){
+        enddate[2] = 28;
+      }
+      else{
+        enddate[2] = 30;
+      }
+    }
+    if(enddate[1]>12){
+      enddate[1]=1
+    }
+    bill = enddate;
+    bill[2] = bill[2]-1
+    if(bill[2]==0){
+      bill[1]-=1;
+      if(enddate[1]%2==1){
+        enddate[2] = 31;
+      }
+      else if(enddate[1]==2){
+        enddate[2] = 28;
+      }
+      else{
+        enddate[2] = 30;
+      }
+    }
+    console.log(plan.description.split('+'));
 
-    // ส่งข้อมูลจำลอง
+    // ส่งข้อมูล
     return {
-      id: "FIT-8482",
-      type: "Gold",
-      startDate: "January 2025",
-      expiryDate: "December 31, 2025",
+      id: plan.id,
+      type: datamem.planName,
+      startDate: datamem.expireDate,
+      expiryDate: enddate[0]+'-'+enddate[1]+'-'+enddate[2],
       billingCycle: "Monthly automatic renewal",
-      nextBillingDate: "December 31, 2023",
-      benefits: [
-        "เข้าใช้บริการฟิตเนสได้ตลอด 24/7",
-        "คลาสกลุ่มฟรี",
-        "ปรึกษาเทรนเนอร์ส่วนตัว (2 ครั้ง/เดือน)",
-        "เข้าถึงอุปกรณ์พรีเมียม",
-        "บริการผ้าเช็ดตัว",
-        "ล็อคเกอร์ส่วนตัวฟรี",
-      ],
+      nextBillingDate: bill[0]+'-'+bill[1]+'-'+bill[2],
+      benefits: plan.description.split('+'),
     }
   },
 

@@ -37,8 +37,8 @@
                         <img src="./image/user-icon.png" alt="User Avatar"> <!--<img src="/placeholder.svg?height=50&width=50" alt="User Avatar">-->
                     </div>
                     <div class="user-info">
-                        <h3 class="user-name">John Cena</h3>
-                        <p class="user-membership">Premium Member</p>
+                        <h3 class="user-name" id ='nameP'>John Cena</h3>
+                        <p class="user-membership" id ='planP'>Premium Member</p>
                     </div>
                 </div>
                 <nav class="sidebar-nav">
@@ -108,11 +108,6 @@
                                     <div class="profile-item-icon"><i class="fas fa-map-marker-alt"></i></div>
                                     <div class="profile-item-label">Address</div>
                                     <div class="profile-item-value" id="profile-address-value">99/9 Moo ping</div>
-                                </div>
-                                <div class="profile-item">
-                                    <div class="profile-item-icon"><i class="fas fa-birthday-cake"></i></div>
-                                    <div class="profile-item-label">Birth Date</div>
-                                    <div class="profile-item-value" id="profile-birthdate-value">18 Feb 1990</div>
                                 </div>
                             </div>
                         </div>
@@ -215,8 +210,8 @@
                     <textarea id="profile-address" name="address" rows="3">99/9 Moo ping</textarea>
                 </div>
                 <div class="form-group">
-                    <label for="profile-birthdate">Birth Date</label>
-                    <input type="date" id="profile-birthdate" name="birthDate" value="1990-02-18">
+                    <label for="profile-pass">Confirm password</label>
+                    <input type="tel" id="profile-pass" name="pass" value="">
                 </div>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
@@ -228,21 +223,10 @@
         <div class="modal-content modal-scrollable">
             <span class="close-modal">&times;</span>
             <h2>Change Membership Plan</h2>
-            <div class="plan-options">
-                <div class="plan-option" id="standard-plan">
-                    <div class="plan-header">
-                        <h3>Standard</h3>
-                        <div class="plan-price">฿590/month</div>
-                    </div>
-                    <ul class="plan-features">
-                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
-                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
-                    </ul>
-                    <button class="btn btn-outline select-plan-btn" data-plan="standard">Select Plan</button>
-                </div>
+            <div class="plan-options">  
                 <div class="plan-option" id="silver-plan">
                     <div class="plan-header">
-                        <h3>Silver</h3>
+                        <h3>Basic</h3>
                         <div class="plan-price">฿990/month</div>
                     </div>
                     <ul class="plan-features">
