@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>คลาสเรียนของฉัน - FitJAD</title>
-    <link rel="stylesheet" href="./css/ProfileSetting.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./css/ProfileSetting.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <div class="app-container">
         <!-- ส่วนหัว -->
         <header class="main-header">
@@ -33,7 +36,7 @@
             <aside class="sidebar">
                 <div class="user-profile">
                     <div class="user-avatar">
-                        <img src="/placeholder.svg?height=50&width=50" alt="User Avatar">
+                        <img src="image/placeholder.png?height=50&width=50" alt="User Avatar">
                     </div>
                     <div class="user-info">
                         <h3 class="user-name">John Cena</h3>
@@ -80,54 +83,6 @@
                     </div>
                     <div class="class-list" id="upcoming-classes-list">
                         <!-- คลาสเรียนจะถูกเพิ่มที่นี่ด้วย JavaScript -->
-                        <div class="class-item" data-id="1">
-                            <div class="class-header">
-                                <div class="class-title">Class</div>
-                                <div class="class-studio">Studio A</div>
-                            </div>
-                            <div class="class-instructor">Instructor: Moo Deng</div>
-                            <div class="class-details">
-                                <div class="class-detail">
-                                    <i class="fas fa-calendar"></i> 17 Feb 2025
-                                </div>
-                                <div class="class-detail">
-                                    <i class="fas fa-clock"></i> 16:00 - 17:30
-                                </div>
-                                <button class="cancel-btn" data-id="1">✕ Cancel</button>
-                            </div>
-                        </div>
-                        <div class="class-item" data-id="2">
-                            <div class="class-header">
-                                <div class="class-title">Class</div>
-                                <div class="class-studio">Studio B</div>
-                            </div>
-                            <div class="class-instructor">Instructor: Lebron James</div>
-                            <div class="class-details">
-                                <div class="class-detail">
-                                    <i class="fas fa-calendar"></i> 18 Feb 2025
-                                </div>
-                                <div class="class-detail">
-                                    <i class="fas fa-clock"></i> 16:00 - 17:30
-                                </div>
-                                <button class="cancel-btn" data-id="2">✕ Cancel</button>
-                            </div>
-                        </div>
-                        <div class="class-item" data-id="3">
-                            <div class="class-header">
-                                <div class="class-title">Class</div>
-                                <div class="class-studio">Studio A</div>
-                            </div>
-                            <div class="class-instructor">Instructor: Christina Sae-tae</div>
-                            <div class="class-details">
-                                <div class="class-detail">
-                                    <i class="fas fa-calendar"></i> 19 Feb 2025
-                                </div>
-                                <div class="class-detail">
-                                    <i class="fas fa-clock"></i> 16:00 - 17:30
-                                </div>
-                                <button class="cancel-btn" data-id="3">✕ Cancel</button>
-                            </div>
-                        </div>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-primary">Find More</button>
@@ -135,41 +90,86 @@
                 </div>
             </main>
         </div>
+      </header>
+
+      <!-- ส่วนเนื้อหาหลัก -->
+      <div class="content-container">
+        <!-- เมนูด้านข้าง -->
+        <aside class="sidebar">
+          <div class="user-profile">
+            <div class="user-avatar">
+              <img
+                src="image/placeholder.png?height=50&width=50"
+                alt="User Avatar"
+              />
+            </div>
+            <div class="user-info">
+              <h3 class="user-name" id="user-name">...</h3>
+              <!-- ซ่อนข้อมูลสมมติ -->
+              <p class="user-membership">...</p>
+              <!-- ซ่อนข้อมูลสมมติ -->
+            </div>
+          </div>
+          <nav class="sidebar-nav">
+            <ul>
+              <li>
+                <a href="#" class="sidebar-link" data-page="profile"
+                  ><i class="fas fa-user"></i> Profile</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-link" data-page="my-classes"
+                  ><i class="fas fa-calendar"></i> My Class</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-link" data-page="trainer"
+                  ><i class="fas fa-dumbbell"></i> Trainer</a
+                >
+              </li>
+              <li>
+                <a href="#" class="sidebar-link" data-page="history"
+                  ><i class="fas fa-history"></i> History</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </aside>
+      </div>
     </div>
 
     <!-- การแจ้งเตือน -->
     <div id="notification" class="notification">
-        <span id="notification-message"></span>
+      <span id="notification-message"></span>
     </div>
 
     <!-- JavaScript -->
-    <script src="./js/api.js"></script>
-    <script src="/js/ProfileSetting.js"></script>
-    <script src="/js/my-classes.js"></script>
-    
+    <script src="./js/ProfileSetting.js"></script>
+    <script src="./js/my-classes.js"></script>
+
     <style>
-        /* CSS สำหรับการแจ้งเตือน */
-        .notification {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            padding: 1rem 1.5rem;
-            border-radius: 4px;
-            background-color: #4caf50;
-            color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            transform: translateX(120%);
-            transition: transform 0.3s ease;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification.error {
-            background-color: #f44336;
-        }
+      /* CSS สำหรับการแจ้งเตือน */
+      .notification {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        padding: 1rem 1.5rem;
+        border-radius: 4px;
+        background-color: #4caf50;
+        color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        transform: translateX(120%);
+        transition: transform 0.3s ease;
+      }
+
+      .notification.show {
+        transform: translateX(0);
+      }
+
+      .notification.error {
+        background-color: #f44336;
+      }
     </style>
-</body>
+  </body>
 </html>

@@ -2,16 +2,17 @@ document.getElementById("registerForm").addEventListener("submit", function(even
   event.preventDefault();
 
   const formData = {
-    firstName: document.querySelector('input[placeholder="John"]').value,
-    lastName: document.querySelector('input[placeholder="Doe"]').value,
+    userName: document.querySelector('input[placeholder="test"]').value,  // Assuming you will update the placeholder
+    fname: document.querySelector('input[placeholder="John"]').value,
+    lname: document.querySelector('input[placeholder="Doe"]').value,
     email: document.querySelector('input[placeholder="Enter your email"]').value,
-    phone: document.querySelector('input[placeholder="012345678"]').value,
-    address: document.querySelector('input[placeholder="Samuthparkan"]').value,
-    username: document.querySelector('input[placeholder="test"]').value,
-    password: document.querySelector('input[placeholder="XXXXXXXX"]').value
+    password: document.querySelector('input[placeholder="XXXXXXXX"]').value,
+    phoneNumber: document.querySelector('input[placeholder="012345678"]').value,
+    address: document.querySelector('input[placeholder="Samuthparkan"]').value
   };
+  console.log(formData);
 
-  fetch("https://your-backend.com/api/register", { // Backend Change
+  fetch("http://localhost:8080/member/register", { // Update backend URL if necessary
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -27,48 +28,11 @@ document.getElementById("registerForm").addEventListener("submit", function(even
   })
   .then(data => {
     alert("Account created successfully!");
-    window.location.href = "login.html";
+    localStorage.setItem("memberId", data.id);
+    window.location.href = "login.html";  // Redirect after successful registration
   })
   .catch(error => {
     console.error("Error:", error);
     alert("An error occurred: " + error.message);
   });
 });
-
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  const username = document.querySelector('input[placeholder="Enter your username"]').value;
-  const password = document.querySelector('input[placeholder="XXXXXXXX"]').value;
-
-  const loginData = {
-    username: username,
-    password: password
-  };
-
-  fetch("https://your-backend.com/api/login", { // Backend Change
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(loginData)
-  })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else if (response.status === 401) {
-      throw new Error("Username or password is incorrect.");
-    } else {
-      throw new Error("An error occurred during login.");
-    }
-  })
-  .then(data => {
-    alert("Login successful!");
-    window.location.href = "home.html";
-  })
-  .catch(error => {
-    alert(error.message);
-    console.error("Error:", error);
-  });
-});
-
