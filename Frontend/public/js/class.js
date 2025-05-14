@@ -2,7 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const classList = document.getElementById("classList");
   const searchInput = document.getElementById("searchInput");
   const filterButtons = document.querySelectorAll(".filters button");
-
+  const id = localStorage.getItem("memberId");
+  console.log(id);
   let allClasses = [];
 
   const mockClasses = [
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const classId = button.getAttribute("data-id");
-
+        
         try {
           const response = await fetch("http://localhost:8080/booking", {
             method: "POST",
@@ -86,8 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
           });
 
           const result = await response.json();
-
-          if (result.success) {
+          console.log(response);
+          if (response.status) {
             alert("ลงทะเบียนเข้าคลาสเรียบร้อย!");
           } else {
             alert("ไม่สามารถลงทะเบียนคลาสได้ กรุณาลองใหม่");

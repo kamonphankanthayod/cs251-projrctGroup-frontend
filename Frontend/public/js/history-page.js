@@ -76,6 +76,36 @@ function setupViewButtons() {
   });
 }
 
+function setupInvoiceModal() {
+  const modal = document.getElementById("invoice-modal");
+
+  // ตั้งค่าปุ่มดูใบเสร็จ
+  const viewButtons = document.querySelectorAll(".view-btn");
+  viewButtons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+      const paymentId = this.getAttribute("data-id");
+      showInvoice(paymentId);
+    });
+  });
+
+  // ตั้งค่าปุ่มปิด (กากบาท)
+  const closeBtn = modal?.querySelector(".close-modal");
+  if (closeBtn) {
+    closeBtn.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+  }
+
+  // ปิด modal เมื่อคลิกข้างนอก
+  window.addEventListener("click", function (e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+}
+
+
 // ฟังก์ชันโหลดข้อมูลประวัติการเข้าใช้บริการ (API จริง)
 async function loadGymVisitHistory(page = 1) {
   const gymVisitTable = document.getElementById("gym-visit-table");
@@ -109,7 +139,7 @@ async function loadGymVisitHistory(page = 1) {
       "Content-Type": "application/json",
     };
 
-    const memberId = 1; // ID ของสมาชิก (สามารถดึงจาก localStorage)
+    const memberId = localStorage.getItem("memberId");
     const url = `http://localhost:8080/attendance/memberId/${memberId}`;
     let visits = [];
 
@@ -213,10 +243,8 @@ function calculateDuration(checkin, checkout) {
 // ฟังก์ชันโหลดข้อมูลการชำระเงินจาก API จริง
 async function loadPaymentHistory(page = 1) {
   const paymentTable = document.getElementById("payment-table");
-  if (!paymentTable) return;
-
-  const memberId = localStorage.getItem("memberId") || "USR12345"; // ใช้ค่าที่เก็บไว้หรือค่าเริ่มต้น
-
+  if (!paymentTable) return;  
+  const memberId = localStorage.getItem("memberId");
   try {
     if (page === 1) {
       showLoading(paymentTable);
@@ -283,7 +311,7 @@ async function loadPaymentHistory(page = 1) {
 
 // ฟังก์ชันโหลดข้อมูลประวัติการชำระเงิน
 async function loadPaymentHistory(page = 1) {
-  id = 1; //const id = localStorage.getItem("id");
+  const id = localStorage.getItem("memberId");
   const paymentTable = document.getElementById("payment-table");
   if (!paymentTable) return;
 
@@ -396,11 +424,33 @@ async function loadActivitySummary() {
 
   try {
     showLoading(statsContainer);
-
+    const id = localStorage.getItem("memberId");
+    const url = `http://localhost:8080/attendance/memberId/${id}`;
+    const header = {
+      "Content-Type": "application/json",
+    };
+    response = await fetch(url, {
+      method: "GET",
+      headers: header,
+    });
+    data = await response.json();
+    console.log(data);
+    let totalV = 0;
+    let totalH = 0;
+    for(const i of data){
+      totalV+=1;
+      hour1 = new Date(i.checkinTime);
+      hour2 = new Date(i.checkoutTime);
+      //console.log(hour1);
+      //console.log(hour2);
+      diffMs = hour2 - hour1;
+      totalH = diffMs / (1000 * 60 * 60);
+    }
+    console.log(totalH);
     const mockSummary = {
-      totalVisits: 24,
+      totalVisits: totalV,
       totalClasses: 12,
-      totalHours: 36.5,
+      totalHours: totalH,
       totalSpent: await totalpayment(),
       period: "Last 3 months",
     };
@@ -585,7 +635,7 @@ async function showInvoice(paymentId) {
 }
 
 async function totalpayment() {
-  id = 1; //const id = localStorage.getItem("id");
+  const id = localStorage.getItem("memberId");
   const header = {
     "Content-Type": "application/json",
   };
@@ -618,6 +668,31 @@ async function totalpayment() {
       }
     }
   }
-  console.log(total);
+  //console.log(total);
   return total;
+}
+
+
+async function totalVisits(){
+  const id = localStorage.getItem("memberId");
+  const url = `http://localhost:8080/attendance/memberId/${id}`;
+  const header = {
+    "Content-Type": "application/json",
+  };
+   response = await fetch(url, {
+    method: "GET",
+    headers: header,
+  });
+  data = await response.json();
+  console.log(data);
+  let totalV = 0;
+  let totalH = 0;
+  for(const i of data){
+    totalV+=1;
+    hour1 = i.checkinTime.spilt('T');
+    hour2 = i.checkinTime.spilt('T');
+    console.log(hour1);
+    console.log(hour2);
+  }
+  return 25,50
 }

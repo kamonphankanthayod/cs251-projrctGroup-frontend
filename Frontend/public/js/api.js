@@ -7,7 +7,7 @@
 const API = {
   // API ข้อมูลผู้ใช้
   getUserProfile: async () => {
-    const id = 1 //JSON.parse(localStorage.getItem("id"));
+    const id = localStorage.getItem("memberId");
     // จำลองการหน่วงเวลาเรียก API
     const header = {
       "Content-Type": "application/json"
@@ -18,6 +18,7 @@ const API = {
         headers: header
     });
     data = await response.json();
+    console.log(data);
     // ส่งข้อมูล
     return {
       id: data.id,
@@ -74,7 +75,7 @@ const API = {
 
   // API ข้อมูลสมาชิก
   getMembershipDetails: async () => {
-    const id = 1 //JSON.parse(localStorage.getItem("id"));
+    const id = localStorage.getItem("memberId");
     const header = {
       "Content-Type": "application/json"
     };
