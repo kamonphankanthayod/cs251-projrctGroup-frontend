@@ -234,31 +234,6 @@
     <!-- JavaScript -->
     <script src="./js/api.js"></script>
     <script src="./js/ProfileSetting.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // ตั้งค่าแท็บประวัติ
-            setupHistoryTabs();
-            
-            // ตั้งค่าปุ่มโหลดเพิ่มเติม
-            setupLoadMoreButton();
-            
-            // ตั้งค่าปุ่มดูใบเสร็จ
-            setupViewInvoiceButtons();
-            
-            // โหลดข้อมูลประวัติการชำระเงิน
-            // loadPaymentHistory();
-        });
-
-        // ฟังก์ชันตั้งค่าแท็บประวัติ
-        function setupHistoryTabs() {
-            const tabContainer = document.getElementById('history-tabs');
-            const tabButtons = tabContainer.querySelectorAll('.tab-btn');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const tabId = this.getAttribute('data-tab');
-                    
-                    // เปลี่ยนแท็บ
-                    switchTab(tabContainer, tabId);
-                    
-                    // โหลดข
+    
+</body>
+</html>

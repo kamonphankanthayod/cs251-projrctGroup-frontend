@@ -11,7 +11,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
     password: document.querySelector('input[placeholder="XXXXXXXX"]').value
   };
 
-  fetch("https://your-backend.com/api/register", { // Backend Change
+  fetch("http://localhost:8080/member/register", { // Backend Change
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -27,6 +27,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
   })
   .then(data => {
     alert("Account created successfully!");
+    localStorage.setItem("memberId", data.id);
     window.location.href = "login.html";
   })
   .catch(error => {
@@ -46,7 +47,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
     password: password
   };
 
-  fetch("https://your-backend.com/api/login", { // Backend Change
+  fetch("http://localhost:8080/member/login", { // Backend Change
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -64,11 +65,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
   })
   .then(data => {
     alert("Login successful!");
-    window.location.href = "home.html";
+    localStorage.setItem("memberId", data.id);
+    window.location.href = "alreadyLoginHome.html";
   })
   .catch(error => {
     alert(error.message);
     console.error("Error:", error);
   });
 });
-

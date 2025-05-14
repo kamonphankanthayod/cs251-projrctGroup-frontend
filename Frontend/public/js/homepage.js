@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let allClasses = [];
 
     // ดึงข้อมูลจาก Backend จริง
-    fetch("https://your-backend.com/api/classes")
+    fetch("http://localhost:8080/class")
         .then(response => response.json())
         .then(data => {
             allClasses = data;
