@@ -36,19 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-let trainerCounter = 1;
 function createTrainerCard(trainerReview) {
   const card = document.createElement("div");
   card.className = "trainer-card";
   card.setAttribute("data-trainer-id", trainerReview.trainerId);
 
-  const trainerName = trainerReview.trainerName?.trim() || `Review ${trainerCounter++}`; // ✅ Ensures trainer name is valid
-  const imageSrc =
-    trainerReview.image && trainerReview.image.trim() !== ""
-      ? trainerReview.image
-      : "image/placeholder.png"; // ✅ Proper image fallback
-  const rating = trainerReview.rate ? trainerReview.rate.toFixed(1) : "N/A"; // ✅ Handles missing rating values
-  const reviewText = trainerReview.review?.trim() || "ยังไม่มีรีวิว"; // ✅ Prevents undefined review display
+  const trainerName = trainerReview.trainerFullName?.trim() || "ไม่ทราบชื่อ"; // ✅ Fix the name reference
+  const imageSrc = trainerReview.image?.trim() || "image/placeholder.png";
+  const rating = trainerReview.rate ? trainerReview.rate.toFixed(1) : "N/A";
+  const reviewText = trainerReview.review?.trim() || "ยังไม่มีรีวิว";
 
   card.innerHTML = `
     <div class="trainer-header">
@@ -57,9 +53,9 @@ function createTrainerCard(trainerReview) {
       </div>
       <div class="trainer-info">
         <h3>${trainerName}</h3>
+        <p>⭐ ${rating}</p>
       </div>
     </div>
-    <button class="rate-trainer-btn" data-trainer-id="${trainerReview.trainerId}">Rate Trainer</button>
     <div class="trainer-reviews">
       <h4>Reviews</h4>
       <div class="review-item">
@@ -70,6 +66,7 @@ function createTrainerCard(trainerReview) {
 
   return card;
 }
+
 
 function generateStars(rating) {
   const fullStars = Math.floor(rating);
