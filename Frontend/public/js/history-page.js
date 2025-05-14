@@ -81,35 +81,22 @@ async function loadGymVisitHistory(page = 1) {
   const gymVisitTable = document.getElementById("gym-visit-table");
   if (!gymVisitTable) return;
 
-  // mock data fallback
+  // Mock data fallback
   const mockVisits = [
     {
-      id: "VISIT001",
-      date: "12-01-2025",
-      time: "08:15 - 09:30",
-      duration: "2h 15m",
-      type: "Regular visit",
+      id: 1,
+      checkinTime: "2025-05-14T08:15:00",
+      checkoutTime: "2025-05-14T09:30:00",
     },
     {
-      id: "VISIT002",
-      date: "13-01-2025",
-      time: "10:00 - 11:20",
-      duration: "1h 20m",
-      type: "Group class",
+      id: 2,
+      checkinTime: "2025-05-15T07:45:00",
+      checkoutTime: "2025-05-15T09:00:00",
     },
     {
-      id: "VISIT003",
-      date: "14-01-2025",
-      time: "07:00 - 08:30",
-      duration: "1h 30m",
-      type: "Regular visit",
-    },
-    {
-      id: "VISIT004",
-      date: "15-01-2025",
-      time: "09:15 - 10:45",
-      duration: "1h 30m",
-      type: "Personal training",
+      id: 3,
+      checkinTime: "2025-05-16T06:30:00",
+      checkoutTime: "2025-05-16T07:45:00",
     },
   ];
 
@@ -122,13 +109,8 @@ async function loadGymVisitHistory(page = 1) {
       "Content-Type": "application/json",
     };
 
-    const id = 1; // หรือใช้จาก localStorage ในระบบจริง
-    const url = `http://localhost:8080/gym-visit/get-by-member/${id}`;
-    let response = await fetch(url, {
-      method: "GET",
-      headers: header,
-    });
-
+    const memberId = 1; // ID ของสมาชิก (สามารถดึงจาก localStorage)
+    const url = `http://localhost:8080/attendance/memberId/${memberId}`;
     let visits = [];
 
     try {
@@ -139,6 +121,8 @@ async function loadGymVisitHistory(page = 1) {
 
       if (response.ok) {
         visits = await response.json();
+      } else {
+        console.warn("API ไม่ตอบกลับ 200 OK, ใช้ mock data แทน");
       }
     } catch (fetchError) {
       console.warn("โหลดจาก API ไม่สำเร็จ ใช้ mock data แทน:", fetchError);
@@ -156,13 +140,18 @@ async function loadGymVisitHistory(page = 1) {
 
     if (visits.length > 0) {
       visits.forEach((visit) => {
+        // ✅ Calculate duration dynamically
+        const duration =
+          visit.checkinTime && visit.checkoutTime
+            ? calculateDuration(visit.checkinTime, visit.checkoutTime)
+            : "Unknown";
+
         const row = document.createElement("tr");
 
         row.innerHTML = `
-                    <td>${visit.date}</td>
-                    <td>${visit.time}</td>
-                    <td>${visit.duration}</td>
-                    <td><span class="badge">${visit.type}</span></td>
+                    <td>${visit.checkinTime}</td>
+                    <td>${visit.checkoutTime}</td>
+                    <td>${duration}</td>
                 `;
 
         gymVisitTable.appendChild(row);
@@ -205,6 +194,20 @@ async function loadGymVisitHistory(page = 1) {
       );
     }
   }
+}
+
+// ✅ Function to calculate duration dynamically
+function calculateDuration(checkin, checkout) {
+  const checkinTime = new Date(checkin);
+  const checkoutTime = new Date(checkout);
+  const diff = checkoutTime - checkinTime;
+
+  if (diff > 0) {
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(minutes / 60);
+    return `${hours}h ${minutes % 60}m`;
+  }
+  return "Unknown";
 }
 
 // ฟังก์ชันโหลดข้อมูลการชำระเงินจาก API จริง
@@ -280,43 +283,43 @@ async function loadPaymentHistory(page = 1) {
 
 // ฟังก์ชันโหลดข้อมูลประวัติการชำระเงิน
 async function loadPaymentHistory(page = 1) {
-    id = 1 //const id = localStorage.getItem("id");
-    const paymentTable = document.getElementById('payment-table');
-    if (!paymentTable) return;
-    
-    try {
-        if (page === 1) {
-            showLoading(paymentTable);
-        }
-        
-        const header = {
-            "Content-Type": "application/json"
-        };
-        url = "http://localhost:8080/payment/get-by-member/"+id; 
-        response = await fetch(url, {
-            method: "GET",
-            headers: header
-        });
-        console.log(response);
-        data = await response.json();
-        payments = []
-        for(const i of data){
-            if(i.paymentStatus == "Success"){
-             payments.push(i);
-            }
-        }
-        
-        const hasMore = true; // จำลองว่ามีข้อมูลเพิ่มเติม
-        
-        if (page === 1) {
-            paymentTable.innerHTML = '';
-        }
-        
-        if (payments && payments.length > 0) {
-            payments.forEach(payment => {
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
+  id = 1; //const id = localStorage.getItem("id");
+  const paymentTable = document.getElementById("payment-table");
+  if (!paymentTable) return;
+
+  try {
+    if (page === 1) {
+      showLoading(paymentTable);
+    }
+
+    const header = {
+      "Content-Type": "application/json",
+    };
+    url = "http://localhost:8080/payment/get-by-member/" + id;
+    response = await fetch(url, {
+      method: "GET",
+      headers: header,
+    });
+    console.log(response);
+    data = await response.json();
+    payments = [];
+    for (const i of data) {
+      if (i.paymentStatus == "Success") {
+        payments.push(i);
+      }
+    }
+
+    const hasMore = true; // จำลองว่ามีข้อมูลเพิ่มเติม
+
+    if (page === 1) {
+      paymentTable.innerHTML = "";
+    }
+
+    if (payments && payments.length > 0) {
+      payments.forEach((payment) => {
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
                     <td>${payment.paymentDate}</td>
                     <td>${payment.planName}</td>
                     <td>${payment.amount}</td>
@@ -388,27 +391,27 @@ function loadMorePaymentHistory() {
 
 // ฟังก์ชันโหลดข้อมูลสรุปกิจกรรม
 async function loadActivitySummary() {
-    const statsContainer = document.getElementById('activity-stats');
-    if (!statsContainer) return;
-    
-    try {
-        showLoading(statsContainer);
-        
-        const mockSummary = {
-            totalVisits: 24,
-            totalClasses: 12,
-            totalHours: 36.5,
-            totalSpent: await totalpayment(),
-            period: "Last 3 months"
-        };
-        
-        // จำลองการเรียก API
-        // const summary = await API.getActivitySummary();
-        
-        const summary = mockSummary;
-        
-        if (summary) {
-            statsContainer.innerHTML = `
+  const statsContainer = document.getElementById("activity-stats");
+  if (!statsContainer) return;
+
+  try {
+    showLoading(statsContainer);
+
+    const mockSummary = {
+      totalVisits: 24,
+      totalClasses: 12,
+      totalHours: 36.5,
+      totalSpent: await totalpayment(),
+      period: "Last 3 months",
+    };
+
+    // จำลองการเรียก API
+    // const summary = await API.getActivitySummary();
+
+    const summary = mockSummary;
+
+    if (summary) {
+      statsContainer.innerHTML = `
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-user"></i></div>
                     <div class="stat-value">${summary.totalVisits}</div>
@@ -441,98 +444,99 @@ async function loadActivitySummary() {
 
 // ฟังก์ชันแสดงใบเสร็จ
 async function showInvoice(paymentId) {
-    const modal = document.getElementById('invoice-modal');
-    if (!modal) return;
-    
-    try {
-        const header = {
-        "Content-Type": "application/json"
-        };
-        url = "http://localhost:8080/payment/"+paymentId; 
-        response = await fetch(url, {
-            method: "GET",
-            headers: header
-        });
-        datapayment = await response.json();
-        console.log(datapayment);
+  const modal = document.getElementById("invoice-modal");
+  if (!modal) return;
 
-        url = "http://localhost:8080/member/"+datapayment.memberId;
-        response = await fetch(url, {
-            method: "GET",
-            headers: header
-        });
-        datamember = await response.json();
-        console.log(datamember);
+  try {
+    const header = {
+      "Content-Type": "application/json",
+    };
+    url = "http://localhost:8080/payment/" + paymentId;
+    response = await fetch(url, {
+      method: "GET",
+      headers: header,
+    });
+    datapayment = await response.json();
+    console.log(datapayment);
 
-        url = "http://localhost:8080/membership";
-        response = await fetch(url, {
-            method: "GET",
-            headers: header
-        });
-        dataplan = await response.json();
-        console.log(dataplan);
+    url = "http://localhost:8080/member/" + datapayment.memberId;
+    response = await fetch(url, {
+      method: "GET",
+      headers: header,
+    });
+    datamember = await response.json();
+    console.log(datamember);
 
-        for(const i of dataplan){
-            if(i.planName==datapayment.planName){
-                baseprice = i.price
-            }
-        }
-        console.log(baseprice);
-        
-        const Invoice = {
-            id: paymentId,
-            date: datapayment.paymentDate,
-            customer: {
-                name: datamember.fname + " " + datamember.lname,
-                email: datamember.email,
-                address: datamember.address
-            },
-            items: [
-                {
-                    description: "Monthly Membership - "+datapayment.planName+" Plan",
-                    quantity: 1,
-                    unitPrice: baseprice ,
-                    amount: datapayment.amount
-                }
-            ],
-            subtotal: datapayment.amount,
-            total: datapayment.amount,
-            payment: {
-                method: datapayment.paymentMethod,
-                date: datapayment.paymentDate,
-                status: datapayment.paymentStatus
-            }
-        }; 
-        
-        const invoice = Invoice;
-        
-        if (invoice) {
-            // อัพเดทข้อมูลใบเสร็จใน Modal
-            const invoiceNumber = document.getElementById('invoice-number');
-            const invoiceDate = document.getElementById('invoice-date');
-            const customerName = document.getElementById('customer-name');
-            const customerEmail = document.getElementById('customer-email');
-            const customerAddress = document.getElementById('customer-address');
-            const invoiceItems = document.getElementById('invoice-items');
-            const invoiceSummary = document.getElementById('invoice-summary');
-            const paymentMethod = document.getElementById('payment-method');
-            const paymentDate = document.getElementById('payment-date');
-            const paymentStatus = document.getElementById('payment-status');
-            
-            if (invoiceNumber) invoiceNumber.textContent = `Invoice #${invoice.id}`;
-            if (invoiceDate) invoiceDate.textContent = `Date: ${invoice.date}`;
-            if (customerName) customerName.textContent = invoice.customer.name;
-            if (customerEmail) customerEmail.textContent = invoice.customer.email;
-            if (customerAddress) customerAddress.textContent = invoice.customer.address;
-            
-            // อัพเดทรายการในใบเสร็จ
-            if (invoiceItems) {
-                invoiceItems.innerHTML = '';
-                
-                invoice.items.forEach(item => {
-                    const row = document.createElement('tr');
-                    
-                    row.innerHTML = `
+    url = "http://localhost:8080/membership";
+    response = await fetch(url, {
+      method: "GET",
+      headers: header,
+    });
+    dataplan = await response.json();
+    console.log(dataplan);
+
+    for (const i of dataplan) {
+      if (i.planName == datapayment.planName) {
+        baseprice = i.price;
+      }
+    }
+    console.log(baseprice);
+
+    const Invoice = {
+      id: paymentId,
+      date: datapayment.paymentDate,
+      customer: {
+        name: datamember.fname + " " + datamember.lname,
+        email: datamember.email,
+        address: datamember.address,
+      },
+      items: [
+        {
+          description: "Monthly Membership - " + datapayment.planName + " Plan",
+          quantity: 1,
+          unitPrice: baseprice,
+          amount: datapayment.amount,
+        },
+      ],
+      subtotal: datapayment.amount,
+      total: datapayment.amount,
+      payment: {
+        method: datapayment.paymentMethod,
+        date: datapayment.paymentDate,
+        status: datapayment.paymentStatus,
+      },
+    };
+
+    const invoice = Invoice;
+
+    if (invoice) {
+      // อัพเดทข้อมูลใบเสร็จใน Modal
+      const invoiceNumber = document.getElementById("invoice-number");
+      const invoiceDate = document.getElementById("invoice-date");
+      const customerName = document.getElementById("customer-name");
+      const customerEmail = document.getElementById("customer-email");
+      const customerAddress = document.getElementById("customer-address");
+      const invoiceItems = document.getElementById("invoice-items");
+      const invoiceSummary = document.getElementById("invoice-summary");
+      const paymentMethod = document.getElementById("payment-method");
+      const paymentDate = document.getElementById("payment-date");
+      const paymentStatus = document.getElementById("payment-status");
+
+      if (invoiceNumber) invoiceNumber.textContent = `Invoice #${invoice.id}`;
+      if (invoiceDate) invoiceDate.textContent = `Date: ${invoice.date}`;
+      if (customerName) customerName.textContent = invoice.customer.name;
+      if (customerEmail) customerEmail.textContent = invoice.customer.email;
+      if (customerAddress)
+        customerAddress.textContent = invoice.customer.address;
+
+      // อัพเดทรายการในใบเสร็จ
+      if (invoiceItems) {
+        invoiceItems.innerHTML = "";
+
+        invoice.items.forEach((item) => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
                         <td>${item.description}</td>
                         <td>${item.quantity}</td>
                         <td>฿${item.unitPrice.toFixed(2)}</td>
@@ -580,42 +584,40 @@ async function showInvoice(paymentId) {
   }
 }
 
-
-
 async function totalpayment() {
-    id=1 //const id = localStorage.getItem("id");   
-    const header = {
-        "Content-Type": "application/json"
-    };
-    url = "http://localhost:8080/payment/get-by-member/"+id; 
-    response = await fetch(url, {
-        method: "GET",
-        headers: header
-    });
-    data = await response.json();
-    payments = []
-    total = 0
-    
-    const dateObj = new Date();
-    const year = dateObj.getFullYear();
-    const month = dateObj.getMonth() + 1; 
-    const day = dateObj.getDate();
+  id = 1; //const id = localStorage.getItem("id");
+  const header = {
+    "Content-Type": "application/json",
+  };
+  url = "http://localhost:8080/payment/get-by-member/" + id;
+  response = await fetch(url, {
+    method: "GET",
+    headers: header,
+  });
+  data = await response.json();
+  payments = [];
+  total = 0;
 
-    for(const i of data){
-        if(i.paymentStatus === "Success" ){
-            paymentdate = i.paymentDate
-            date = paymentdate.split('-');
-            if(date[0]!=year){
-                year = date[0]
-                month +=12
-            }
-            ((month-date[1])*30)+date[2]<=90
-            if(month-date[1]<3 || (month-date[1]==3 && day<date[2])){
-                payments.push(i);
-                total+=i.amount
-            }
-        }
+  const dateObj = new Date();
+  const year = dateObj.getFullYear();
+  const month = dateObj.getMonth() + 1;
+  const day = dateObj.getDate();
+
+  for (const i of data) {
+    if (i.paymentStatus === "Success") {
+      paymentdate = i.paymentDate;
+      date = paymentdate.split("-");
+      if (date[0] != year) {
+        year = date[0];
+        month += 12;
+      }
+      (month - date[1]) * 30 + date[2] <= 90;
+      if (month - date[1] < 3 || (month - date[1] == 3 && day < date[2])) {
+        payments.push(i);
+        total += i.amount;
+      }
     }
-    console.log(total);
-    return total
+  }
+  console.log(total);
+  return total;
 }

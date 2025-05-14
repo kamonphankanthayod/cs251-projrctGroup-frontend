@@ -32,53 +32,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ฟังก์ชันโหลดข้อมูลผู้ใช้
 async function loadUserProfile() {
-  try {
-    // ในระบบจริงจะใช้ API.getUserProfile() เพื่อดึงข้อมูล
-    const profile = await API.getUserProfile();
-    const header = {
-      "Content-Type": "application/json",
-    };
-    let url = "http://localhost:8080/member/{memberId}";
-    let response = await fetch(url, {
-      method: "GET",
-      headers: header,
-    });
-
-    if (profile) {
-      // อัพเดทข้อมูลในหน้า
-      document.getElementById("profile-name-value").textContent = profile.name;
-      document.getElementById("profile-email-value").textContent =
-        profile.email;
-      document.getElementById("profile-phone-value").textContent =
-        profile.phone;
-      document.getElementById("profile-address-value").textContent =
-        profile.address;
-      document.getElementById("profile-birthdate-value").textContent =
-        profile.birthDate;
-
-      // อัพเดทฟอร์มแก้ไขโปรไฟล์
-      document.getElementById("profile-name").value = profile.name;
-      document.getElementById("profile-email").value = profile.email;
-      document.getElementById("profile-phone").value = profile.phone;
-      document.getElementById("profile-address").value = profile.address;
-
-      // แปลงวันที่เป็นรูปแบบที่ใช้กับ input type="date"
-      const birthDate = new Date(profile.birthDate);
-      const formattedDate = birthDate.toISOString().split("T")[0];
-      document.getElementById("profile-birthdate").value = formattedDate;
-
-      // อัพเดทรูปโปรไฟล์
-      if (profile.profileImage) {
-        document.getElementById("profile-image").src = profile.profileImage;
-      }
+    try {
+        // ในระบบจริงจะใช้ API.getUserProfile() เพื่อดึงข้อมูล
+        const profile = await API.getUserProfile();
+        const header = {
+            "Content-Type": "application/json"
+        };
+        let url = "http://localhost:8080/member/{memberId}";
+        let response = await fetch(url, {
+            method: "GET",
+            headers: header,
+        });
+        
+        if (profile) {
+            // อัพเดทข้อมูลในหน้า
+            document.getElementById('profile-name-value').textContent = profile.name;
+            document.getElementById('profile-email-value').textContent = profile.email;
+            document.getElementById('profile-phone-value').textContent = profile.phone;
+            document.getElementById('profile-address-value').textContent = profile.address;
+            document.getElementById('profile-birthdate-value').textContent = profile.birthDate;
+            
+            // อัพเดทฟอร์มแก้ไขโปรไฟล์
+            document.getElementById('profile-name').value = profile.name;
+            document.getElementById('profile-email').value = profile.email;
+            document.getElementById('profile-phone').value = profile.phone;
+            document.getElementById('profile-address').value = profile.address;
+            
+            // แปลงวันที่เป็นรูปแบบที่ใช้กับ input type="date"
+            const birthDate = new Date(profile.birthDate);
+            const formattedDate = birthDate.toISOString().split('T')[0];
+            document.getElementById('profile-birthdate').value = formattedDate;
+            
+            // อัพเดทรูปโปรไฟล์
+            if (profile.profileImage) {
+                document.getElementById('profile-image').src = profile.profileImage;
+            }
+        }
+    } catch (error) {
+        console.error('เกิดข้อผิดพลาดในการโหลดข้อมูลโปรไฟล์:', error);
+        showNotification('ไม่สามารถโหลดข้อมูลโปรไฟล์ได้ กรุณาลองใหม่อีกครั้ง', 'error');
     }
-  } catch (error) {
-    console.error("เกิดข้อผิดพลาดในการโหลดข้อมูลโปรไฟล์:", error);
-    showNotification(
-      "ไม่สามารถโหลดข้อมูลโปรไฟล์ได้ กรุณาลองใหม่อีกครั้ง",
-      "error"
-    );
-  }
 }
 
 // ฟังก์ชันโหลดข้อมูลสมาชิก

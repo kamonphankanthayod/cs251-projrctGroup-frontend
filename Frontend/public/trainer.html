@@ -13,62 +13,78 @@
   </head>
   <body>
     <div class="app-container">
-        <!-- ส่วนหัว -->
-        <header class="main-header">
-            <div class="logo">FitJAD</div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="alreadyLoginHome.html" class="nav-link">Home</a></li>
-                    <li><a href="membership.html" class="nav-link active">Member</a></li>
-                    <li><a href="alreadyLoginHome.html#classes" class="nav-link">Classes</a></li>
-                    <li><a href="alreadyLoginHome.html#footer" class="nav-link">Contact</a></li>
-                </ul>
-            </nav>
-            <div class="sign-out">
-                <a href="homepage.html" class="sign-out-btn">
-                    <i class="fas fa-sign-out-alt"></i> Sign out
-                </a>
-            </div>
-        </header>
+      <!-- ส่วนหัว -->
+      <header class="main-header">
+        <div class="logo">FitJAD</div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="alreadyLoginHome.html" class="nav-link">Home</a></li>
+            <li>
+              <a href="membership.html" class="nav-link active">Member</a>
+            </li>
+            <li>
+              <a href="alreadyLoginHome.html#classes" class="nav-link"
+                >Classes</a
+              >
+            </li>
+            <li>
+              <a href="alreadyLoginHome.html#footer" class="nav-link"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="sign-out">
+          <a href="homepage.html" class="sign-out-btn">
+            <i class="fas fa-sign-out-alt"></i> Sign out
+          </a>
+        </div>
+      </header>
 
-        <!-- ส่วนเนื้อหาหลัก -->
-        <div class="content-container">
-            <!-- เมนูด้านข้าง -->
-            <aside class="sidebar">
-                <div class="user-profile">
-                    <div class="user-avatar">
-                        <img src="image/placeholder.png?height=50&width=50" alt="User Avatar">
-                    </div>
-                    <div class="user-info">
-                        <h3 class="user-name">John Cena</h3>
-                        <p class="user-membership">Premium Member</p>
-                    </div>
-                </div>
-                <nav class="sidebar-nav">
-                    <ul>
-                        <li>
-                            <a href="profile.html" class="sidebar-link" data-page="profile">
-                                <i class="fas fa-user"></i> Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="my-classes(Profile).html" class="sidebar-link" data-page="my-classes(Profile)">
-                                <i class="fas fa-calendar"></i> My Class
-                            </a>
-                        </li>
-                        <li>
-                            <a href="trainer.html" class="sidebar-link active" data-page="trainer">
-                                <i class="fas fa-dumbbell"></i> Trainer
-                            </a>
-                        </li>
-                        <li>
-                            <a href="history.html" class="sidebar-link" data-page="history">
-                                <i class="fas fa-history"></i> History
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
+      <!-- ส่วนเนื้อหาหลัก -->
+      <div class="content-container">
+        <!-- เมนูด้านข้าง -->
+        <aside class="sidebar">
+          <div class="user-profile">
+            <div class="user-avatar">
+              <img src="image/placeholder.png" alt="User Avatar" />
+            </div>
+            <div class="user-info">
+              <h3 class="user-name">John Cena</h3>
+              <p class="user-membership">Premium Member</p>
+            </div>
+          </div>
+          <nav class="sidebar-nav">
+            <ul>
+              <li>
+                <a href="profile.html" class="sidebar-link" data-page="profile"
+                  ><i class="fas fa-user"></i> Profile</a
+                >
+              </li>
+              <li>
+                <a
+                  href="my-classes(Profile).html"
+                  class="sidebar-link"
+                  data-page="my-classes(Profile)"
+                  ><i class="fas fa-calendar"></i> My Class</a
+                >
+              </li>
+              <li>
+                <a
+                  href="trainer.html"
+                  class="sidebar-link active"
+                  data-page="trainer"
+                  ><i class="fas fa-dumbbell"></i> Trainer</a
+                >
+              </li>
+              <li>
+                <a href="history.html" class="sidebar-link" data-page="history"
+                  ><i class="fas fa-history"></i> History</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </aside>
 
         <!-- เนื้อหาหลัก -->
         <main class="main-content">
@@ -139,7 +155,6 @@
     </div>
 
     <!-- JavaScript -->
-    <!--<script src="./js/api.js"></script>-->
     <script src="./js/ProfileSetting.js"></script>
     <script src="./js/trainer-page.js"></script>
   </body>
