@@ -2,16 +2,16 @@ document.getElementById("registerForm").addEventListener("submit", function(even
   event.preventDefault();
 
   const formData = {
-    firstName: document.querySelector('input[placeholder="John"]').value,
-    lastName: document.querySelector('input[placeholder="Doe"]').value,
-    email: document.querySelector('input[placeholder="Enter your email"]').value,
-    phone: document.querySelector('input[placeholder="012345678"]').value,
-    address: document.querySelector('input[placeholder="Samuthparkan"]').value,
-    username: document.querySelector('input[placeholder="test"]').value,
-    password: document.querySelector('input[placeholder="XXXXXXXX"]').value
+    userName: document.querySelector('input[placeholder="John"]').value,  // Assuming you will update the placeholder
+    fname: document.querySelector('input[placeholder="สมชาย"]').value,
+    lname: document.querySelector('input[placeholder="ใจถึงพึ่งได้"]').value,
+    email: document.querySelector('input[placeholder="Somchai@gmail.com"]').value,
+    password: document.querySelector('input[placeholder="password123"]').value,
+    phoneNumber: document.querySelector('input[placeholder="123-456-7890"]').value,
+    address: document.querySelector('input[placeholder="ดาวอังคาร"]').value
   };
 
-  fetch("http://localhost:8080/member/register", { // Backend Change
+  fetch("http://localhost:8080/member/register", { // Update backend URL if necessary
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -28,7 +28,7 @@ document.getElementById("registerForm").addEventListener("submit", function(even
   .then(data => {
     alert("Account created successfully!");
     localStorage.setItem("memberId", data.id);
-    window.location.href = "login.html";
+    window.location.href = "login.html";  // Redirect after successful registration
   })
   .catch(error => {
     console.error("Error:", error);
@@ -43,7 +43,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
   const password = document.querySelector('input[placeholder="XXXXXXXX"]').value;
 
   const loginData = {
-    username: username,
+    userName: username,
     password: password
   };
 
