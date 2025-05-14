@@ -19,25 +19,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ฟังก์ชันแสดงผล
     function renderClasses(classes) {
-        classList.innerHTML = "";
-        if (classes.length === 0) {
-            classList.innerHTML = "<p>No classes found.</p>";
-            return;
-        }
-
-        classes.forEach(cls => {
-            const card = document.createElement("div");
-            card.className = "class-card";
-            card.innerHTML = `
-                <div class="badge">${cls.category}</div>
-                <h3>${cls.title}</h3>
-                <p>${cls.description}</p>
-                <p><strong>Instructor:</strong> ${cls.instructor}</p>
-                <p><strong>Duration:</strong> ${cls.duration} min</p>
-            `;
-            classList.appendChild(card);
-        });
+    classList.innerHTML = "";
+    if (classes.length === 0) {
+        classList.innerHTML = "<p>No classes found.</p>";
+        return;
     }
+
+    classes.forEach(cls => {
+        const card = document.createElement("div");
+        card.className = "class-card";
+
+        const trainersHTML = cls.trainers?.map(t => `
+            <li>
+                <strong>${t.fullName}</strong> (${t.speciality}) – Rating: ${t.rating}
+            </li>
+        `).join("") || "<li>No trainers listed.</li>";
+
+        card.innerHTML = `
+            <div class="badge">${cls.category || "General"}</div>
+            <h3>${cls.className || cls.title}</h3>
+            <p><strong>Schedule:</strong> ${cls.schedule || "TBD"}</p>
+            <p><strong>Capacity:</strong> ${cls.capacity}</p>
+            <p><strong>Class Rating:</strong> ${cls.rating}</p>
+            <p><strong>Trainers:</strong></p>
+            <ul>${trainersHTML}</ul>
+        `;
+        classList.appendChild(card);
+    });
+}
 
     // Search
     searchInput.addEventListener("input", () => {
