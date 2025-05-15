@@ -82,3 +82,11 @@ Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:3
 1. รันคําสั่ง ```sudo systemctl stop mysql``` หรือ ``sudo systemctl stop mysqld`` (ขึ้นอยู่กับ version ที่ติดตั้ง)
 2. ตรวจสอบสถานะว่า MySQL หยุดแล้วหรือยัง ``sudo systemctl status mysql``
 3. รัน project อีกรอบ
+
+
+
+# ตัว github ที่ใช้ในการพัฒนา
+```bash
+https://github.com/kamonphankanthayod/cs251-projrctGroup-frontend
+https://github.com/Nattasak-Chonmanat/fitness_backend_cs251.git
+```
