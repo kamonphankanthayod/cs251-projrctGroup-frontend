@@ -1,0 +1,8 @@
+# Ignore files/folders that are not needed in the image
+.vscode
+*.pdf
+*.md
+*.zip
+node_modules
+Dockerfile
+docker-compose.yml

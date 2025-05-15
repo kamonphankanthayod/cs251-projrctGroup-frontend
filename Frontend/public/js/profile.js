@@ -190,7 +190,7 @@ async function loadMembershipHistory() {
       headers: header
   });
   data = await response.json();
-  console.log(data);
+  //console.log(data);
   const historyData = [
     {
       date: data.regisDate,
@@ -198,9 +198,22 @@ async function loadMembershipHistory() {
       details: "Account created",
     },
   ];
+
+  url = "http://localhost:8080/payment/get-by-member/"+id; 
+  response = await fetch(url, {
+      method: "GET",
+      headers: header
+  });
+  datapayment = await response.json();
+  datestart = '';
+  for(const i of datapayment){
+    if(i.paymentStatus == "Success"){
+        datestart = i.paymentDate
+      }
+  }
   if(data.planName != null){
     historyData.push({
-      date: data.expireDate,
+      date: datestart,
       action: "Apply for membership",
       details: data.planName + " membership",
   });
