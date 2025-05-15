@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  app:
+    image: eclipse-temurin:21-jdk
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./demo/target/demo-0.0.1-SNAPSHOT.jar:/demo.jar
+    environment:
+      - SPRING_MAIN_WEB_APPLICATION_TYPE=servlet
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - mysql
+    command: ["java", "-jar", "/demo.jar"]
+
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fitness_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
+
+  frontend:
+    build: .
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
