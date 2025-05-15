@@ -39,7 +39,7 @@ async function loadUserProfile() {
         const header = {
             "Content-Type": "application/json"
         };
-        console.log(profile)
+        //console.log(profile)
         if (profile) {
             let memberIdElem = document.getElementById("nameP");
             if (memberIdElem) memberIdElem.textContent = profile.name;
@@ -176,32 +176,36 @@ async function loadPaymentMethods() {
 }
 
 // ฟังก์ชันโหลดประวัติสมาชิก
-function loadMembershipHistory() {
+async function loadMembershipHistory() {
   const historyContainer = document.querySelector(".membership-history-list");
 
-  // ข้อมูลจำลอง
+  const id = localStorage.getItem("memberId");
+  // จำลองการหน่วงเวลาเรียก API
+  const header = {
+    "Content-Type": "application/json"
+  };
+  url = "http://localhost:8080/member/"+id; 
+  response = await fetch(url, {
+      method: "GET",
+      headers: header
+  });
+  data = await response.json();
+  console.log(data);
   const historyData = [
     {
-      date: "2025-01-01",
-      action: "Membership Started",
-      details: "Gold membership plan activated",
-    },
-    {
-      date: "2024-12-15",
-      action: "Plan Changed",
-      details: "Changed from Silver to Gold plan",
-    },
-    {
-      date: "2024-10-01",
-      action: "Membership Started",
-      details: "Silver membership plan activated",
-    },
-    {
-      date: "2024-09-25",
+      date: data.regisDate,
       action: "Registration",
       details: "Account created",
     },
   ];
+  if(data.planName != null){
+    historyData.push({
+      date: data.expireDate,
+      action: "Apply for membership",
+      details: data.planName + " membership",
+  });
+  }
+  
 
   // เรียงข้อมูลจากใหม่ไปเก่า
   historyData.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -288,21 +292,13 @@ function setupEditProfileButton() {
 
     try {
       const response = await API.updateUserProfile(data);
-
-      if (response.success) {
+      console.log(response.status);
+      if (response) {
         // อัพเดทข้อมูลในหน้า
         document.getElementById("profile-name-value").textContent = data.name;
         document.getElementById("profile-email-value").textContent = data.email;
         document.getElementById("profile-phone-value").textContent = data.phone;
         document.getElementById("profile-address-value").textContent = data.address;
-
-        const birthDate = new Date(data.birthDate);
-        const formattedDate = birthDate.toLocaleDateString("th-TH", {
-          day: "numeric",
-          month: "short",
-          year: "numeric",
-        });
-        document.getElementById("profile-birthdate-value").textContent = formattedDate;
 
         if (response.profileImage) {
           updateProfileImages(response.profileImage);
@@ -429,7 +425,7 @@ function updateCurrentPlan(planId) {
     const selectButton = currentPlan.querySelector(".select-plan-btn");
     if (selectButton) selectButton.remove();
   }
-
+  //**** 
   // เพิ่มปุ่มเลือกแผนให้กับแผนอื่น
   document.querySelectorAll(".plan-option:not(.active)").forEach((plan) => {
     const planType = plan.id.replace("-plan", "");
@@ -542,7 +538,7 @@ function updateBenefitsByPlan(planId) {
     benefitsList.appendChild(li);
   });
 }
-
+//****
 // ฟังก์ชันเพิ่มประวัติการเปลี่ยนแปลงสมาชิก
 function addMembershipHistoryItem(action, details) {
   const historyContainer = document.querySelector(".membership-history-list");
@@ -566,7 +562,7 @@ function addMembershipHistoryItem(action, details) {
   // เพิ่มรายการใหม่ไว้ด้านบนสุด
   historyContainer.insertBefore(historyItem, historyContainer.firstChild);
 }
-
+//
 // ฟังก์ชันตั้งค่าปุ่มยกเลิกสมาชิก
 function setupCancelMembershipButton() {
   const cancelButton = document.getElementById("cancel-membership-btn");
@@ -574,23 +570,23 @@ function setupCancelMembershipButton() {
   cancelButton.addEventListener("click", async function () {
     if (
       confirm(
-        "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกสมาชิก? การกระทำนี้จะเปลี่ยนแผนของคุณเป็น Standard"
+        "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกสมาชิก? การกระทำนี้จะยกเลิการเก็บเงินสำหรับค่าสมาชิกในรอบเดือนถัดไปและเปลี่ยนแผนเป้นสมาชิก Standard"
       )
     ) {
       try {
         // ในระบบจริงจะเรียกใช้ API
         const response = await API.cancelMembership();
 
-        if (response.success) {
+        if (response.status) {
           // เปลี่ยนแผนเป็น Standard
-          updateCurrentPlan("standard");
+          updateCurrentPlan(10004);
 
           // อัพเดทข้อมูลในหน้า
           document.getElementById("membership-type-value").textContent =
             "Standard";
 
           // อัพเดทสิทธิประโยชน์
-          updateBenefitsByPlan("standard");
+          updateBenefitsByPlan(10004);
 
           // เพิ่มประวัติการเปลี่ยนแปลง
           addMembershipHistoryItem(
@@ -601,7 +597,7 @@ function setupCancelMembershipButton() {
           // แสดงข้อความสำเร็จ
           showNotification("เปลี่ยนแผนสมาชิกเป็น Standard เรียบร้อยแล้ว");
         } else {
-          throw new Error(response.message || "ไม่สามารถยกเลิกสมาชิกได้");
+          throw new Error(response.status || "ไม่สามารถยกเลิกสมาชิกได้");
         }
       } catch (error) {
         console.error("เกิดข้อผิดพลาดในการยกเลิกสมาชิก:", error);

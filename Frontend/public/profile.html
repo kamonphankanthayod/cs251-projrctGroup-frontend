@@ -127,7 +127,7 @@
                             <div class="tab-content active" id="membership-overview">
                                 <!-- ข้อมูลสมาชิกจะถูกเพิ่มที่นี่ด้วย JavaScript -->
                                 <div class="membership-badge">
-                                    <div class="membership-type">FitJAD <span id="membership-type-value">Gold</span></div>
+                                    <div class="membership-type">FitJAD <span id="membership-type-value"></span></div>
                                     <div class="membership-info">Member since: <span id="membership-since-value">January 2025</span></div>
                                     <div class="membership-info">Expires on: <span id="membership-expires-value">December 31, 2025</span></div>
                                     <div class="membership-info">Membership ID: <span id="membership-id-value">FIT-8482</span></div>
@@ -140,12 +140,10 @@
                             </div>
                             <div class="tab-content" id="membership-benefits">
                                 <ul class="benefits-list" id="benefits-list">
-                                    <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
-                                    <li>คลาสกลุ่มฟรี</li>
-                                    <li>ปรึกษาเทรนเนอร์ส่วนตัว (2 ครั้ง/เดือน)</li>
-                                    <li>เข้าถึงอุปกรณ์พรีเมียม</li>
-                                    <li>บริการผ้าเช็ดตัว</li>
-                                    <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
                                 </ul>
                             </div>
                             <div class="tab-content" id="membership-history">
@@ -209,10 +207,6 @@
                     <label for="profile-address">Address</label>
                     <textarea id="profile-address" name="address" rows="3">99/9 Moo ping</textarea>
                 </div>
-                <div class="form-group">
-                    <label for="profile-pass">Confirm password</label>
-                    <input type="tel" id="profile-pass" name="pass" value="">
-                </div>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
         </div>
@@ -224,49 +218,54 @@
             <span class="close-modal">&times;</span>
             <h2>Change Membership Plan</h2>
             <div class="plan-options">  
-                <div class="plan-option" id="silver-plan">
+                <div class="plan-option" id="basic-plan">
                     <div class="plan-header">
                         <h3>Basic</h3>
-                        <div class="plan-price">฿990/month</div>
+                        <div class="plan-price">฿50/month</div>
                     </div>
                     <ul class="plan-features">
-                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
-                        <li>คลาสกลุ่มพื้นฐาน</li>
-                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                        <li>Access to gym floor</li>
+                        <li>Basic equipment usage</li>
+                        <li>Locker room access</li>
+                        <li>Free water station</li>
                     </ul>
-                    <button class="btn btn-outline select-plan-btn" data-plan="silver">Select Plan</button>
+                    <form action="./payment-QR.html" method="get">
+                        <input type="hidden" name="PlanName" value="Basic" />
+                        <button type="submit" class="btn btn-outline select-plan-btn" data-plan="basic">Select Plan</button>
+                    </form>
+                    
                 </div>
-                <div class="plan-option active" id="gold-plan">
+                <div class="plan-option" id="gold-plan">
                     <div class="plan-header">
                         <h3>Gold</h3>
-                        <div class="plan-price">฿1,500/month</div>
+                        <div class="plan-price">฿70/month</div>
                     </div>
                     <ul class="plan-features">
-                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
-                        <li>คลาสกลุ่มฟรี</li>
-                        <li>ปรึกษาเทรนเนอร์ส่วนตัว (2 ครั้ง/เดือน)</li>
-                        <li>เข้าถึงอุปกรณ์พรีเมียม</li>
-                        <li>บริการผ้าเช็ดตัว</li>
-                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
+                        <li>Everything in Basic</li>
+                        <li>Group fitness classes</li>
+                        <li>Nutrition consultation</li>
+                        <li>Access to all locations</li>
                     </ul>
-                    <div class="current-plan-badge">Current Plan</div>
+                    <form action="./payment-QR.html" method="get">
+                        <input type="hidden" name="PlanName" value="Gold" />
+                        <button type="submit" class="btn btn-outline select-plan-btn" data-plan="gold">Select Plan</button>
+                    </form>
                 </div>
                 <div class="plan-option" id="platinum-plan">
                     <div class="plan-header">
                         <h3>Platinum</h3>
-                        <div class="plan-price">฿2,500/month</div>
+                        <div class="plan-price">฿100/month</div>
                     </div>
                     <ul class="plan-features">
-                        <li>เข้าใช้บริการฟิตเนสได้ตลอด 24/7</li>
-                        <li>คลาสกลุ่มฟรีไม่จำกัด</li>
-                        <li>ปรึกษาเทรนเนอร์ส่วนตัว (4 ครั้ง/เดือน)</li>
-                        <li>เข้าถึงอุปกรณ์พรีเมียม</li>
-                        <li>บริการผ้าเช็ดตัว</li>
-                        <li>ล็อคเกอร์ส่วนตัวฟรี</li>
-                        <li>สิทธิ์เข้าใช้สปาและซาวน่า</li>
-                        <li>ที่จอดรถฟรี</li>
+                        <li>Everything in Gold</li>
+                        <li>Premium locker with amenities</li>
+                        <li>Spa & recovery services</li>
+                        <li>Priority class booking</li>
                     </ul>
-                    <button class="btn btn-primary select-plan-btn" data-plan="platinum">Select Plan</button>
+                    <form action="./payment-QR.html" method="get">
+                        <input type="hidden" name="PlanName" value="Platinum" />
+                        <button type="submit" class="btn btn-outline select-plan-btn" data-plan="platinum">Select Plan</button>
+                    </form>
                 </div>
             </div>
         </div>

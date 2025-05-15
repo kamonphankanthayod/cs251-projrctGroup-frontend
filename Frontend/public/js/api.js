@@ -18,7 +18,7 @@ const API = {
         headers: header
     });
     data = await response.json();
-    console.log(data);
+    //console.log(data);
     // ส่งข้อมูล
     return {
       id: data.id,
@@ -33,8 +33,8 @@ const API = {
   },
 
   updateUserProfile: async (userData) => {
-    console.log(userData);
-    const id = 1 //JSON.parse(localStorage.getItem("id"));
+    //console.log(userData);
+    const id = localStorage.getItem("memberId");
     const header = {
       "Content-Type": "application/json"
     };
@@ -47,30 +47,24 @@ const API = {
     rname = userData.name.split(' ');
     
     const body = JSON.stringify({
-      "userName": data.userName,
       "fname": rname[0],
       "lname": rname[1],
       "email": userData.email,
-      "password": userData.pass,
       "phoneNumber": userData.phone,
       "address": userData.address
     });
-    console.log(body);
+    //console.log(body);
     url = "http://localhost:8080/member/"+id; 
     response = await fetch(url, {
         method: "PUT",
         headers: header,
         body: body,
     });
-    data = await response.json();
-    console.log(data);
+    //data = await response.json();
+    //console.log(data);
 
     // จำลองการอัพเดทสำเร็จ
-    return {
-      success: true,
-      message: "อัพเดทโปรไฟล์สำเร็จ",
-      data: userData,
-    }
+    return response
   },
 
   // API ข้อมูลสมาชิก
@@ -86,6 +80,7 @@ const API = {
     });
     datamem = await response.json();
     //console.log(datamem);
+    if(datamem.planName != null){
     url = "http://localhost:8080/membership"; 
     response = await fetch(url, {
         method: "GET",
@@ -99,8 +94,24 @@ const API = {
         plan = i
       } 
     }
-    console.log(plan);
-    enddate = datamem.expireDate.split('-');
+    //console.log(plan);
+
+    let datestart = ''
+    url = "http://localhost:8080/payment/get-by-member/"+id; 
+    response = await fetch(url, {
+        method: "GET",
+        headers: header
+    });
+    datapayment = await response.json();
+    for(const i of datapayment){
+      console.log(i);
+      if(i.paymentStatus == "Success"){
+        datestart = i.paymentDate
+      }
+    }
+    console.log(datestart);
+
+    enddate = datestart.split('-');
     enddate[1] = parseInt(enddate[1])+1;
     enddate[2] = parseInt(enddate[2])-1
     if(enddate[2]==0){
@@ -118,8 +129,9 @@ const API = {
     if(enddate[1]>12){
       enddate[1]=1
     }
-    bill = enddate;
-    bill[2] = bill[2]-1
+    bill = datestart.split('-');
+    bill[1] = parseInt(bill[1])+1;
+    bill[2] = parseInt(bill[2])-2
     if(bill[2]==0){
       bill[1]-=1;
       if(enddate[1]%2==1){
@@ -132,17 +144,41 @@ const API = {
         enddate[2] = 30;
       }
     }
-    console.log(plan.description.split('+'));
-
-    // ส่งข้อมูล
+    if(bill[2]< 0){
+      bill[1]-=1;
+      if(enddate[1]%2==1){
+        enddate[2] = 30;
+      }
+      else if(enddate[1]==2){
+        enddate[2] = 28;
+      }
+      else{
+        enddate[2] = 30;
+      }
+      }
+    //console.log(plan.description.split('+'));
+    billingCycle = "Monthly automatic renewal"
+    //console.log(plan.description.split('+'));
     return {
       id: plan.id,
       type: datamem.planName,
-      startDate: datamem.expireDate,
+      startDate: datestart,
       expiryDate: enddate[0]+'-'+enddate[1]+'-'+enddate[2],
-      billingCycle: "Monthly automatic renewal",
+      billingCycle: billingCycle,
       nextBillingDate: bill[0]+'-'+bill[1]+'-'+bill[2],
       benefits: plan.description.split('+'),
+    }
+    }
+    else{
+      return{
+        id: "-",
+        type: "-",
+        startDate: "-",
+        expiryDate: "-",
+        billingCycle: "-",
+        nextBillingDate: "-",
+        benefits: ['-'],
+      }
     }
   },
 
@@ -164,15 +200,23 @@ const API = {
   },
 
   cancelMembership: async () => {
-    // จำลองการหน่วงเวลาเรียก API
-    await new Promise((resolve) => setTimeout(resolve, 900))
-
-    // จำลองการยกเลิกสำเร็จ
-    return {
-      success: true,
-      message: "ยกเลิกสมาชิกสำเร็จ",
-      cancellationDate: "December 31, 2023",
-    }
+    const id = localStorage.getItem("memberId");
+    const body = JSON.stringify({
+      "planId": 10004
+    });
+    const header = {
+      "Content-Type": "application/json"
+    };
+    url = "http://localhost:8080/member/update-membership/"+id; 
+    response = await fetch(url, {
+        method: "PUT",
+        headers: header,
+        body: body
+    });
+    data = await response.json();
+    //console.log('data =',data);
+    
+    return data
   },
 
   // API วิธีการชำระเงิน
