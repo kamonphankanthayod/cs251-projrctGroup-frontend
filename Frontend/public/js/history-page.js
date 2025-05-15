@@ -112,23 +112,7 @@ async function loadGymVisitHistory(page = 1) {
   if (!gymVisitTable) return;
 
   // Mock data fallback
-  const mockVisits = [
-    {
-      id: 1,
-      checkinTime: "2025-05-14T08:15:00",
-      checkoutTime: "2025-05-14T09:30:00",
-    },
-    {
-      id: 2,
-      checkinTime: "2025-05-15T07:45:00",
-      checkoutTime: "2025-05-15T09:00:00",
-    },
-    {
-      id: 3,
-      checkinTime: "2025-05-16T06:30:00",
-      checkoutTime: "2025-05-16T07:45:00",
-    },
-  ];
+  const mockVisits = [];
 
   try {
     if (page === 1) {
@@ -466,11 +450,6 @@ async function loadActivitySummary() {
                     <div class="stat-icon"><i class="fas fa-user"></i></div>
                     <div class="stat-value">${summary.totalVisits}</div>
                     <div class="stat-label">Total Visit<br>${summary.period}</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-calendar"></i></div>
-                    <div class="stat-value">${summary.totalClasses}</div>
-                    <div class="stat-label">Class Attendance<br>${summary.period}</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-clock"></i></div>
