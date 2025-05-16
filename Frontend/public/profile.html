@@ -17,8 +17,8 @@
                 <ul>
                     <li><a href="alreadyLoginHome.html" class="nav-link">Home</a></li>
                     <li><a href="membership.html" class="nav-link active">Member</a></li>
-                    <li><a href="my-classes(Profile).html" class="nav-link">Classes</a></li>
-                    <li><a href="alreadyLoginHome.html" class="nav-link">Contact</a></li>
+                    <li><a href="my-classes(Profile).html#classes" class="nav-link">Classes</a></li>
+                    <li><a href="alreadyLoginHome.html#footer" class="nav-link">Contact</a></li>
                 </ul>
             </nav>
             <div class="sign-out">
@@ -157,19 +157,6 @@
                             <button class="btn btn-danger" id="cancel-membership-btn">Cancel Membership</button>
                         </div>
                     </div>
-
-                    <div class="content-card">
-                        <div class="card-header">
-                            <h2>Payment Method</h2>
-                            <p>Manage your payment method</p>
-                        </div>
-                        <div class="payment-methods" id="payment-methods-list">
-                            <!-- วิธีการชำระเงินจะถูกเพิ่มที่นี่ด้วย JavaScript -->
-                        </div>
-                        <div class="card-footer">
-                            <button class="btn btn-primary" id="add-payment-btn">Add Payment Method</button>
-                        </div>
-                    </div>
                 </div>
             </main>
         </div>
@@ -271,40 +258,7 @@
         </div>
     </div>
 
-    <!-- Modal เพิ่มวิธีการชำระเงิน -->
-    <div id="add-payment-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Add Payment Method</h2>
-            <form id="payment-form" class="payment-form">
-                <div class="form-group">
-                    <label for="card-number">Card Number</label>
-                    <input type="text" id="card-number" name="cardNumber" placeholder="XXXX XXXX XXXX XXXX" maxlength="19">
-                </div>
-                <div class="form-row">
-                    <div class="form-group half">
-                        <label for="card-expiry">Expiry Date</label>
-                        <input type="text" id="card-expiry" name="cardExpiry" placeholder="MM/YY" maxlength="5">
-                    </div>
-                    <div class="form-group half">
-                        <label for="card-cvv">CVV</label>
-                        <input type="text" id="card-cvv" name="cardCvv" placeholder="XXX" maxlength="3">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="card-name">Name on Card</label>
-                    <input type="text" id="card-name" name="cardName" placeholder="John Cena">
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="set-default" name="setDefault">
-                        Set as default payment method
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary">Add Payment Method</button>
-            </form>
-        </div>
-    </div>
+
 
     <!-- JavaScript -->
     <script src="./js/api.js"></script>
