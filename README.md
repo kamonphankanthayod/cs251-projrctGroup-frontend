@@ -18,13 +18,6 @@ docker-compose up --build
 ```
 
 
-## เข้าเว็บ
-1. เปิดเว็บเบราว์เซอร์
-2. วาง``http://localhost:3000/login.html``
-```bash
-http://localhost:3000/login.html
-```
-
 
 ## How to access database
 ดาวโหลด MySQL workbench และ MySQL Server(หรือ DBMs ตัวไหนก็ได้แต่อันตัวอย่างนี้จะสอนแค่ mysql workbench) 
@@ -83,6 +76,32 @@ Error response from daemon: Ports are not available: exposing port TCP 0.0.0.0:3
 2. ตรวจสอบสถานะว่า MySQL หยุดแล้วหรือยัง ``sudo systemctl status mysql``
 3. รัน project อีกรอบ
 
+
+
+## เข้าเว็บ
+1. เปิดเว็บเบราว์เซอร์
+2. วาง``http://localhost:3000/login.html``
+```bash
+http://localhost:3000/login.html
+```
+
+### ก่อนทดสอบระบบควรมีข้อมูลใน data base ดังนี้ 
+***คือควรมีใน data base
+```bash
+membership
+	10001	Everything in Basic+Group fitness classes+Nutrition consultation+Access to all locations	1	Gold	70   ***
+	10002	Access to gym floor+Basic equipment usage+Locker room access+Free water station	1	Basic	50   ***
+	10003	Everything in Gold+Premium locker with amenities+Spa & recovery services+Priority class  	1	Platinum	100   ***
+	10004	Access to fitness services+24/7Free personal locker	1	Standard	0    ***
+
+
+promotion
+	0	0	Percentage	0	2100-12-31	2020-01-01	Active     ***
+	20001	DISCOUNT10	Percentage	10	2026-01-31	2025-01-01	Active
+	20002	SAVE25	Fixed Amount	25	2026-02-28	2025-02-01	Active
+	20003	NEWYEAR50	Percentage	50	2026-01-05	2024-12-25	Active
+	20004	DISCOUNT20	Percentage	20	2026-01-31	2025-01-25	Active
+```
 
 
 # ตัว github ที่ใช้ในการพัฒนา
