@@ -36,11 +36,11 @@
             <aside class="sidebar">
                 <div class="user-profile">
                     <div class="user-avatar">
-                        <img src="image/placeholder.png?height=50&width=50" alt="User Avatar">
+                        <img src="./image/user-icon.png" alt="User Avatar"> <!--<img src="/placeholder.svg?height=50&width=50" alt="User Avatar">-->
                     </div>
                     <div class="user-info">
-                        <h3 class="user-name">John Cena</h3>
-                        <p class="user-membership">Premium Member</p>
+                        <h3 class="user-name" id ='nameP'>John Cena</h3>
+                        <p class="user-membership" id ='planP'>Premium Member</p>
                     </div>
                 </div>
                 <nav class="sidebar-nav">
@@ -144,9 +144,25 @@
     </div>
 
     <!-- JavaScript -->
+     <script src="./js/api.js"></script>
     <script src="./js/ProfileSetting.js"></script>
     <script src="./js/my-classes.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const profile = await API.getUserProfile();
+        if (profile) {
+        const nameElem = document.getElementById("nameP");
+        const planElem = document.getElementById("planP");
 
+        if (nameElem) nameElem.textContent = profile.name;
+        if (planElem) planElem.textContent = profile.membershipType;
+        }
+      } catch (error) {
+      console.error("โหลดข้อมูลผู้ใช้ไม่สำเร็จ:", error);
+      }
+      });
+    </script>
     <style>
       /* CSS สำหรับการแจ้งเตือน */
       .notification {

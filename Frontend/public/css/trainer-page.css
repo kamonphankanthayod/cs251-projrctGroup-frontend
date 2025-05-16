@@ -232,3 +232,21 @@
         width: 100%;
     }
 }
+
+.review-action {
+  margin-top: 1rem;
+}
+
+.review-action .btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #4caf50;
+  background-color: white;
+  color: #4caf50;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.review-action .btn:hover {
+  background-color: #4caf50;
+  color: white;
+}

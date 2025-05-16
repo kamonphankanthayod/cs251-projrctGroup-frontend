@@ -4,47 +4,47 @@ document.addEventListener("DOMContentLoaded", () => {
   setupModalClose();
 });
 
-    async function loadTrainerReviews() {
-      const trainersContainer = document.getElementById("trainers-container");
-      if (!trainersContainer) return;
+// โหลดรายชื่อเทรนเนอร์ทั้งหมด
+async function loadTrainerReviews() {
+  const trainersContainer = document.getElementById("trainers-container");
+  trainersContainer.innerHTML = '<div class="loading">กำลังโหลดข้อมูล...</div>';
 
-      try {
-        showLoading(trainersContainer);
+  try {
+    const memberId = localStorage.getItem("memberId");
 
-        const response = await fetch("http://localhost:8080/trainer/review");
-        if (!response.ok) {
-          console.error("❌ API Error:", response.status);
-          return;
-        }
+    // โหลดเทรนเนอร์ทั้งหมด
+    const trainerRes = await fetch("http://localhost:8080/trainer");
+    const trainers = await trainerRes.json();
 
-        const trainerReviews = await response.json();
-        console.log("🔍 API Response Data:", trainerReviews); // ✅ Debug API response
+    // โหลดรีวิวเฉพาะของสมาชิก (เราคนเดียว)
+    const reviewRes = await fetch(`http://localhost:8080/trainer/review/memberId/${memberId}`);
+    const myReviews = await reviewRes.json();
 
-        trainersContainer.innerHTML = "";
+    trainersContainer.innerHTML = "";
 
-        trainerReviews.forEach((trainer) => {
-          console.log("✅ Checking Trainer Name:", trainer.trainerName); // ✅ Ensure trainerName exists
-          const card = createTrainerCard(trainer);
-          trainersContainer.appendChild(card);
-        });
+    trainers.forEach((trainer) => {
+      const myReview = myReviews.find(r => r.trainerId === trainer.id);
+      const card = createTrainerCard(trainer, myReview);
+      trainersContainer.appendChild(card);
+    });
 
-        setupRatingButtons();
-        setupEditButtons();
-      } catch (error) {
-        console.error("❌ Error loading trainer reviews:", error);
-        trainersContainer.innerHTML = "<p>ไม่สามารถโหลดข้อมูลได้</p>";
-      }
-    }
+    setupRatingButtons();
+  } catch (error) {
+    console.error("❌ Error loading trainers:", error);
+    trainersContainer.innerHTML = "<p>ไม่สามารถโหลดรายชื่อเทรนเนอร์ได้</p>";
+  }
+}
 
-function createTrainerCard(trainerReview) {
+// สร้าง Card เทรนเนอร์พร้อมปุ่มให้คะแนน
+function createTrainerCard(trainer, myReview) {
   const card = document.createElement("div");
   card.className = "trainer-card";
-  card.setAttribute("data-trainer-id", trainerReview.trainerId);
+  card.setAttribute("data-trainer-id", trainer.id);
 
-  const trainerName = trainerReview.trainerFullName?.trim() || "ไม่ทราบชื่อ"; // ✅ Fix the name reference
-  const imageSrc = trainerReview.image?.trim() || "image/placeholder.png";
-  const rating = trainerReview.rate ? trainerReview.rate.toFixed(1) : "N/A";
-  const reviewText = trainerReview.review?.trim() || "ยังไม่มีรีวิว";
+  const trainerName = trainer.fullName?.trim() || "ไม่ทราบชื่อ";
+  const imageSrc = trainer.image?.trim() || "image/placeholder.png";
+  const myRating = myReview?.rate || null;
+  const myReviewText = myReview?.review || null;
 
   card.innerHTML = `
     <div class="trainer-header">
@@ -53,20 +53,23 @@ function createTrainerCard(trainerReview) {
       </div>
       <div class="trainer-info">
         <h3>${trainerName}</h3>
-        <p>⭐ ${rating}</p>
+        ${myRating ? `<p>⭐ คะแนนของคุณ: ${myRating} <br> 💬 ${myReviewText}</p>` : ""}
       </div>
     </div>
     <div class="trainer-reviews">
-      <h4>Reviews</h4>
-      <div class="review-item">
-        <strong>⭐ ${rating}</strong>: ${reviewText}
+      <div class="review-action">
+        <button class="btn btn-outline rate-trainer-btn"
+          data-trainer-id="${trainer.id}"
+          data-trainer-name="${trainerName}"
+          ${myReview ? `data-review-id="${myReview.id}" data-rating="${myReview.rate}" data-review-text="${myReview.review}"` : ""}>
+          ${myReview ? "แก้ไขรีวิว" : "ให้คะแนนเทรนเนอร์"}
+        </button>
       </div>
     </div>
   `;
 
   return card;
 }
-
 
 function generateStars(rating) {
   const fullStars = Math.floor(rating);
@@ -83,7 +86,12 @@ function setupRatingButtons() {
   document.querySelectorAll(".rate-trainer-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const trainerId = btn.getAttribute("data-trainer-id");
-      openReviewModal(trainerId, "add");
+      const trainerName = btn.getAttribute("data-trainer-name");
+      const reviewId = btn.getAttribute("data-review-id") || null;
+      const rating = btn.getAttribute("data-rating") || 0;
+      const reviewText = btn.getAttribute("data-review-text") || "";
+
+      openReviewModal(trainerId, trainerName, reviewId, rating, reviewText);
     });
   });
 }
@@ -98,17 +106,19 @@ function setupEditButtons() {
   });
 }
 
-function openReviewModal(trainerId, mode) {
+function openReviewModal(trainerId, trainerName, reviewId, rating = 0, reviewText = "") {
   const modal = document.getElementById("review-modal");
-  document.getElementById("review-modal-title").textContent =
-    mode === "edit" ? "Edit Review" : "Rate Trainer";
-  document.getElementById("trainer-id").value = trainerId;
-  document.getElementById("rating").value = 0;
-  document.getElementById("review-text").value = "";
+  document.getElementById("review-modal-title").textContent = reviewId ? `แก้ไขรีวิว: ${trainerName}` : `ให้คะแนน: ${trainerName}`;
 
-  document
-    .querySelectorAll(".star-rating i")
-    .forEach((star) => star.classList.remove("active"));
+  document.getElementById("trainer-id").value = trainerId;
+  document.getElementById("rating").value = rating;
+  document.getElementById("review-text").value = reviewText;
+  document.getElementById("review-id").value = reviewId || "";
+
+  document.querySelectorAll(".star-rating i").forEach((star) => {
+    const starRating = parseInt(star.getAttribute("data-rating"));
+    star.classList.toggle("active", starRating <= rating);
+  });
 
   modal.style.display = "block";
 }
@@ -181,22 +191,26 @@ async function saveReview(trainerId, rating, reviewText, memberId) {
     review: reviewText,
   };
 
-  console.log("📡 Sending Review Payload:", JSON.stringify(payload));
+  const reviewId = document.getElementById("review-id").value;
+
+  const url = reviewId
+    ? `http://localhost:8080/trainer/review/${reviewId}`
+    : `http://localhost:8080/trainer/review`;
+
+  const method = reviewId ? "PUT" : "POST";
 
   try {
-    const response = await fetch("http://localhost:8080/trainer/review", {
-      method: "POST",
+    const response = await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
     if (response.ok) {
-      const result = await response.json();
-      console.log("✅ Review Saved:", result);
-      loadTrainerReviews(); // ✅ โหลดใหม่
       showNotification("บันทึกรีวิวสำเร็จ", "success");
+      loadTrainerReviews(); // โหลดใหม่
     } else {
-      alert("ไม่สามารถบันทึกรีวิวได้ กรุณาลองใหม่");
+      throw new Error("ไม่สามารถบันทึกรีวิวได้");
     }
   } catch (error) {
     console.error("❌ Error saving review:", error);
